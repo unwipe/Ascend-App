@@ -355,7 +355,7 @@ function App() {
     
     setGameState(prev => {
       const updatedQuests = prev.weeklyQuests.map((q, i) =>
-        i === index ? { ...q, current: Math.min(q.current + 1, q.target) } : q
+        i === index ? { ...q, current: Math.min(q.current + 1, q.target), lastProgressAt: new Date().toISOString() } : q
       );
       
       const allComplete = updatedQuests.every(q => q.current >= q.target);
@@ -376,8 +376,8 @@ function App() {
       };
     });
     
-    addXP(quest.xpPerIncrement);
-    toast.success('Progress Updated! 💪', { description: `+${quest.xpPerIncrement} XP earned!` });
+    addXP(quest.xpPerIncrement || 5);
+    toast.success('Progress Updated! 💪', { description: `+${quest.xpPerIncrement || 5} XP earned!` });
   };
 
   const handleDeleteWeekly = (index) => {
