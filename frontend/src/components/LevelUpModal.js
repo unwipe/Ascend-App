@@ -86,9 +86,11 @@ const LevelUpModal = ({ isOpen, onClose, oldLevel, newLevel }) => {
               initial={{ scale: 1 }}
               animate={{ scale: 0.8, opacity: 0.5 }}
               transition={{ delay: 0.3 }}
-              className="text-5xl"
+              className="text-center"
             >
-              {getLevelEmoji(oldLevel)}
+              <div className="text-5xl mb-2">{oldEmoji}</div>
+              <div className="text-sm text-gray-400">Level {oldLevel}</div>
+              <div className="text-xs text-gray-500">{oldRank}</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -102,9 +104,11 @@ const LevelUpModal = ({ isOpen, onClose, oldLevel, newLevel }) => {
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
-              className="text-7xl"
+              className="text-center"
             >
-              {emoji}
+              <div className="text-7xl mb-2">{emoji}</div>
+              <div className="text-lg text-white">Level {newLevel}</div>
+              <div className="text-md text-blue-400 font-bold">{newRank}</div>
             </motion.div>
           </div>
 
@@ -114,10 +118,10 @@ const LevelUpModal = ({ isOpen, onClose, oldLevel, newLevel }) => {
             transition={{ delay: 0.9 }}
             className="space-y-2"
           >
-            <div className="text-6xl font-bold text-yellow-400" data-testid="new-level-display">
-              Level {newLevel}
+            <div className="text-5xl font-bold text-yellow-400" data-testid="new-level-display">
+              Level Up!
             </div>
-            <p className="text-xl text-gray-300">You're getting stronger! Keep going! 💪</p>
+            <p className="text-xl text-gray-300">You're now a {newRank}! Keep ascending! 💪</p>
           </motion.div>
 
           <motion.button
