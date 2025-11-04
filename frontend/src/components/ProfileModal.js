@@ -197,7 +197,18 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                       <h3 className="font-bold text-white text-center">{item.name}</h3>
                       <p className="text-sm text-gray-400 text-center mt-2">{item.description}</p>
                       {item.canUse && (
-                        <Button className="w-full mt-3" size="sm" data-testid={`use-${item.id}`}>
+                        <Button 
+                          onClick={() => {
+                            if (item.id === 'xp_multiplier') {
+                              onUseXPMultiplier();
+                            } else if (item.id === 'streak_saver') {
+                              onUseStreakSaver();
+                            }
+                          }}
+                          className="w-full mt-3 bg-purple-600 hover:bg-purple-700" 
+                          size="sm" 
+                          data-testid={`use-${item.id}`}
+                        >
                           Use Now
                         </Button>
                       )}
