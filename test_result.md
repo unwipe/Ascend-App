@@ -58,9 +58,9 @@ frontend:
 
   - task: "XP Multiplier Functionality"
     implemented: true
-    working: false
+    working: true
     file: "/app/frontend/src/App.js, /app/frontend/src/utils/effectsUtils.js"
-    stuck_count: 1
+    stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
@@ -70,6 +70,9 @@ frontend:
       - working: false
         agent: "testing"
         comment: "CRITICAL ISSUE: Cannot test XP Multiplier purchase/usage flow. Store modal and Profile modal cannot be accessed due to persistent onboarding modal blocking all UI interactions."
+      - working: true
+        agent: "testing"
+        comment: "✅ WORKING: Full XP Multiplier flow tested successfully. Purchase from Store (20 coins) → Use from Profile Inventory → Appears in Active Effects as '🔥 XP Multiplier (2x)' with countdown timer '59m 57s remaining'. Toast notification shows 'XP Multiplier activated! 🔥 2x XP for 1 hour!'. Timer updates every second correctly."
 
   - task: "Streak Saver Functionality"
     implemented: true
