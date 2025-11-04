@@ -693,7 +693,9 @@ function App() {
         isOpen={showStore}
         onClose={() => setShowStore(false)}
         coins={gameState.coins}
+        unlockedAvatars={gameState.unlockedAvatars || []}
         onPurchase={handlePurchase}
+        onPurchaseAvatar={handlePurchaseAvatar}
       />
       
       <MiniGames
@@ -705,7 +707,9 @@ function App() {
       <SettingsModal
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
+        settings={gameState.settings || {}}
         onResetAll={handleResetAll}
+        onToggleStreakMode={handleToggleStreakMode}
       />
       
       <LevelUpModal
