@@ -224,6 +224,49 @@ function App() {
     });
   };
 
+  // Avatar purchase handler
+  const handlePurchaseAvatar = (avatar) => {
+    if (gameState.coins < avatar.price) {
+      toast.error('Not enough coins!');
+      return;
+    }
+
+    if (gameState.unlockedAvatars?.includes(avatar.id)) {
+      toast.info('You already own this avatar!');
+      return;
+    }
+
+    setGameState(prev => ({
+      ...prev,
+      coins: prev.coins - avatar.price,
+      totalCoinsSpent: prev.totalCoinsSpent + avatar.price,
+      totalPurchases: prev.totalPurchases + 1,
+      unlockedAvatars: [...(prev.unlockedAvatars || []), avatar.id]
+    }));
+
+    toast.success(`${avatar.name} avatar unlocked! 🎉`, {
+      description: 'Change it in your Profile!'
+    });
+  };
+
+  // Streak mode toggle handler
+  const handleToggleStreakMode = (enabled) => {
+    setGameState(prev => ({
+      ...prev,
+      settings: {
+        ...prev.settings,
+        individualDailyStreaks: enabled
+      },
+      // Reset all daily streaks when mode changes
+      dailyStreak: 0,
+      dailyQuests: prev.dailyQuests.map(q => ({ ...q, streak: 0 }))
+    }));
+
+    toast.success(enabled ? 'Individual streak mode enabled!' : 'Global streak mode enabled!', {
+      description: 'All daily streaks have been reset.'
+    });
+  };
+
   // Main Quest handlers
   const handleAddMainQuest = (quest) => {
     setGameState(prev => ({ ...prev, mainQuest: quest }));
