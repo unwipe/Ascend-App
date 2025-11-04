@@ -73,7 +73,6 @@ const SideQuests = ({ sideQuests, onAddSide, onToggleSide, onDeleteSide }) => {
                   <SelectItem value="5">+5 XP</SelectItem>
                   <SelectItem value="10">+10 XP</SelectItem>
                   <SelectItem value="15">+15 XP</SelectItem>
-                  <SelectItem value="20">+20 XP</SelectItem>
                 </SelectContent>
               </Select>
               <Button onClick={handleAdd} className="flex-1 bg-green-600 hover:bg-green-700" data-testid="save-side-quest-btn">
