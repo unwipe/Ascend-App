@@ -292,7 +292,7 @@ function App() {
     
     setGameState(prev => {
       const updatedQuests = prev.dailyQuests.map((q, i) =>
-        i === index ? { ...q, completed: !q.completed } : q
+        i === index ? { ...q, completed: !q.completed, completedAt: !q.completed ? new Date().toISOString() : null } : q
       );
       
       const wasAnyCompleted = prev.dailyQuests.some(q => q.completed);
@@ -315,6 +315,22 @@ function App() {
       addXP(quest.xp);
       toast.success('Daily Quest Completed! ✅', { description: `+${quest.xp} XP earned!` });
     }
+  };
+
+  const handleUndoDaily = (index) => {
+    const quest = gameState.dailyQuests[index];
+    
+    setGameState(prev => ({
+      ...prev,
+      dailyQuests: prev.dailyQuests.map((q, i) =>
+        i === index ? { ...q, completed: false, completedAt: null } : q
+      ),
+      xp: Math.max(0, prev.xp - quest.xp),
+      totalXPEarned: Math.max(0, prev.totalXPEarned - quest.xp),
+      totalQuestsCompleted: Math.max(0, prev.totalQuestsCompleted - 1)
+    }));
+    
+    toast.info(`Daily task undone. ${quest.xp} XP refunded.`);
   };
 
   const handleDeleteDaily = (index) => {
