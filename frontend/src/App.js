@@ -399,15 +399,41 @@ function App() {
 
   const handleToggleSide = (index) => {
     const quest = gameState.sideQuests[index];
-    addXP(quest.xp);
     
     setGameState(prev => ({
       ...prev,
-      sideQuests: prev.sideQuests.filter((_, i) => i !== index),
+      sideQuests: prev.sideQuests.map((q, i) =>
+        i === index ? { ...q, completed: true, completedAt: new Date().toISOString() } : q
+      ),
       totalQuestsCompleted: prev.totalQuestsCompleted + 1
     }));
     
+    addXP(quest.xp);
     toast.success('Side Quest Completed! ✅', { description: `+${quest.xp} XP earned!` });
+    
+    // Auto-remove after 5 minutes
+    setTimeout(() => {
+      setGameState(prev => ({
+        ...prev,
+        sideQuests: prev.sideQuests.filter((_, i) => i !== index)
+      }));
+    }, 5 * 60 * 1000);
+  };
+
+  const handleUndoSide = (index) => {
+    const quest = gameState.sideQuests[index];
+    
+    setGameState(prev => ({
+      ...prev,
+      sideQuests: prev.sideQuests.map((q, i) =>
+        i === index ? { ...q, completed: false, completedAt: null } : q
+      ),
+      xp: Math.max(0, prev.xp - quest.xp),
+      totalXPEarned: Math.max(0, prev.totalXPEarned - quest.xp),
+      totalQuestsCompleted: Math.max(0, prev.totalQuestsCompleted - 1)
+    }));
+    
+    toast.info(`Side quest undone. ${quest.xp} XP refunded.`);
   };
 
   const handleDeleteSide = (index) => {
