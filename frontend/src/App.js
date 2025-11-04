@@ -266,6 +266,14 @@ function App() {
     if (!wasCompleted) {
       addXP(25);
       toast.success('Objective Completed! ✅', { description: '+25 XP earned!' });
+    } else {
+      // Refund XP when unchecking
+      setGameState(prev => ({
+        ...prev,
+        xp: Math.max(0, prev.xp - 25),
+        totalXPEarned: Math.max(0, prev.totalXPEarned - 25)
+      }));
+      toast.info('Objective undone. 25 XP refunded.');
     }
   };
 
