@@ -10,7 +10,7 @@ import { achievements } from '../utils/achievements';
 import { FREE_AVATARS, PAID_AVATARS, getUnlockedAvatars, getLockedAvatars } from '../utils/avatars';
 import { toast } from 'sonner';
 
-const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile }) => {
+const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMultiplier, onUseStreakSaver }) => {
   const [isEditingUsername, setIsEditingUsername] = useState(false);
   const [tempUsername, setTempUsername] = useState(gameState.username);
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
