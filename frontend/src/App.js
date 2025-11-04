@@ -241,7 +241,13 @@ function App() {
   };
 
   const handleCompleteMainQuest = () => {
-    const completedQuest = { ...gameState.mainQuest, completedAt: new Date().toISOString() };
+    const completedQuest = { 
+      ...gameState.mainQuest, 
+      completedAt: new Date().toISOString(),
+      id: `mq-${Date.now()}`,
+      xpEarned: 200,
+      status: 'completed'
+    };
     
     // Set 7-day cooldown (7 days from now)
     const cooldownEnd = new Date();
