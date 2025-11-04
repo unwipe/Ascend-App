@@ -6,7 +6,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 
-const avatarOptions = ['😊', '🦸', '🧑‍💻', '🎨', '🏃', '🧠', '🎮', '🌟', '🦁', '🐉', '🚀', '⚡'];
+const avatarOptions = ['👦', '👧', '👨', '👩', '🧑', '👴', '👵', '👨‍💼', '👩‍💼', '👨‍🎓', '👩‍🎓', '🧑‍💻'];
 
 const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   const [step, setStep] = useState(0);
