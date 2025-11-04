@@ -7,6 +7,9 @@ import { getLevelEmoji, getRankTitle } from '../utils/gameLogic';
 const LevelUpModal = ({ isOpen, onClose, oldLevel, newLevel }) => {
   const [showConfetti, setShowConfetti] = useState(false);
   const emoji = getLevelEmoji(newLevel);
+  const oldEmoji = getLevelEmoji(oldLevel);
+  const oldRank = getRankTitle(oldLevel);
+  const newRank = getRankTitle(newLevel);
 
   useEffect(() => {
     if (isOpen) {
