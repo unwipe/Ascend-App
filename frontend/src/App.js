@@ -243,9 +243,14 @@ function App() {
   const handleCompleteMainQuest = () => {
     const completedQuest = { ...gameState.mainQuest, completedAt: new Date().toISOString() };
     
+    // Set 7-day cooldown (7 days from now)
+    const cooldownEnd = new Date();
+    cooldownEnd.setDate(cooldownEnd.getDate() + 7);
+    
     setGameState(prev => ({
       ...prev,
       mainQuest: null,
+      mainQuestCooldown: cooldownEnd.toISOString(),
       mainQuestHistory: [...(prev.mainQuestHistory || []), completedQuest],
       mainQuestsCompleted: prev.mainQuestsCompleted + 1,
       totalQuestsCompleted: prev.totalQuestsCompleted + 1
