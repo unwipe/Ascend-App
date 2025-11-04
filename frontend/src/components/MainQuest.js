@@ -1,20 +1,42 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Target, Plus, Edit2, Trash2, CheckCircle2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Target, Plus, Edit2, CheckCircle2, Clock, History } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Checkbox } from './ui/checkbox';
 import ConfirmModal from './ConfirmModal';
+import { formatCountdown } from '../utils/timerUtils';
 
-const MainQuest = ({ mainQuest, onAddMainQuest, onEditMainQuest, onAbandonMainQuest, onCompleteMainQuest, onToggleObjective }) => {
+const MainQuest = ({ mainQuest, mainQuestCooldown, onAddMainQuest, onEditMainQuest, onCompleteMainQuest, onToggleObjective, onViewHistory }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState('');
   const [objectives, setObjectives] = useState(['', '', '']);
-  const [showAbandonModal, setShowAbandonModal] = useState(false);
   const [showCompleteModal, setShowCompleteModal] = useState(false);
   const [showObjectiveModal, setShowObjectiveModal] = useState(false);
   const [pendingObjectiveIndex, setPendingObjectiveIndex] = useState(null);
+  const [cooldownTimer, setCooldownTimer] = useState('');
+
+  // Calculate cooldown time remaining
+  useEffect(() => {
+    if (mainQuestCooldown) {
+      const interval = setInterval(() => {
+        const now = new Date();
+        const cooldownEnd = new Date(mainQuestCooldown);
+        const diff = cooldownEnd - now;
+        
+        if (diff <= 0) {
+          setCooldownTimer('');
+        } else {
+          setCooldownTimer(formatCountdown(diff));
+        }
+      }, 1000);
+      
+      return () => clearInterval(interval);
+    } else {
+      setCooldownTimer('');
+    }
+  }, [mainQuestCooldown]);
 
   const handleAdd = () => {
     if (title.trim() && objectives.filter(o => o.trim()).length >= 3) {
@@ -63,6 +85,44 @@ const MainQuest = ({ mainQuest, onAddMainQuest, onEditMainQuest, onAbandonMainQu
   const totalCount = mainQuest?.objectives.length || 0;
   const progress = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
 
+  // Check if cooldown is active
+  const isCooldownActive = mainQuestCooldown && new Date(mainQuestCooldown) > new Date();
+
+  // If on cooldown and no active quest, show cooldown message
+  if (!mainQuest && isCooldownActive) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 backdrop-blur-lg border-2 border-yellow-500/30 rounded-2xl p-8 shadow-xl text-center"
+        data-testid="main-quest-cooldown"
+      >
+        <div className="text-6xl mb-4">🏆</div>
+        <h3 className="text-2xl font-bold text-white mb-2">Main Quest Completed!</h3>
+        <p className="text-gray-300 mb-4">You've accomplished something great!</p>
+        
+        <div className="bg-white/10 rounded-xl p-4 mb-4">
+          <div className="flex items-center justify-center gap-2 text-orange-400 mb-2">
+            <Clock className="w-5 h-5" />
+            <span className="font-bold">Next Main Quest Available In:</span>
+          </div>
+          <div className="text-3xl font-bold text-white">{cooldownTimer}</div>
+          <p className="text-sm text-gray-400 mt-2">Main Quests have a 7-day cooldown to ensure meaningful progress</p>
+        </div>
+
+        <Button
+          onClick={onViewHistory}
+          variant="outline"
+          className="border-yellow-500/50 text-yellow-400 hover:bg-yellow-500/10"
+          data-testid="view-history-btn"
+        >
+          <History className="w-4 h-4 mr-2" />
+          View Main Quest History
+        </Button>
+      </motion.div>
+    );
+  }
+
   if (!mainQuest && !isAdding) {
     return (
       <motion.div
@@ -107,7 +167,7 @@ const MainQuest = ({ mainQuest, onAddMainQuest, onEditMainQuest, onAbandonMainQu
             <Input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g., Launch My Business"
+              placeholder="e.g., Get Healthy"
               className="bg-white/5 border-white/20 text-white"
               data-testid="main-quest-title-input"
             />
@@ -195,15 +255,6 @@ const MainQuest = ({ mainQuest, onAddMainQuest, onEditMainQuest, onAbandonMainQu
             >
               <Edit2 className="w-4 h-4" />
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setShowAbandonModal(true)}
-              className="text-red-400 hover:text-red-300"
-              data-testid="abandon-main-quest-btn"
-            >
-              <Trash2 className="w-4 h-4" />
-            </Button>
           </div>
         </div>
 
@@ -267,25 +318,12 @@ const MainQuest = ({ mainQuest, onAddMainQuest, onEditMainQuest, onAbandonMainQu
       </motion.div>
 
       <ConfirmModal
-        isOpen={showAbandonModal}
-        onClose={() => setShowAbandonModal(false)}
-        onConfirm={() => {
-          onAbandonMainQuest();
-          setShowAbandonModal(false);
-        }}
-        title="Abandon Main Quest?"
-        description="Are you sure you want to abandon your Main Quest? All progress will be lost."
-        confirmText="Abandon Quest"
-        variant="danger"
-      />
-
-      <ConfirmModal
         isOpen={showCompleteModal}
         onClose={() => setShowCompleteModal(false)}
         onConfirm={confirmComplete}
         title="🏆 Complete Main Quest?"
-        description="Congratulations! Did you complete all objectives correctly? You'll earn +200 XP total! This is a big milestone - make sure you've earned it!"
-        confirmText="Yes, Quest Complete!"
+        description="Congratulations! Are you sure you completed all objectives correctly? ⚠️ Main Quests are serious commitments. You'll earn +200 XP total, but you won't be able to start a new Main Quest for 7 days. Make sure you've truly accomplished this goal!"
+        confirmText="Yes, I Completed It!"
       />
 
       <ConfirmModal
