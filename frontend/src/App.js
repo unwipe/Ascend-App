@@ -582,14 +582,21 @@ function App() {
         
         <MotivationalQuote />
         
+        <DailyCheckIn 
+          lastCheckIn={gameState.lastCheckIn}
+          onCheckIn={handleCheckIn}
+        />
+        
         <div className="space-y-6">
           <MainQuest
             mainQuest={gameState.mainQuest}
+            mainQuestCooldown={gameState.mainQuestCooldown}
             onAddMainQuest={handleAddMainQuest}
             onEditMainQuest={handleEditMainQuest}
             onAbandonMainQuest={handleAbandonMainQuest}
             onCompleteMainQuest={handleCompleteMainQuest}
             onToggleObjective={handleToggleObjective}
+            onViewHistory={handleViewHistory}
           />
           
           <DailyQuests
