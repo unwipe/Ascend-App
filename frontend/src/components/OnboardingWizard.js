@@ -38,7 +38,8 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
         title: mainQuest,
         objectives: objectives.filter(o => o.trim()).map(o => ({ text: o, completed: false }))
       } : null,
-      firstDaily: dailyHabit ? { text: dailyHabit, xp: parseInt(dailyXP), completed: false } : null
+      firstDaily: dailyHabit ? { text: dailyHabit, xp: parseInt(dailyXP), completed: false, completedAt: null } : null,
+      firstWeekly: weeklyGoal ? { text: weeklyGoal, target: parseInt(weeklyTarget), current: 0, xpPerIncrement: parseInt(weeklyXP), lastProgressAt: null } : null
     });
   };
 
