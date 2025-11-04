@@ -235,7 +235,14 @@ const MainQuest = ({ mainQuest, onAddMainQuest, onEditMainQuest, onAbandonMainQu
             >
               <Checkbox
                 checked={objective.completed}
-                onCheckedChange={() => onToggleObjective(index)}
+                onCheckedChange={() => {
+                  if (!objective.completed) {
+                    setPendingObjectiveIndex(index);
+                    setShowObjectiveModal(true);
+                  } else {
+                    onToggleObjective(index);
+                  }
+                }}
                 className="border-white/30"
                 data-testid={`main-quest-objective-checkbox-${index}`}
               />
