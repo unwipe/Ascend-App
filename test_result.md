@@ -162,3 +162,24 @@ agent_communication:
       7. Purchase Streak Saver, use it, verify shows in Active Effects
       
       Frontend URL: https://levelup-tasks-5.preview.emergentagent.com
+  - agent: "testing"
+    message: |
+      **CRITICAL TESTING BLOCKER IDENTIFIED:**
+      
+      **Issue**: Onboarding modal skip functionality is broken
+      - Skip button (X icon) is clickable but modal does not close
+      - Modal remains persistent and blocks ALL app interactions
+      - Cannot access Store, Profile, Mini-Games, or any other features
+      - This prevents testing of ALL Prompt 8 features
+      
+      **Only Testable Feature**: 
+      ✅ Active Effects Component - visible and working correctly
+      
+      **Blocked Features** (cannot test due to modal):
+      ❌ XP Multiplier purchase/usage flow
+      ❌ Streak Saver purchase/usage flow  
+      ❌ Mini-Game cooldown timers
+      ❌ Sound effects testing
+      ❌ Profile inventory use buttons
+      
+      **URGENT**: Fix onboarding modal skip functionality before any other features can be properly tested.
