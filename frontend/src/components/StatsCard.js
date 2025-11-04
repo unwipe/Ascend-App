@@ -8,6 +8,7 @@ const StatsCard = ({ level, xp, coins }) => {
   const requiredXP = getRequiredXP(level);
   const progress = (xp / requiredXP) * 100;
   const emoji = getLevelEmoji(level);
+  const rankTitle = getRankTitle(level);
 
   return (
     <motion.div
@@ -38,6 +39,7 @@ const StatsCard = ({ level, xp, coins }) => {
               >
                 {level}
               </motion.div>
+              <div className="text-sm text-blue-400 font-medium">{rankTitle}</div>
             </div>
           </div>
           
