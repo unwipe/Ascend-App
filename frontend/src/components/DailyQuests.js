@@ -81,7 +81,6 @@ const DailyQuests = ({ dailyQuests, dailyStreak, onAddDaily, onToggleDaily, onDe
                   <SelectItem value="5">+5 XP</SelectItem>
                   <SelectItem value="10">+10 XP</SelectItem>
                   <SelectItem value="15">+15 XP</SelectItem>
-                  <SelectItem value="20">+20 XP</SelectItem>
                 </SelectContent>
               </Select>
               <Button onClick={handleAdd} className="flex-1 bg-orange-600 hover:bg-orange-700" data-testid="save-daily-quest-btn">
