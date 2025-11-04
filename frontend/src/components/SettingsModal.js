@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
 import { Switch } from './ui/switch';
 import ConfirmModal from './ConfirmModal';
+import { APP_VERSION, APP_NAME } from '../utils/constants';
 
 const SettingsModal = ({ isOpen, onClose, settings = {}, onResetAll, onToggleStreakMode }) => {
   const [showFirstConfirm, setShowFirstConfirm] = useState(false);
