@@ -22,75 +22,105 @@ user_problem_statement: |
 frontend:
   - task: "Coin Sound Fix"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/frontend/src/utils/soundEffects.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Reduced coin sound volume from 0.3 to 0.2. Set playbackRate to 1.3 to make sound 30% faster/shorter."
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL ISSUE: Onboarding modal blocks all app interactions. Cannot test sound effects or any other features due to persistent modal overlay that prevents clicking buttons or accessing functionality."
 
   - task: "Mini-Game Cooldown Timers"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/frontend/src/components/MiniGames.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Added 30-minute cooldown to all mini-games. Cooldown timers update every second, show formatted countdown, disable button during cooldown."
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL ISSUE: Cannot access Mini-Games modal due to onboarding modal blocking all interactions. Skip button clicks but modal remains open, preventing testing of cooldown functionality."
 
   - task: "XP Multiplier Functionality"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/frontend/src/App.js, /app/frontend/src/utils/effectsUtils.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Updated addXP() to use getXPMultiplier(). Added handleUseXPMultiplier() to activate multiplier. XP gains are doubled during active period with toast notification."
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL ISSUE: Cannot test XP Multiplier purchase/usage flow. Store modal and Profile modal cannot be accessed due to persistent onboarding modal blocking all UI interactions."
 
   - task: "Streak Saver Functionality"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/frontend/src/App.js, /app/frontend/src/utils/effectsUtils.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Added handleUseStreakSaver() to activate streak protection. Created utility functions for checking and using streak saver."
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL ISSUE: Cannot test Streak Saver functionality. Purchase and usage flow blocked by onboarding modal that prevents access to Store and Profile modals."
 
   - task: "Active Effects Component"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/components/ActiveEffects.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Created ActiveEffects component displaying on left side. Shows XP Multiplier with countdown and Streak Saver with uses left. Updates every second."
+      - working: true
+        agent: "testing"
+        comment: "✅ WORKING: Active Effects component is visible and displays 'No active effects' message correctly. Component renders properly below Stats Card as expected."
 
   - task: "Profile Inventory Use Buttons"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/frontend/src/components/ProfileModal.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Added Use button handlers to inventory items. Clicking Use on XP Multiplier or Streak Saver calls respective handler in App.js."
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL ISSUE: Cannot access Profile modal to test inventory use buttons. Onboarding modal blocks all header button interactions including Profile button."
+
+  - task: "Onboarding Modal Skip Functionality"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/components/OnboardingWizard.js"
+    stuck_count: 1
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL BUG: Skip tutorial button (X icon) is clickable but modal does not close. Modal remains persistent and blocks all app functionality. This prevents testing of all other Prompt 8 features."
 
 metadata:
   created_by: "main_agent"
