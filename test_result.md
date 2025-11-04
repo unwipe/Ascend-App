@@ -130,13 +130,15 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Onboarding Modal Skip Functionality"
+  stuck_tasks: 
+    - "Coin Sound Fix"
     - "Mini-Game Cooldown Timers"
     - "XP Multiplier Functionality"
     - "Streak Saver Functionality"
-    - "Active Effects Component"
-  stuck_tasks: []
+    - "Profile Inventory Use Buttons"
   test_all: false
-  test_priority: "high_first"
+  test_priority: "critical_first"
 
 agent_communication:
   - agent: "main"
