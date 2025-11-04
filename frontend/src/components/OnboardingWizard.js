@@ -16,6 +16,9 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   const [objectives, setObjectives] = useState(['', '', '']);
   const [dailyHabit, setDailyHabit] = useState('');
   const [dailyXP, setDailyXP] = useState('5');
+  const [weeklyGoal, setWeeklyGoal] = useState('');
+  const [weeklyTarget, setWeeklyTarget] = useState('3');
+  const [weeklyXP, setWeeklyXP] = useState('10');
 
   const totalSteps = 11;
 
