@@ -274,6 +274,50 @@ function App() {
     });
   };
 
+  // Use XP Multiplier from inventory
+  const handleUseXPMultiplier = () => {
+    // Check if already active
+    if (getXPMultiplier() > 1) {
+      toast.error('XP Multiplier is already active!');
+      return;
+    }
+
+    // Activate multiplier
+    activateXPMultiplier();
+
+    // Remove from inventory
+    setGameState(prev => ({
+      ...prev,
+      inventory: prev.inventory.filter(item => item.id !== 'xp_multiplier' || !item.canRemove),
+    }));
+
+    toast.success('XP Multiplier activated! 🔥', {
+      description: '2x XP for 1 hour!'
+    });
+  };
+
+  // Use Streak Saver from inventory
+  const handleUseStreakSaver = () => {
+    // Check if already active
+    if (isStreakSaverActive()) {
+      toast.error('Streak Saver is already active!');
+      return;
+    }
+
+    // Activate streak saver
+    activateStreakSaver();
+
+    // Remove from inventory
+    setGameState(prev => ({
+      ...prev,
+      inventory: prev.inventory.filter(item => item.id !== 'streak_saver' || !item.canRemove),
+    }));
+
+    toast.success('Streak Saver activated! 🛡️', {
+      description: 'Your next missed day will be forgiven!'
+    });
+  };
+
   // Main Quest handlers
   const handleAddMainQuest = (quest) => {
     setGameState(prev => ({ ...prev, mainQuest: quest }));
