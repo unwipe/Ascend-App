@@ -47,6 +47,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
       case 1: return username.trim() !== '';
       case 3: return mainQuest.trim() !== '' && objectives.filter(o => o.trim()).length >= 3;
       case 4: return dailyHabit.trim() !== '';
+      case 5: return weeklyGoal.trim() !== '';
       default: return true;
     }
   };
