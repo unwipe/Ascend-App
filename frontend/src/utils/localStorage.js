@@ -41,9 +41,9 @@ export const getInitialGameState = () => ({
   xp: 0,
   coins: 0,
   mainQuest: null,
-  dailyQuests: [],
-  weeklyQuests: [],
-  sideQuests: [],
+  dailyQuests: [], // Now includes: { text, xp, completed, completedAt, category }
+  weeklyQuests: [], // Now includes: { text, target, current, xpPerIncrement, lastProgressAt, category }
+  sideQuests: [], // Now includes: { text, xp, completed, completedAt, category }
   dailyStreak: 0,
   weeklyStreak: 0,
   lastLoginDate: new Date().toISOString(),
