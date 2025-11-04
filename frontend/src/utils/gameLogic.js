@@ -5,16 +5,8 @@ export const getRequiredXP = (level) => {
   return 500 + (level - 1) * 50;
 };
 
-// Get level emoji indicator
-export const getLevelEmoji = (level) => {
-  if (level >= 50) return '👑';
-  if (level >= 40) return '💎';
-  if (level >= 30) return '⭐';
-  if (level >= 20) return '🔥';
-  if (level >= 10) return '🚀';
-  if (level >= 5) return '⚡';
-  return '🌱';
-};
+// Export from levelSystem.js for consistency
+export { getLevelEmoji, getRankTitle } from './levelSystem';
 
 // Check if user should level up
 export const checkLevelUp = (xp, level) => {
