@@ -109,9 +109,9 @@ frontend:
 
   - task: "Profile Inventory Use Buttons"
     implemented: true
-    working: false
+    working: true
     file: "/app/frontend/src/components/ProfileModal.js"
-    stuck_count: 1
+    stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
@@ -121,6 +121,9 @@ frontend:
       - working: false
         agent: "testing"
         comment: "CRITICAL ISSUE: Cannot access Profile modal to test inventory use buttons. Onboarding modal blocks all header button interactions including Profile button."
+      - working: true
+        agent: "testing"
+        comment: "✅ WORKING: Profile Inventory Use buttons function perfectly. Profile modal opens correctly, Inventory tab accessible, XP Multiplier 'Use Now' button works and triggers activation with proper toast notification. Item removed from inventory after use. UI flow is smooth and intuitive."
 
   - task: "Onboarding Modal Skip Functionality"
     implemented: true
