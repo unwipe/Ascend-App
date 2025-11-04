@@ -54,9 +54,10 @@ export const getInitialGameState = () => ({
   // New fields for Phase 1 & 2
   username: 'Ascendant',
   avatar: '😊',
+  unlockedAvatars: ['professional-person', 'professional-woman', 'person-pouting', 'man-pouting', 'woman-pouting', 'person-headscarf', 'male-teacher', 'female-teacher'], // All free avatars unlocked by default
   unlockedAchievements: [],
   inventory: [],
-  mainQuestHistory: [],
+  mainQuestHistory: [], // Stores completed and current Main Quests with full details
   totalXPEarned: 0,
   totalQuestsCompleted: 0,
   totalCoinsEarned: 0,
@@ -69,5 +70,9 @@ export const getInitialGameState = () => ({
   mainQuestsCompleted: 0,
   tutorialCompleted: false,
   soundEnabled: true,
-  activeMultiplier: null
+  activeMultiplier: null,
+  // Settings
+  settings: {
+    individualDailyStreaks: false, // false = global streak, true = individual streaks per quest
+  }
 });
