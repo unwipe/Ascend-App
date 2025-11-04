@@ -148,8 +148,8 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                       </button>
                     ))}
                   </div>
-                  <p className="text-sm text-gray-400 mt-3">
-                    You can unlock more avatars and cosmetics later in the Reward Store!
+                  <p className="text-sm text-blue-300 mt-3 bg-blue-500/10 rounded-lg p-2">
+                    💡 Unlock special character avatars in the Reward Store!
                   </p>
                 </div>
               </div>
