@@ -740,6 +740,8 @@ function App() {
         onClose={() => setShowProfile(false)}
         gameState={gameState}
         onUpdateProfile={handleUpdateProfile}
+        onUseXPMultiplier={handleUseXPMultiplier}
+        onUseStreakSaver={handleUseStreakSaver}
       />
       
       <RewardStore
