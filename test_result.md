@@ -40,9 +40,9 @@ frontend:
 
   - task: "Mini-Game Cooldown Timers"
     implemented: true
-    working: false
+    working: true
     file: "/app/frontend/src/components/MiniGames.js"
-    stuck_count: 1
+    stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
@@ -52,6 +52,9 @@ frontend:
       - working: false
         agent: "testing"
         comment: "CRITICAL ISSUE: Cannot access Mini-Games modal due to onboarding modal blocking all interactions. Skip button clicks but modal remains open, preventing testing of cooldown functionality."
+      - working: true
+        agent: "testing"
+        comment: "✅ WORKING: 30-minute cooldown system works perfectly. After claiming rewards, buttons become disabled with 'On Cooldown' text. Timer displays 'Available in: 29m 20s' format and updates every second. Verified timer countdown is functional and accurate."
 
   - task: "XP Multiplier Functionality"
     implemented: true
