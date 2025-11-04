@@ -572,6 +572,7 @@ function App() {
             onAddDaily={handleAddDaily}
             onToggleDaily={handleToggleDaily}
             onDeleteDaily={handleDeleteDaily}
+            onUndoDaily={handleUndoDaily}
           />
           
           <WeeklyQuests
