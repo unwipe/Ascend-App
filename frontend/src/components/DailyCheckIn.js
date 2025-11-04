@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Gift } from 'lucide-react';
 import { Button } from './ui/button';
-import { formatCountdown } from '../utils/timerUtils';
+import { formatCountdown, getTimeUntilMidnight } from '../utils/timerUtils';
 
 const DailyCheckIn = ({ lastCheckIn, onCheckIn }) => {
   const [cooldownTimer, setCooldownTimer] = useState('');
@@ -11,17 +11,21 @@ const DailyCheckIn = ({ lastCheckIn, onCheckIn }) => {
   useEffect(() => {
     if (lastCheckIn) {
       const checkCooldown = () => {
-        const now = Date.now();
-        const checkInTime = new Date(lastCheckIn).getTime();
-        const cooldownEnd = checkInTime + (24 * 60 * 60 * 1000); // 24 hours
-        const timeRemaining = cooldownEnd - now;
-
-        if (timeRemaining <= 0) {
+        const now = new Date();
+        const checkInDate = new Date(lastCheckIn);
+        
+        // Check if last check-in was today
+        const isToday = now.toDateString() === checkInDate.toDateString();
+        
+        if (isToday) {
+          // Already checked in today, show time until midnight (00:01 AM)
+          const timeUntilMidnight = getTimeUntilMidnight();
+          setCanCheckIn(false);
+          setCooldownTimer(formatCountdown(timeUntilMidnight));
+        } else {
+          // Last check-in was yesterday or earlier, can check in again
           setCanCheckIn(true);
           setCooldownTimer('');
-        } else {
-          setCanCheckIn(false);
-          setCooldownTimer(formatCountdown(timeRemaining));
         }
       };
 
