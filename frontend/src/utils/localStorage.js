@@ -74,5 +74,7 @@ export const getInitialGameState = () => ({
   // Settings
   settings: {
     individualDailyStreaks: false, // false = global streak, true = individual streaks per quest
-  }
+  },
+  // Active Effects (XP Multiplier, Streak Saver, etc.)
+  activeEffects: {}
 });
