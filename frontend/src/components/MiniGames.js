@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Gamepad2, Coins } from 'lucide-react';
+import { Gamepad2, Coins, Clock } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
 import ConfirmModal from './ConfirmModal';
+import { getMiniGameCooldown } from '../utils/effectsUtils';
 
 const miniGamesData = [
   {
