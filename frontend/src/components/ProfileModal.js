@@ -147,21 +147,29 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile }) => {
                     key={achievement.id}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className={`p-4 rounded-xl border-2 ${
+                    className={`p-4 rounded-xl border-2 relative ${
                       isUnlocked
                         ? 'bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border-yellow-500/50'
-                        : 'bg-white/5 border-gray-700 opacity-50'
+                        : 'bg-white/5 border-gray-700'
                     }`}
+                    style={{ opacity: isUnlocked ? 1 : 0.4, filter: isUnlocked ? 'none' : 'grayscale(100%)' }}
                     data-testid={`achievement-${achievement.id}`}
                   >
+                    {!isUnlocked && (
+                      <div className="absolute top-2 right-2 text-gray-500">
+                        🔒
+                      </div>
+                    )}
                     <div className="text-4xl mb-2 text-center">{achievement.icon}</div>
                     <h3 className="font-bold text-white text-center mb-1">{achievement.title}</h3>
                     <p className="text-xs text-gray-400 text-center">{achievement.description}</p>
-                    {isUnlocked && (
-                      <div className="mt-2 text-center">
+                    <div className="mt-2 text-center">
+                      {isUnlocked ? (
                         <span className="text-xs text-green-400">✓ Unlocked</span>
-                      </div>
-                    )}
+                      ) : (
+                        <span className="text-xs text-gray-500">🔒 Locked</span>
+                      )}
+                    </div>
                   </motion.div>
                 );
               })}
