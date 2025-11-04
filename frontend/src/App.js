@@ -680,6 +680,8 @@ function App() {
           coins={gameState.coins} 
         />
         
+        <ActiveEffects />
+        
         <MotivationalQuote />
         
         <DailyCheckIn 
