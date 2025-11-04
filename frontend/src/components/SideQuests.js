@@ -1,25 +1,45 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ScrollText, Plus, Trash2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ScrollText, Plus, Trash2, Undo2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Checkbox } from './ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import ConfirmModal from './ConfirmModal';
+import { canUndoQuest, getUndoTimeRemaining, formatCountdown } from '../utils/timerUtils';
 
-const SideQuests = ({ sideQuests, onAddSide, onToggleSide, onDeleteSide }) => {
+const SideQuests = ({ sideQuests, onAddSide, onToggleSide, onDeleteSide, onUndoSide }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [newXP, setNewXP] = useState('5');
   const [deleteIndex, setDeleteIndex] = useState(null);
   const [completeIndex, setCompleteIndex] = useState(null);
+  const [undoIndex, setUndoIndex] = useState(null);
+  const [undoTimers, setUndoTimers] = useState({});
+
+  // Update undo timers
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newTimers = {};
+      sideQuests.forEach((quest, index) => {
+        if (quest.completed && quest.completedAt && canUndoQuest(quest.completedAt)) {
+          const remaining = getUndoTimeRemaining(quest.completedAt);
+          newTimers[index] = formatCountdown(remaining);
+        }
+      });
+      setUndoTimers(newTimers);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [sideQuests]);
 
   const handleAdd = () => {
     if (newTask.trim()) {
       onAddSide({
         text: newTask.trim(),
         xp: parseInt(newXP),
-        completed: false
+        completed: false,
+        completedAt: null
       });
       setNewTask('');
       setNewXP('5');
@@ -64,7 +84,7 @@ const SideQuests = ({ sideQuests, onAddSide, onToggleSide, onDeleteSide }) => {
               className="bg-white/5 border-white/20 text-white"
               data-testid="side-quest-input"
             />
-            <div className="flex gap-2">
+            <div className="space-y-2">
               <Select value={newXP} onValueChange={setNewXP}>
                 <SelectTrigger className="bg-white/5 border-white/20 text-white w-32" data-testid="side-quest-xp-select">
                   <SelectValue />
@@ -75,6 +95,13 @@ const SideQuests = ({ sideQuests, onAddSide, onToggleSide, onDeleteSide }) => {
                   <SelectItem value="15">+15 XP</SelectItem>
                 </SelectContent>
               </Select>
+              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
+                <p className="text-xs text-blue-300">
+                  💡 <span className="font-bold">Tip:</span> Choose XP based on how hard the task is. Be honest with yourself!
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-2">
               <Button onClick={handleAdd} className="flex-1 bg-green-600 hover:bg-green-700" data-testid="save-side-quest-btn">
                 Add
               </Button>
@@ -91,36 +118,74 @@ const SideQuests = ({ sideQuests, onAddSide, onToggleSide, onDeleteSide }) => {
           </div>
         ) : (
           <div className="space-y-2">
-            {sideQuests.map((quest, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                className="flex items-center gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all group"
-                data-testid={`side-quest-${index}`}
-              >
-                <Checkbox
-                  checked={quest.completed}
-                  onCheckedChange={() => setCompleteIndex(index)}
-                  className="border-white/30"
-                  data-testid={`side-quest-checkbox-${index}`}
-                />
-                <span className={`flex-1 ${quest.completed ? 'line-through text-gray-500' : 'text-white'}`}>
-                  {quest.text}
-                </span>
-                <span className="text-sm text-green-400 font-medium">+{quest.xp} XP</span>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setDeleteIndex(index)}
-                  className="text-gray-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                  data-testid={`delete-side-quest-${index}`}
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </motion.div>
-            ))}
+            <AnimatePresence mode="popLayout">
+              {sideQuests.map((quest, index) => {
+                const undoTimer = undoTimers[index];
+                const showUndo = quest.completed && undoTimer;
+
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20, height: 0 }}
+                    className="p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all group"
+                    data-testid={`side-quest-${index}`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <Checkbox
+                        checked={quest.completed}
+                        onCheckedChange={() => setCompleteIndex(index)}
+                        disabled={quest.completed}
+                        className="border-white/30 mt-1"
+                        data-testid={`side-quest-checkbox-${index}`}
+                      />
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <span className={`font-medium ${quest.completed ? 'text-green-400' : 'text-white'}`}>
+                            {quest.text}
+                          </span>
+                          <span className="text-sm text-green-400 font-medium">+{quest.xp} XP</span>
+                        </div>
+                        
+                        {showUndo && (
+                          <div className="mt-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setUndoIndex(index)}
+                              className="text-orange-400 hover:text-orange-300 h-6 text-xs p-0"
+                              data-testid={`undo-side-quest-${index}`}
+                            >
+                              <Undo2 className="w-3 h-3 mr-1" />
+                              Undo ({undoTimer})
+                            </Button>
+                          </div>
+                        )}
+                        
+                        {quest.completed && !showUndo && (
+                          <div className="mt-1 text-xs text-green-400">
+                            ✅ Completed (auto-removing soon...)
+                          </div>
+                        )}
+                      </div>
+                      
+                      {!quest.completed && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => setDeleteIndex(index)}
+                          className="text-gray-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                          data-testid={`delete-side-quest-${index}`}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </div>
         )}
       </motion.div>
@@ -133,8 +198,21 @@ const SideQuests = ({ sideQuests, onAddSide, onToggleSide, onDeleteSide }) => {
           setCompleteIndex(null);
         }}
         title="Complete Side Quest?"
-        description="Did you complete this task?"
+        description="Did you complete this task? You'll earn XP."
         confirmText="Yes, Complete"
+      />
+
+      <ConfirmModal
+        isOpen={undoIndex !== null}
+        onClose={() => setUndoIndex(null)}
+        onConfirm={() => {
+          onUndoSide(undoIndex);
+          setUndoIndex(null);
+        }}
+        title="⚠️ Undo Side Quest?"
+        description="Are you sure you want to undo this Side Quest? This will refund the given XP."
+        confirmText="Yes, Undo"
+        variant="danger"
       />
 
       <ConfirmModal
