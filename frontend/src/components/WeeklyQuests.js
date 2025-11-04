@@ -1,17 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Plus, Trash2 } from 'lucide-react';
+import { Zap, Plus, Trash2, Calendar, Clock } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import ConfirmModal from './ConfirmModal';
+import { getTimeUntilMidnight, getTimeUntilMonday, formatCountdown, canCompleteQuest } from '../utils/timerUtils';
 
 const WeeklyQuests = ({ weeklyQuests, weeklyStreak, onAddWeekly, onIncrementWeekly, onDeleteWeekly }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [newTarget, setNewTarget] = useState('3');
+  const [newXP, setNewXP] = useState('10');
   const [deleteIndex, setDeleteIndex] = useState(null);
   const [incrementIndex, setIncrementIndex] = useState(null);
+  const [mondayTimer, setMondayTimer] = useState('');
+  const [progressTimers, setProgressTimers] = useState({});
+
+  // Update Monday reset timer
+  useEffect(() => {
+    const updateMondayTimer = () => {
+      const timeUntilMonday = getTimeUntilMonday();
+      setMondayTimer(formatCountdown(timeUntilMonday));
+    };
+
+    updateMondayTimer();
+    const interval = setInterval(updateMondayTimer, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Update per-progress timers
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newTimers = {};
+      weeklyQuests.forEach((quest, index) => {
+        if (quest.lastProgressAt && quest.current < quest.target) {
+          const canProgress = canCompleteQuest(quest.lastProgressAt);
+          if (!canProgress) {
+            const timeUntilNext = getTimeUntilMidnight();
+            newTimers[index] = formatCountdown(timeUntilNext);
+          }
+        }
+      });
+      setProgressTimers(newTimers);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [weeklyQuests]);
 
   const handleAdd = () => {
     if (newTask.trim()) {
@@ -19,10 +54,12 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, onAddWeekly, onIncrementWeek
         text: newTask.trim(),
         target: parseInt(newTarget),
         current: 0,
-        xpPerIncrement: 5
+        xpPerIncrement: parseInt(newXP),
+        lastProgressAt: null
       });
       setNewTask('');
       setNewTarget('3');
+      setNewXP('10');
       setIsAdding(false);
     }
   };
@@ -58,6 +95,12 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, onAddWeekly, onIncrementWeek
           </Button>
         </div>
 
+        {/* Monday Reset Timer */}
+        <div className="mb-4 flex items-center gap-2 text-sm text-blue-400 bg-blue-500/10 rounded-lg p-3">
+          <Calendar className="w-4 h-4" />
+          <span>Weekly quests reset in: <strong>{mondayTimer}</strong> (Monday 00:01 AM)</span>
+        </div>
+
         {isAdding && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
@@ -72,19 +115,42 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, onAddWeekly, onIncrementWeek
               className="bg-white/5 border-white/20 text-white"
               data-testid="weekly-quest-input"
             />
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">Times per week</label>
+                <Select value={newTarget} onValueChange={setNewTarget}>
+                  <SelectTrigger className="bg-white/5 border-white/20 text-white" data-testid="weekly-quest-target-select">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="2">2x/week</SelectItem>
+                    <SelectItem value="3">3x/week</SelectItem>
+                    <SelectItem value="4">4x/week</SelectItem>
+                    <SelectItem value="5">5x/week</SelectItem>
+                    <SelectItem value="7">7x/week</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">XP per progress</label>
+                <Select value={newXP} onValueChange={setNewXP}>
+                  <SelectTrigger className="bg-white/5 border-white/20 text-white" data-testid="weekly-quest-xp-select">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="5">+5 XP</SelectItem>
+                    <SelectItem value="10">+10 XP</SelectItem>
+                    <SelectItem value="15">+15 XP</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
+              <p className="text-xs text-blue-300">
+                💡 <span className="font-bold">Tip:</span> Choose XP based on how hard the task is. Be honest with yourself!
+              </p>
+            </div>
             <div className="flex gap-2">
-              <Select value={newTarget} onValueChange={setNewTarget}>
-                <SelectTrigger className="bg-white/5 border-white/20 text-white w-32" data-testid="weekly-quest-target-select">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="2">2x/week</SelectItem>
-                  <SelectItem value="3">3x/week</SelectItem>
-                  <SelectItem value="4">4x/week</SelectItem>
-                  <SelectItem value="5">5x/week</SelectItem>
-                  <SelectItem value="7">7x/week</SelectItem>
-                </SelectContent>
-              </Select>
               <Button onClick={handleAdd} className="flex-1 bg-purple-600 hover:bg-purple-700" data-testid="save-weekly-quest-btn">
                 Add
               </Button>
@@ -104,6 +170,8 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, onAddWeekly, onIncrementWeek
             {weeklyQuests.map((quest, index) => {
               const progress = (quest.current / quest.target) * 100;
               const isComplete = quest.current >= quest.target;
+              const canProgress = !quest.lastProgressAt || canCompleteQuest(quest.lastProgressAt);
+              const timer = progressTimers[index];
               
               return (
                 <motion.div
@@ -114,42 +182,62 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, onAddWeekly, onIncrementWeek
                   data-testid={`weekly-quest-${index}`}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className={`font-medium ${isComplete ? 'text-green-400' : 'text-white'}`}>
-                      {quest.text}
-                    </span>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <span className={`font-medium ${isComplete ? 'text-green-400' : 'text-white'}`}>
+                          {quest.text}
+                        </span>
+                        <span className="text-xs text-purple-400">+{quest.xpPerIncrement || 5} XP per visit</span>
+                      </div>
+                    </div>
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => setDeleteIndex(index)}
-                      className="text-gray-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="text-gray-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity ml-2"
                       data-testid={`delete-weekly-quest-${index}`}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <div className="flex-1">
-                      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${progress}%` }}
-                          className="h-full bg-purple-500"
-                        />
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <div className="flex-1">
+                        <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${progress}%` }}
+                            className="h-full bg-purple-500"
+                          />
+                        </div>
                       </div>
+                      <span className="text-sm text-gray-300 w-16 text-right" data-testid={`weekly-quest-progress-${index}`}>
+                        {quest.current}/{quest.target}
+                      </span>
+                      <Button
+                        onClick={() => setIncrementIndex(index)}
+                        disabled={isComplete || !canProgress}
+                        size="sm"
+                        className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        data-testid={`increment-weekly-quest-${index}`}
+                      >
+                        +
+                      </Button>
                     </div>
-                    <span className="text-sm text-gray-300 w-16 text-right" data-testid={`weekly-quest-progress-${index}`}>
-                      {quest.current}/{quest.target}
-                    </span>
-                    <Button
-                      onClick={() => setIncrementIndex(index)}
-                      disabled={isComplete}
-                      size="sm"
-                      className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50"
-                      data-testid={`increment-weekly-quest-${index}`}
-                    >
-                      +
-                    </Button>
+                    
+                    {!isComplete && !canProgress && timer && (
+                      <div className="flex items-center gap-2 text-xs text-orange-400">
+                        <Clock className="w-3 h-3" />
+                        <span>Next progress available in {timer}</span>
+                      </div>
+                    )}
+                    
+                    {isComplete && (
+                      <div className="text-xs text-green-400 flex items-center gap-1">
+                        ✅ Completed this week
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               );
@@ -166,7 +254,7 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, onAddWeekly, onIncrementWeek
           setIncrementIndex(null);
         }}
         title="Complete Activity?"
-        description="Did you complete this activity?"
+        description="Did you complete this activity? You'll earn XP."
         confirmText="Yes, Complete"
       />
 
