@@ -131,19 +131,19 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
 
                 <div>
                   <label className="text-sm text-gray-300 mb-2 block">Select your avatar</label>
-                  <div className="grid grid-cols-6 gap-3">
-                    {avatarOptions.map((emoji) => (
+                  <div className="grid grid-cols-4 gap-3">
+                    {FREE_AVATARS.map((avatarOption) => (
                       <button
-                        key={emoji}
-                        onClick={() => setAvatar(emoji)}
+                        key={avatarOption.id}
+                        onClick={() => setAvatar(avatarOption.emoji)}
                         className={`text-4xl p-3 rounded-lg transition-all ${
-                          avatar === emoji
+                          avatar === avatarOption.emoji
                             ? 'bg-blue-600 scale-110'
                             : 'bg-white/5 hover:bg-white/10'
                         }`}
-                        data-testid={`avatar-${emoji}`}
+                        data-testid={`avatar-${avatarOption.id}`}
                       >
-                        {emoji}
+                        {avatarOption.emoji}
                       </button>
                     ))}
                   </div>
