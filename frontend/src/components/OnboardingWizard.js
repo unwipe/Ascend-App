@@ -53,12 +53,12 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={() => {}}>
+    <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onSkip(); }}>
       <DialogContent className="max-w-3xl bg-gradient-to-br from-gray-900/98 to-black/98 backdrop-blur-lg border border-white/20" data-testid="onboarding-wizard">
         {/* Skip Button */}
         <button
           onClick={onSkip}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-300 text-sm"
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-300 text-sm z-50"
           data-testid="skip-tutorial-btn"
         >
           <X className="w-4 h-4" />
