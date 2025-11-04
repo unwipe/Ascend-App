@@ -349,12 +349,12 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="text-sm text-gray-300 mb-2 block">Times per week:</label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {['2', '3', '5'].map((num) => (
+                    <div className="grid grid-cols-4 gap-2">
+                      {['1', '2', '3', '4', '5', '6', '7'].map((num) => (
                         <button
                           key={num}
                           onClick={() => setWeeklyTarget(num)}
-                          className={`py-2 rounded-lg font-bold transition-all ${
+                          className={`py-2 rounded-lg font-bold transition-all text-xs ${
                             weeklyTarget === num
                               ? 'bg-purple-600 text-white'
                               : 'bg-white/10 text-gray-300 hover:bg-white/20'
