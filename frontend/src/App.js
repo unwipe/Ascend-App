@@ -588,6 +588,7 @@ function App() {
             onAddSide={handleAddSide}
             onToggleSide={handleToggleSide}
             onDeleteSide={handleDeleteSide}
+            onUndoSide={handleUndoSide}
           />
         </div>
       </main>
