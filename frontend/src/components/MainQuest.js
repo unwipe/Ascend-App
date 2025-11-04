@@ -13,6 +13,8 @@ const MainQuest = ({ mainQuest, onAddMainQuest, onEditMainQuest, onAbandonMainQu
   const [objectives, setObjectives] = useState(['', '', '']);
   const [showAbandonModal, setShowAbandonModal] = useState(false);
   const [showCompleteModal, setShowCompleteModal] = useState(false);
+  const [showObjectiveModal, setShowObjectiveModal] = useState(false);
+  const [pendingObjectiveIndex, setPendingObjectiveIndex] = useState(null);
 
   const handleAdd = () => {
     if (title.trim() && objectives.filter(o => o.trim()).length >= 3) {
