@@ -322,8 +322,85 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
             </motion.div>
           )}
 
-          {/* Step 5: Other Quest Types */}
+          {/* Step 5: Add Weekly Quest */}
           {step === 5 && (
+            <motion.div
+              key="step5"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="py-6"
+            >
+              <div className="text-center mb-8">
+                <div className="text-6xl mb-4">⚡</div>
+                <h2 className="text-3xl font-bold text-white mb-2">Set Up a Weekly Quest</h2>
+                <p className="text-gray-300">Goals you want to hit multiple times per week</p>
+              </div>
+
+              <div className="space-y-4 max-w-md mx-auto">
+                <Input
+                  value={weeklyGoal}
+                  onChange={(e) => setWeeklyGoal(e.target.value)}
+                  placeholder="Go to gym / Call family / Study coding"
+                  className="bg-white/10 border-white/20 text-white"
+                  data-testid="weekly-goal-input"
+                />
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-sm text-gray-300 mb-2 block">Times per week:</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {['2', '3', '5'].map((num) => (
+                        <button
+                          key={num}
+                          onClick={() => setWeeklyTarget(num)}
+                          className={`py-2 rounded-lg font-bold transition-all ${
+                            weeklyTarget === num
+                              ? 'bg-purple-600 text-white'
+                              : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                          }`}
+                        >
+                          {num}x
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="text-sm text-gray-300 mb-2 block">XP per completion:</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {['5', '10', '15'].map((xp) => (
+                        <button
+                          key={xp}
+                          onClick={() => setWeeklyXP(xp)}
+                          className={`py-2 rounded-lg font-bold transition-all ${
+                            weeklyXP === xp
+                              ? 'bg-purple-600 text-white'
+                              : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                          }`}
+                        >
+                          {xp}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                  <p className="text-sm text-blue-300">
+                    💡 <span className="font-bold">Tip:</span> Choose XP based on how hard the task is. Be honest with yourself!
+                  </p>
+                </div>
+
+                <p className="text-sm text-gray-400 text-center">
+                  Example: "Go to gym 3x/week" at 10 XP = 30 XP total per week
+                </p>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 6: Other Quest Types */}
+          {step === 6 && (
             <motion.div
               key="step5"
               initial={{ opacity: 0, x: 20 }}
