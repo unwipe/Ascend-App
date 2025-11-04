@@ -180,14 +180,31 @@ const MiniGames = ({ isOpen, onClose, onClaimReward }) => {
                           ))}
                         </ol>
                       </div>
-                      <Button
-                        onClick={() => handleClaim(game.id, game.reward)}
-                        className="w-full bg-yellow-600 hover:bg-yellow-700"
-                        data-testid={`claim-reward-${game.id}`}
-                      >
-                        <Coins className="w-4 h-4 mr-2" />
-                        Claim {game.reward} Coins
-                      </Button>
+                      {cooldowns[game.id] && !cooldowns[game.id].isAvailable ? (
+                        <div className="w-full">
+                          <div className="flex items-center justify-center gap-2 text-orange-400 mb-2 text-sm">
+                            <Clock className="w-4 h-4" />
+                            <span>Available in: {cooldowns[game.id].formattedTime}</span>
+                          </div>
+                          <Button
+                            disabled
+                            className="w-full bg-gray-600 cursor-not-allowed"
+                            data-testid={`claim-reward-${game.id}`}
+                          >
+                            <Coins className="w-4 h-4 mr-2" />
+                            On Cooldown
+                          </Button>
+                        </div>
+                      ) : (
+                        <Button
+                          onClick={() => handleClaim(game.id, game.reward)}
+                          className="w-full bg-yellow-600 hover:bg-yellow-700"
+                          data-testid={`claim-reward-${game.id}`}
+                        >
+                          <Coins className="w-4 h-4 mr-2" />
+                          Claim {game.reward} Coins
+                        </Button>
+                      )}
                     </CollapsibleContent>
                   </Collapsible>
                 </div>
