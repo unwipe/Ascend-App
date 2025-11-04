@@ -283,9 +283,27 @@ const MainQuest = ({ mainQuest, onAddMainQuest, onEditMainQuest, onAbandonMainQu
         isOpen={showCompleteModal}
         onClose={() => setShowCompleteModal(false)}
         onConfirm={confirmComplete}
-        title="Complete Main Quest?"
-        description="Did you complete all objectives for this Main Quest? You'll earn 200 XP!"
-        confirmText="Complete Quest"
+        title="🏆 Complete Main Quest?"
+        description="Congratulations! Did you complete all objectives correctly? You'll earn +200 XP total! This is a big milestone - make sure you've earned it!"
+        confirmText="Yes, Quest Complete!"
+      />
+
+      <ConfirmModal
+        isOpen={showObjectiveModal}
+        onClose={() => {
+          setShowObjectiveModal(false);
+          setPendingObjectiveIndex(null);
+        }}
+        onConfirm={() => {
+          if (pendingObjectiveIndex !== null) {
+            onToggleObjective(pendingObjectiveIndex);
+          }
+          setShowObjectiveModal(false);
+          setPendingObjectiveIndex(null);
+        }}
+        title="⚠️ Complete Objective?"
+        description="Did you complete this objective correctly? You'll earn +25 XP. Make sure you've actually completed this before marking it done!"
+        confirmText="Yes, I Completed It"
       />
     </>
   );
