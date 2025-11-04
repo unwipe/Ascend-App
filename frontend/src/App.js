@@ -475,6 +475,22 @@ function App() {
     addCoins(coins);
   };
 
+  // Daily Check-In handler
+  const handleCheckIn = () => {
+    const now = new Date().toISOString();
+    setGameState(prev => ({
+      ...prev,
+      lastCheckIn: now
+    }));
+    addXP(10);
+    toast.success('Daily Check-In Complete! ✅', { description: '+10 XP earned!' });
+  };
+
+  // View Main Quest History handler
+  const handleViewHistory = () => {
+    setShowProfile(true);
+  };
+
   // Settings handlers
   const handleResetAll = () => {
     const initialState = getInitialGameState();
