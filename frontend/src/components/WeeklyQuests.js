@@ -123,10 +123,12 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, onAddWeekly, onIncrementWeek
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="1">1x/week</SelectItem>
                     <SelectItem value="2">2x/week</SelectItem>
                     <SelectItem value="3">3x/week</SelectItem>
                     <SelectItem value="4">4x/week</SelectItem>
                     <SelectItem value="5">5x/week</SelectItem>
+                    <SelectItem value="6">6x/week</SelectItem>
                     <SelectItem value="7">7x/week</SelectItem>
                   </SelectContent>
                 </Select>
