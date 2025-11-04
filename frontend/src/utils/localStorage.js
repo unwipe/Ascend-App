@@ -41,12 +41,14 @@ export const getInitialGameState = () => ({
   xp: 0,
   coins: 0,
   mainQuest: null,
+  mainQuestCooldown: null, // Timestamp when Main Quest cooldown ends (7 days after completion)
   dailyQuests: [], // Now includes: { text, xp, completed, completedAt, category }
   weeklyQuests: [], // Now includes: { text, target, current, xpPerIncrement, lastProgressAt, category }
   sideQuests: [], // Now includes: { text, xp, completed, completedAt, category }
   dailyStreak: 0,
   weeklyStreak: 0,
   lastLoginDate: new Date().toISOString(),
+  lastCheckIn: null, // Timestamp of last daily check-in
   isFirstTime: true,
   miniGameCooldowns: {},
   // New fields for Phase 1 & 2
