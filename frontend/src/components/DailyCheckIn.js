@@ -48,7 +48,7 @@ const DailyCheckIn = ({ lastCheckIn, onCheckIn }) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-lg border-2 border-blue-500/30 rounded-2xl p-6 shadow-xl"
+      className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-lg border-2 border-blue-500/30 rounded-2xl p-6 shadow-xl mb-8"
       data-testid="daily-check-in-card"
     >
       <div className="flex items-center justify-between">
