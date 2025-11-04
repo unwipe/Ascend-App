@@ -11,7 +11,7 @@ const storeItems = [
     icon: '🛡️',
     name: 'Streak Saver Token',
     description: 'Save a broken streak! Use this token to restore your daily or weekly streak when you miss a day.',
-    price: 50,
+    price: 30,
     available: true
   },
   {
@@ -19,7 +19,7 @@ const storeItems = [
     icon: '⚡',
     name: 'XP Multiplier',
     description: '2x XP for 24 hours! All quests give double experience points.',
-    price: 75,
+    price: 20,
     available: true
   },
   {
