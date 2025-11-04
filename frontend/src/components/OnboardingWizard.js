@@ -5,8 +5,7 @@ import { Dialog, DialogContent } from './ui/dialog';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-
-const avatarOptions = ['👦', '👧', '👨', '👩', '🧑', '👴', '👵', '👨‍💼', '👩‍💼', '👨‍🎓', '👩‍🎓', '🧑‍💻'];
+import { FREE_AVATARS } from '../utils/avatars';
 
 const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   const [step, setStep] = useState(0);
