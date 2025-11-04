@@ -48,5 +48,24 @@ export const getInitialGameState = () => ({
   weeklyStreak: 0,
   lastLoginDate: new Date().toISOString(),
   isFirstTime: true,
-  miniGameCooldowns: {}
+  miniGameCooldowns: {},
+  // New fields for Phase 1 & 2
+  username: 'Ascendant',
+  avatar: '😊',
+  unlockedAchievements: [],
+  inventory: [],
+  mainQuestHistory: [],
+  totalXPEarned: 0,
+  totalQuestsCompleted: 0,
+  totalCoinsEarned: 0,
+  totalCoinsSpent: 0,
+  totalPurchases: 0,
+  longestDailyStreak: 0,
+  longestWeeklyStreak: 0,
+  memberSince: new Date().toISOString(),
+  miniGamesPlayed: {},
+  mainQuestsCompleted: 0,
+  tutorialCompleted: false,
+  soundEnabled: true,
+  activeMultiplier: null
 });
