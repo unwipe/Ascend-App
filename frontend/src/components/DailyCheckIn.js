@@ -88,6 +88,9 @@ const DailyCheckIn = ({ lastCheckIn, onCheckIn }) => {
             <Calendar className="w-4 h-4" />
             <span>Last check-in: {new Date(lastCheckIn).toLocaleString()}</span>
           </div>
+          <div className="mt-2 text-xs text-gray-500">
+            (Resets at 00:01 AM)
+          </div>
         </div>
       )}
     </motion.div>
