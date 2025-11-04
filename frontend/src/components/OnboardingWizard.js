@@ -225,7 +225,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                   <Input
                     value={mainQuest}
                     onChange={(e) => setMainQuest(e.target.value)}
-                    placeholder="Launch My Business / Get Fit / Learn Spanish"
+                    placeholder="Get Healthy / Learn Spanish / Read More Books"
                     className="bg-white/10 border-white/20 text-white"
                     data-testid="main-quest-input"
                   />
