@@ -168,6 +168,10 @@ function App() {
       updatedState.dailyQuests = [data.firstDaily];
     }
 
+    if (data.firstWeekly) {
+      updatedState.weeklyQuests = [data.firstWeekly];
+    }
+
     setGameState(updatedState);
     setShowOnboarding(false);
     saveGameData(updatedState);
