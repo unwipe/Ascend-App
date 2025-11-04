@@ -54,6 +54,11 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, onResetAll, onToggleStr
             </DialogTitle>
           </DialogHeader>
 
+          {/* Version Info - At Top */}
+          <div className="text-center text-sm text-gray-400 border-b border-gray-700/50 pb-4">
+            {APP_NAME} {APP_VERSION}
+          </div>
+
           <div className="space-y-6 mt-4">
             {/* Daily Streak Mode */}
             <div className="bg-white/5 rounded-lg p-4">
