@@ -94,15 +94,6 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, onResetAll, onToggleStr
               </div>
             </div>
 
-            {/* General Info */}
-            <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-sm font-medium text-gray-400 mb-2">General</h3>
-              <div className="text-white">
-                <p className="text-sm">Ascend v1.0</p>
-                <p className="text-xs text-gray-500 mt-1">Gamified Productivity App</p>
-              </div>
-            </div>
-
             {/* Danger Zone */}
             <div className="bg-red-500/10 border-2 border-red-500/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-3">
