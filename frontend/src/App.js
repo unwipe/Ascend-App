@@ -115,12 +115,17 @@ function App() {
 
   // Add XP with animation, sound, and level up check
   const addXP = (amount) => {
-    // Apply multiplier if active
-    const multiplier = gameState.activeMultiplier ? 2 : 1;
+    // Apply multiplier if active (from effectsUtils)
+    const multiplier = getXPMultiplier();
     const finalAmount = amount * multiplier;
     
     setXpAnimation({ visible: true, amount: finalAmount });
     soundManager.play('xpGain');
+    
+    // Show multiplier notification if active
+    if (multiplier > 1) {
+      toast.success(`+${finalAmount} XP (${multiplier}x multiplier)  🔥`);
+    }
     
     setGameState(prev => {
       const newXP = prev.xp + finalAmount;
