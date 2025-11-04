@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 import { Dialog, DialogContent } from './ui/dialog';
-import { getLevelEmoji } from '../utils/gameLogic';
+import { getLevelEmoji, getRankTitle } from '../utils/gameLogic';
 
 const LevelUpModal = ({ isOpen, onClose, oldLevel, newLevel }) => {
   const [showConfetti, setShowConfetti] = useState(false);
