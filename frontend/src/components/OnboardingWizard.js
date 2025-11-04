@@ -441,8 +441,8 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
             </motion.div>
           )}
 
-          {/* Steps 6-9: Quick Info Screens */}
-          {step >= 6 && step <= 9 && (
+          {/* Steps 7-10: Quick Info Screens */}
+          {step >= 7 && step <= 10 && (
             <motion.div
               key={`step${step}`}
               initial={{ opacity: 0, x: 20 }}
@@ -451,13 +451,13 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
               className="py-6 text-center"
             >
               <div className="text-6xl mb-4">
-                {step === 6 ? '🎮' : step === 7 ? '🏪' : step === 8 ? '👤' : '🧙'}
+                {step === 7 ? '🎮' : step === 8 ? '🏪' : step === 9 ? '👤' : '🧙'}
               </div>
               <h2 className="text-3xl font-bold text-white mb-4">
-                {step === 6 ? 'Mini-Games' : step === 7 ? 'Reward Store' : step === 8 ? 'Profile & Achievements' : 'Ready to Ascend!'}
+                {step === 7 ? 'Mini-Games' : step === 8 ? 'Reward Store' : step === 9 ? 'Profile & Achievements' : 'Ready to Ascend!'}
               </h2>
               <div className="max-w-xl mx-auto text-gray-300">
-                {step === 6 && (
+                {step === 7 && (
                   <>
                     <p className="mb-4">Need a productivity boost? Try our Mini-Games! 🎮</p>
                     <p className="mb-4">Complete mini-games to earn coins. Each game has a 1-hour cooldown.</p>
