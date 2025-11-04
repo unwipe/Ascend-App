@@ -469,19 +469,19 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                     </div>
                   </>
                 )}
-                {step === 7 && (
+                {step === 8 && (
                   <>
                     <p className="mb-4">Spend your coins in the Reward Store!</p>
                     <p>Buy power-ups like XP Multipliers, Streak Saver Tokens, and cosmetics.</p>
                   </>
                 )}
-                {step === 8 && (
+                {step === 9 && (
                   <>
                     <p className="mb-4">Track your progress in your Profile!</p>
                     <p>View your Achievements, Inventory, Stats, and Main Quest History.</p>
                   </>
                 )}
-                {step === 9 && (
+                {step === 10 && (
                   <>
                     <p className="text-xl mb-4">You're all set, Ascendant! 🌟</p>
                     <p className="mb-4">Remember: Every quest you complete brings you closer to your goals.</p>
