@@ -110,27 +110,33 @@ user_problem_statement: |
 frontend:
   - task: "Sort Premium Avatars by Price"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/utils/avatars.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Reordered PAID_AVATARS array to be sorted by price (low to high). Order: Troll (5) → 10 10-coin avatars → 2 Levitating (15) → Ninja (25) → Mage (50)"
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Code review confirms PAID_AVATARS array is correctly sorted by price (5→10→15→25→50). Troll (5 coins) is first, Mage (50 coins) is last. Implementation matches requirements exactly."
 
   - task: "Move Version to Top of Settings"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/components/SettingsModal.js, /app/frontend/src/utils/constants.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Created constants.js with APP_VERSION. Moved version display to top of Settings modal, removed old 'General Info' section from middle."
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Code review confirms version display correctly positioned at top of Settings modal (line 58-60). Uses APP_VERSION constant, styled with centered text, gray color, and border separator. Daily Streak Mode section appears after version as expected."
 
 metadata:
   created_by: "main_agent"
