@@ -17,7 +17,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   const [dailyHabit, setDailyHabit] = useState('');
   const [dailyXP, setDailyXP] = useState('5');
 
-  const totalSteps = 10;
+  const totalSteps = 11;
 
   const handleNext = () => {
     if (step < totalSteps - 1) setStep(step + 1);
