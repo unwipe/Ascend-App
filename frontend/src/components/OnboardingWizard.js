@@ -244,7 +244,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                         newObjs[i] = e.target.value;
                         setObjectives(newObjs);
                       }}
-                      placeholder={i === 0 ? 'Build MVP' : i === 1 ? 'Get 10 customers' : 'Reach $1K revenue'}
+                      placeholder={i === 0 ? 'Exercise 3x per week' : i === 1 ? 'Eat healthy for 30 days' : 'Lose 5 pounds'}
                       className="bg-white/10 border-white/20 text-white mb-2"
                       data-testid={`objective-input-${i}`}
                     />
