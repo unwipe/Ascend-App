@@ -938,7 +938,7 @@ function App() {
         gameState={gameState}
         onUpdateProfile={handleUpdateProfile}
         onUseXPMultiplier={handleUseXPMultiplier}
-        onUseStreakSaver={handleUseStreakSaver}
+        onUseStreakFreeze={handleUseStreakFreeze}
       />
       
       <RewardStore
