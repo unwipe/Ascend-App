@@ -40,6 +40,9 @@ function App() {
 
   // Initialize game state
   useEffect(() => {
+    // Migrate old Streak Saver to Streak Freeze (Phase 2 - Prompt 10)
+    migrateStreakSaverToFreeze();
+    
     const savedData = loadGameData();
     if (savedData) {
       // Check if tutorial completed
