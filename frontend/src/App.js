@@ -25,6 +25,7 @@ import { checkAchievements } from './utils/achievements';
 import { soundManager } from './utils/soundEffects';
 import { getXPMultiplier, activateXPMultiplier, activateStreakFreeze, isStreakFreezeActive, useStreakFreeze, migrateStreakSaverToFreeze } from './utils/effectsUtils';
 import { updateQuestStreak, checkMilestoneRewards, getActiveStreaks } from './utils/streakSystem';
+import { redeemPromoCode } from './utils/promoCodes';
 import '@/App.css';
 
 function App() {
