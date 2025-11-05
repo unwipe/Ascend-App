@@ -83,5 +83,10 @@ export const getInitialGameState = () => ({
   dailyQuestCreation: {
     count: 0,
     lastResetDate: new Date().toISOString()
+  },
+  // Weekly Quest Creation Tracking (Phase 3 - Prompt 10)
+  weeklyQuestCreation: {
+    count: 0,
+    lastResetDate: new Date().toISOString()
   }
 });
