@@ -24,6 +24,7 @@ import { checkLevelUp, checkStreakStatus, getWeekStart } from './utils/gameLogic
 import { checkAchievements } from './utils/achievements';
 import { soundManager } from './utils/soundEffects';
 import { getXPMultiplier, activateXPMultiplier, activateStreakSaver, isStreakSaverActive, useStreakSaver } from './utils/effectsUtils';
+import { updateQuestStreak, checkMilestoneRewards, getActiveStreaks } from './utils/streakSystem';
 import '@/App.css';
 
 function App() {
