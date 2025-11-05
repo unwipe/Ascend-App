@@ -176,12 +176,14 @@ function App() {
       updatedState.mainQuest = data.mainQuest;
     }
 
-    if (data.firstDaily) {
-      updatedState.dailyQuests = [data.firstDaily];
+    // Handle multiple daily quests from onboarding
+    if (data.dailyQuests && data.dailyQuests.length > 0) {
+      updatedState.dailyQuests = data.dailyQuests;
     }
 
-    if (data.firstWeekly) {
-      updatedState.weeklyQuests = [data.firstWeekly];
+    // Handle multiple weekly quests from onboarding
+    if (data.weeklyQuests && data.weeklyQuests.length > 0) {
+      updatedState.weeklyQuests = data.weeklyQuests;
     }
 
     setGameState(updatedState);
