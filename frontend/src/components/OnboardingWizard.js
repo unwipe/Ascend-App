@@ -14,7 +14,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   const [mainQuest, setMainQuest] = useState('');
   const [objectives, setObjectives] = useState(['', '', '']);
   const [dailyHabit, setDailyHabit] = useState('');
-  const [dailyXP, setDailyXP] = useState('5');
+  const [dailyXP, setDailyXP] = useState('10');
   const [weeklyGoal, setWeeklyGoal] = useState('');
   const [weeklyTarget, setWeeklyTarget] = useState('3');
   const [weeklyXP, setWeeklyXP] = useState('10');
