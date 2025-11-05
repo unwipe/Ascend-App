@@ -871,6 +871,7 @@ function App() {
           
           <SideQuests
             sideQuests={gameState.sideQuests}
+            questStreaks={gameState.questStreaks}
             onAddSide={handleAddSide}
             onToggleSide={handleToggleSide}
             onDeleteSide={handleDeleteSide}
