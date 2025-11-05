@@ -275,6 +275,11 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                 <div className="text-6xl mb-4">🔥</div>
                 <h2 className="text-3xl font-bold text-white mb-2">Add Daily Habits</h2>
                 <p className="text-gray-300">Let's add your first daily habit</p>
+                <div className="mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 max-w-lg mx-auto">
+                  <p className="text-sm text-yellow-300">
+                    ⚠️ <span className="font-bold">Important:</span> Add all your daily habits now! You can only create 2 new daily quests per day after the tutorial.
+                  </p>
+                </div>
               </div>
 
               <div className="space-y-4 max-w-md mx-auto">
@@ -291,7 +296,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                     Choose XP value (based on difficulty):
                   </label>
                   <div className="grid grid-cols-3 gap-3">
-                    {['5', '10', '15'].map((xp) => (
+                    {['10', '15', '20'].map((xp) => (
                       <button
                         key={xp}
                         onClick={() => setDailyXP(xp)}
