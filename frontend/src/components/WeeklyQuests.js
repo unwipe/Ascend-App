@@ -8,7 +8,7 @@ import ConfirmModal from './ConfirmModal';
 import { getTimeUntilMidnight, getTimeUntilMonday, formatCountdown, canCompleteQuest } from '../utils/timerUtils';
 import { formatStreakDisplay } from '../utils/streakSystem';
 
-const WeeklyQuests = ({ weeklyQuests, weeklyStreak, questStreaks, onAddWeekly, onIncrementWeekly, onDeleteWeekly }) => {
+const WeeklyQuests = ({ weeklyQuests, weeklyStreak, questStreaks, weeklyQuestCreation, tutorialCompleted, onAddWeekly, onIncrementWeekly, onDeleteWeekly }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [newTarget, setNewTarget] = useState('3');
