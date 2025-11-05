@@ -613,9 +613,10 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
             </motion.div>
           )}
         </AnimatePresence>
+        </div>
 
-        {/* Navigation Buttons */}
-        <div className="flex justify-between items-center mt-8">
+        {/* Navigation Buttons - Fixed at Bottom */}
+        <div className="flex justify-between items-center mt-6 pt-4 border-t border-white/10 flex-shrink-0">
           <Button
             variant="ghost"
             onClick={handleBack}
