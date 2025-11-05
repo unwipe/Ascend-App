@@ -407,10 +407,45 @@ function App() {
 
   // Daily Quest handlers
   const handleAddDaily = (quest) => {
-    setGameState(prev => ({
-      ...prev,
-      dailyQuests: [...prev.dailyQuests, quest]
-    }));
+    setGameState(prev => {
+      // Check daily quest creation limit (only enforced after tutorial)
+      if (prev.tutorialCompleted) {
+        const today = new Date().toDateString();
+        const lastResetDate = prev.dailyQuestCreation?.lastResetDate 
+          ? new Date(prev.dailyQuestCreation.lastResetDate).toDateString() 
+          : null;
+        
+        let creationCount = prev.dailyQuestCreation?.count || 0;
+        
+        // Reset count if it's a new day
+        if (lastResetDate !== today) {
+          creationCount = 0;
+        }
+        
+        // Check if limit reached (2 per day)
+        if (creationCount >= 2) {
+          toast.error('Daily Quest creation limit reached (2/day). You can create more tomorrow!');
+          return prev; // Don't add the quest
+        }
+        
+        // Increment creation count
+        return {
+          ...prev,
+          dailyQuests: [...prev.dailyQuests, quest],
+          dailyQuestCreation: {
+            count: creationCount + 1,
+            lastResetDate: new Date().toISOString()
+          }
+        };
+      }
+      
+      // During tutorial, allow unlimited creation
+      return {
+        ...prev,
+        dailyQuests: [...prev.dailyQuests, quest]
+      };
+    });
+    
     toast.success('Daily Quest Added! 🔥');
   };
 
