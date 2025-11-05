@@ -66,7 +66,7 @@ const StatsCard = ({ level, xp, coins }) => {
               XP Progress
             </span>
             <span className="text-gray-300 font-medium" data-testid="xp-display">
-              {currentLevelXP} / {requiredXP} XP
+              {currentXP} / {xpNeededForNextLevel} XP
             </span>
           </div>
           <div className="relative">
