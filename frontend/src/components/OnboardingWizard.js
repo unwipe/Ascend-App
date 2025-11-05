@@ -316,18 +316,38 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
               <div className="text-center mb-8">
                 <div className="text-6xl mb-4">🔥</div>
                 <h2 className="text-3xl font-bold text-white mb-2">Add Daily Habits</h2>
-                <p className="text-gray-300">Let's add your first daily habit</p>
+                <p className="text-gray-300">Add all your daily habits now</p>
                 <div className="mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 max-w-lg mx-auto">
                   <p className="text-sm text-yellow-300">
-                    ⚠️ <span className="font-bold">Important:</span> Add all your daily habits now! You can only create 2 new daily quests per day after the tutorial.
+                    ⚠️ <span className="font-bold">Add ALL your daily habits now!</span> After the tutorial, you can only create 2 new daily quests per day.
                   </p>
                 </div>
               </div>
 
               <div className="space-y-4 max-w-md mx-auto">
+                {/* Added Daily Quests List */}
+                {dailyQuests.length > 0 && (
+                  <div className="bg-white/5 rounded-lg p-4 space-y-2">
+                    <h3 className="text-sm font-bold text-white mb-2">Your Daily Quests ({dailyQuests.length}):</h3>
+                    {dailyQuests.map((quest, index) => (
+                      <div key={index} className="flex items-center justify-between bg-white/10 rounded p-2">
+                        <span className="text-white text-sm">{quest.text} (+{quest.xp} XP)</span>
+                        <button
+                          onClick={() => handleRemoveDailyQuest(index)}
+                          className="text-red-400 hover:text-red-300 text-xs"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Add New Daily Quest Form */}
                 <Input
-                  value={dailyHabit}
-                  onChange={(e) => setDailyHabit(e.target.value)}
+                  value={currentDailyHabit}
+                  onChange={(e) => setCurrentDailyHabit(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleAddDailyQuest()}
                   placeholder="Meditate 10 min / Read 20 pages / Exercise 30 min"
                   className="bg-white/10 border-white/20 text-white"
                   data-testid="daily-habit-input"
@@ -341,9 +361,9 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                     {['10', '15', '20'].map((xp) => (
                       <button
                         key={xp}
-                        onClick={() => setDailyXP(xp)}
+                        onClick={() => setCurrentDailyXP(xp)}
                         className={`py-3 rounded-lg font-bold transition-all ${
-                          dailyXP === xp
+                          currentDailyXP === xp
                             ? 'bg-blue-600 text-white'
                             : 'bg-white/10 text-gray-300 hover:bg-white/20'
                         }`}
@@ -354,6 +374,16 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                     ))}
                   </div>
                 </div>
+
+                {/* Add Quest Button */}
+                <button
+                  onClick={handleAddDailyQuest}
+                  disabled={!currentDailyHabit.trim()}
+                  className="w-full py-3 bg-orange-600 hover:bg-orange-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-all flex items-center justify-center gap-2"
+                >
+                  <Plus className="w-5 h-5" />
+                  Add Daily Quest
+                </button>
 
                 <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                   <p className="text-sm text-blue-300">
