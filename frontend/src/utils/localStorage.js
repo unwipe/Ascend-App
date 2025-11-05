@@ -75,7 +75,7 @@ export const getInitialGameState = () => ({
   settings: {
     individualDailyStreaks: false, // false = global streak, true = individual streaks per quest
   },
-  // Active Effects (XP Multiplier, Streak Saver, etc.)
+  // Active Effects (XP Multiplier, Streak Freeze, etc.)
   activeEffects: {},
   // Individual Quest Streaks (Phase 1 - Prompt 10)
   questStreaks: {} // { questId: { questId, questText, streak, lastCompleted, milestones, totalCompletions } }
