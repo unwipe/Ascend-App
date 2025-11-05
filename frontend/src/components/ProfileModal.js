@@ -238,17 +238,22 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                         {STREAK_MILESTONES.map(milestone => {
                           const reward = {
                             3: { xp: 20, coins: 5 },
-                            7: { xp: 50, coins: 10 },
-                            14: { xp: 100, coins: 25 },
-                            30: { xp: 200, coins: 50 },
-                            60: { xp: 500, coins: 100 },
-                            100: { xp: 1000, coins: 250 }
+                            7: { xp: 50, coins: 5 },
+                            14: { xp: 100, coins: 5 },
+                            30: { xp: 200, coins: 5 },
+                            60: { xp: 500, coins: 5 },
+                            100: { xp: 1000, coins: 5, special: 'Phoenix 🦅' }
                           }[milestone];
                           
                           return (
                             <div key={milestone} className="bg-white/5 rounded p-2">
                               <div className="text-orange-400 font-bold">{milestone} days</div>
-                              <div className="text-gray-400 text-xs">+{reward.xp} XP, +{reward.coins} coins</div>
+                              <div className="text-gray-400 text-xs">
+                                +{reward.xp} XP, +{reward.coins} coins
+                                {reward.special && (
+                                  <div className="text-yellow-400 font-bold mt-1">+ {reward.special}</div>
+                                )}
+                              </div>
                             </div>
                           );
                         })}
