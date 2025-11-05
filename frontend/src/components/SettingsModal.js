@@ -119,6 +119,47 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, onResetAll, onToggleStr
               </div>
             </div>
 
+            {/* Promo Codes Section */}
+            <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <Gift className="w-5 h-5 text-purple-400" />
+                <h3 className="text-sm font-medium text-white">Promo Codes</h3>
+              </div>
+              <p className="text-sm text-gray-300 mb-3">
+                Have a promo code? Enter it below to redeem rewards!
+              </p>
+              
+              <div className="space-y-3">
+                <Input
+                  type="text"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  onKeyPress={handlePromoKeyPress}
+                  placeholder="Enter promo code..."
+                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-500"
+                  data-testid="promo-code-input"
+                />
+                
+                <Button
+                  onClick={handleRedeemPromo}
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                  data-testid="redeem-promo-btn"
+                >
+                  Redeem
+                </Button>
+                
+                {promoMessage.text && (
+                  <div className={`text-sm p-2 rounded ${
+                    promoMessage.type === 'success' 
+                      ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
+                      : 'bg-red-500/20 text-red-300 border border-red-500/30'
+                  }`}>
+                    {promoMessage.text}
+                  </div>
+                )}
+              </div>
+            </div>
+
             {/* Danger Zone */}
             <div className="bg-red-500/10 border-2 border-red-500/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-3">
