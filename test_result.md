@@ -21,23 +21,17 @@ user_problem_statement: |
   5. Visual progress bars for milestone tracking
 
 frontend:
-  - task: "Coin Sound Fix"
+  - task: "Individual Quest Streak System"
     implemented: true
-    working: true
-    file: "/app/frontend/src/utils/soundEffects.js"
+    working: "NA"
+    file: "/app/frontend/src/utils/streakSystem.js, /app/frontend/src/App.js"
     stuck_count: 0
-    priority: "high"
-    needs_retesting: false
+    priority: "critical"
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Reduced coin sound volume from 0.3 to 0.2. Set playbackRate to 1.3 to make sound 30% faster/shorter."
-      - working: false
-        agent: "testing"
-        comment: "CRITICAL ISSUE: Onboarding modal blocks all app interactions. Cannot test sound effects or any other features due to persistent modal overlay that prevents clicking buttons or accessing functionality."
-      - working: true
-        agent: "testing"
-        comment: "✅ WORKING: Sound effects are functional. Coin collection sounds play when claiming mini-game rewards. Modal blocking issue resolved, allowing proper testing of sound functionality."
+        comment: "Created streakSystem.js utility. Added individual quest streak tracking for Daily, Weekly, and Side Quests. Milestone rewards (3,7,14,30,60,100 days) award XP and Coins automatically. Each quest now has unique ID for tracking."
 
   - task: "Mini-Game Cooldown Timers"
     implemented: true
