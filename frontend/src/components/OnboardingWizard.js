@@ -442,7 +442,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                   value={currentWeeklyGoal}
                   onChange={(e) => setCurrentWeeklyGoal(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleAddWeeklyQuest()}
-                  placeholder="Go to gym / Call family / Study coding"
+                  placeholder="Go to gym / Clean Apartment / Study coding"
                   className="bg-white/10 border-white/20 text-white"
                   data-testid="weekly-goal-input"
                 />
