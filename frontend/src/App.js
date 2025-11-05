@@ -23,7 +23,7 @@ import { loadGameData, saveGameData, getInitialGameState } from './utils/localSt
 import { checkLevelUp, checkStreakStatus, getWeekStart } from './utils/gameLogic';
 import { checkAchievements } from './utils/achievements';
 import { soundManager } from './utils/soundEffects';
-import { getXPMultiplier, activateXPMultiplier, activateStreakSaver, isStreakSaverActive, useStreakSaver } from './utils/effectsUtils';
+import { getXPMultiplier, activateXPMultiplier, activateStreakFreeze, isStreakFreezeActive, useStreakFreeze, migrateStreakSaverToFreeze } from './utils/effectsUtils';
 import { updateQuestStreak, checkMilestoneRewards, getActiveStreaks } from './utils/streakSystem';
 import '@/App.css';
 
