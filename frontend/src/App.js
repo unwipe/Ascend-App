@@ -20,7 +20,7 @@ import StreakBrokenModal from './components/StreakBrokenModal';
 import DailyCheckIn from './components/DailyCheckIn';
 import ActiveEffects from './components/ActiveEffects';
 import { loadGameData, saveGameData, getInitialGameState } from './utils/localStorage';
-import { checkLevelUp, checkStreakStatus, getWeekStart } from './utils/gameLogic';
+import { checkLevelUp, checkStreakStatus, getWeekStart, calculateLevel } from './utils/gameLogic';
 import { checkAchievements } from './utils/achievements';
 import { soundManager } from './utils/soundEffects';
 import { getXPMultiplier, activateXPMultiplier, activateStreakFreeze, isStreakFreezeActive, useStreakFreeze, migrateStreakSaverToFreeze } from './utils/effectsUtils';
