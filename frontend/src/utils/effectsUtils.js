@@ -64,7 +64,7 @@ export const formatTimeRemaining = (milliseconds) => {
  */
 export const activateXPMultiplier = () => {
   const now = new Date();
-  const expiresAt = new Date(now.getTime() + 60 * 60 * 1000); // 1 hour
+  const expiresAt = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2 HOURS (not 1)
 
   const activeEffects = JSON.parse(localStorage.getItem('activeEffects') || '{}');
   activeEffects.xpMultiplier = {
