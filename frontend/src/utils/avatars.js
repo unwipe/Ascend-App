@@ -38,12 +38,21 @@ export const PAID_AVATARS = [
   { id: 'mage', emoji: '🧙‍♂️', name: 'Mage', price: 50, category: 'Mage', locked: true },
 ];
 
-// Special Unlockable Avatars (cannot be purchased, only earned)
-export const SPECIAL_AVATARS = [
-  { id: 'phoenix', emoji: '🦅', name: 'Phoenix', unlockMethod: '100-day streak', category: 'Special', locked: true, special: true },
+// Mythical Avatars (cannot be purchased, only earned through achievements)
+export const MYTHICAL_AVATARS = [
+  { 
+    id: 'phoenix', 
+    emoji: '🐦‍🔥', 
+    name: 'Phoenix', 
+    unlockMethod: 'achievement',
+    requirement: '100-day streak on any quest',
+    category: 'mythical', 
+    locked: true, 
+    mythical: true 
+  },
 ];
 
-export const ALL_AVATARS = [...FREE_AVATARS, ...PAID_AVATARS, ...SPECIAL_AVATARS];
+export const ALL_AVATARS = [...FREE_AVATARS, ...PAID_AVATARS, ...MYTHICAL_AVATARS];
 
 // Helper function to get avatar by ID
 export const getAvatarById = (id) => {
