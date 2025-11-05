@@ -78,5 +78,10 @@ export const getInitialGameState = () => ({
   // Active Effects (XP Multiplier, Streak Freeze, etc.)
   activeEffects: {},
   // Individual Quest Streaks (Phase 1 - Prompt 10)
-  questStreaks: {} // { questId: { questId, questText, streak, lastCompleted, milestones, totalCompletions } }
+  questStreaks: {}, // { questId: { questId, questText, streak, lastCompleted, milestones, totalCompletions } }
+  // Daily Quest Creation Tracking (Phase 3 - Prompt 10)
+  dailyQuestCreation: {
+    count: 0,
+    lastResetDate: new Date().toISOString()
+  }
 });
