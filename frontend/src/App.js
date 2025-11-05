@@ -478,6 +478,14 @@ function App() {
       const totalMilestoneXP = milestoneRewards.reduce((sum, r) => sum + r.xp, 0);
       const totalMilestoneCoins = milestoneRewards.reduce((sum, r) => sum + r.coins, 0);
       
+      // Check if Phoenix Avatar should be unlocked (100-day milestone)
+      const shouldUnlockPhoenix = milestoneRewards.some(r => r.unlockPhoenix);
+      let updatedUnlockedAvatars = prev.unlockedAvatars || [];
+      
+      if (shouldUnlockPhoenix && !updatedUnlockedAvatars.includes('phoenix')) {
+        updatedUnlockedAvatars = [...updatedUnlockedAvatars, 'phoenix'];
+      }
+      
       return {
         ...prev,
         dailyQuests: updatedQuests,
@@ -487,7 +495,8 @@ function App() {
         xp: prev.xp + totalMilestoneXP,
         coins: prev.coins + totalMilestoneCoins,
         totalXPEarned: prev.totalXPEarned + totalMilestoneXP,
-        totalCoinsEarned: prev.totalCoinsEarned + totalMilestoneCoins
+        totalCoinsEarned: prev.totalCoinsEarned + totalMilestoneCoins,
+        unlockedAvatars: updatedUnlockedAvatars
       };
     });
     
