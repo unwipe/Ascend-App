@@ -45,23 +45,17 @@ frontend:
         agent: "main"
         comment: "Updated all quest components to display individual streak badges. Format: '🔥 X days' with dynamic emoji based on streak count. Badge appears next to quest name in colored pill."
 
-  - task: "XP Multiplier Functionality"
+  - task: "Profile Modal - Streaks Tab"
     implemented: true
-    working: true
-    file: "/app/frontend/src/App.js, /app/frontend/src/utils/effectsUtils.js"
+    working: "NA"
+    file: "/app/frontend/src/components/ProfileModal.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Updated addXP() to use getXPMultiplier(). Added handleUseXPMultiplier() to activate multiplier. XP gains are doubled during active period with toast notification."
-      - working: false
-        agent: "testing"
-        comment: "CRITICAL ISSUE: Cannot test XP Multiplier purchase/usage flow. Store modal and Profile modal cannot be accessed due to persistent onboarding modal blocking all UI interactions."
-      - working: true
-        agent: "testing"
-        comment: "✅ WORKING: Full XP Multiplier flow tested successfully. Purchase from Store (20 coins) → Use from Profile Inventory → Appears in Active Effects as '🔥 XP Multiplier (2x)' with countdown timer '59m 57s remaining'. Toast notification shows 'XP Multiplier activated! 🔥 2x XP for 1 hour!'. Timer updates every second correctly."
+        comment: "Added new '🔥 Streaks' tab to Profile Modal. Displays all active streaks sorted by count, with quest name, streak count, total completions, progress to next milestone, and completed milestone badges. Includes milestone rewards info table."
 
   - task: "Streak Saver Functionality"
     implemented: true
