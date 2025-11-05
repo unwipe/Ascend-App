@@ -12,7 +12,7 @@ const storeItems = [
     icon: '❄️',
     name: 'Streak Freeze',
     description: 'Freeze your streak! When your streak would break, you have 24 hours to complete your quests and maintain it.',
-    price: 30,
+    price: 20,
     available: true,
     type: 'item'
   },
@@ -21,7 +21,7 @@ const storeItems = [
     icon: '⚡',
     name: 'XP Multiplier',
     description: '2x XP for 2 Hours! All quests give double experience points.',
-    price: 50,
+    price: 15,
     available: true,
     type: 'item'
   },
