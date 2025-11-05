@@ -146,7 +146,120 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
               </div>
             </TabsContent>
 
-            {/* Tab 2: Achievements */}
+            {/* Tab 2: Individual Quest Streaks */}
+            <TabsContent value="streaks" className="space-y-6">
+              <div className="bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-xl p-6 border border-orange-500/30">
+                <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+                  🔥 Your Active Streaks
+                </h3>
+                <p className="text-gray-400 text-sm mb-4">Complete quests consistently to earn milestone rewards!</p>
+
+                {!gameState.questStreaks || Object.keys(gameState.questStreaks).length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="text-6xl mb-4">🎯</div>
+                    <p className="text-gray-400 text-lg">No streaks yet!</p>
+                    <p className="text-gray-500 text-sm mt-2">Complete quests daily to start building your streaks.</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="space-y-3 mb-6">
+                      {getActiveStreaks(gameState.questStreaks).map((streakData, index) => {
+                        const progress = getMilestoneProgress(streakData.streak);
+                        const progressPercent = ((streakData.streak - progress.previous) / (progress.next - progress.previous)) * 100;
+
+                        return (
+                          <motion.div
+                            key={streakData.questId}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.05 }}
+                            className="bg-white/10 rounded-lg p-4"
+                          >
+                            <div className="flex items-center justify-between mb-2">
+                              <div className="flex-1">
+                                <h4 className="text-white font-bold">{streakData.questText}</h4>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <span className="text-2xl">
+                                    {streakData.streak >= 100 ? '🏆' :
+                                     streakData.streak >= 60 ? '💎' :
+                                     streakData.streak >= 30 ? '⚡' :
+                                     streakData.streak >= 14 ? '🔥' :
+                                     streakData.streak >= 7 ? '💪' : '🔥'}
+                                  </span>
+                                  <span className="text-xl font-bold text-orange-400">
+                                    {streakData.streak} {streakData.streak === 1 ? 'day' : 'days'}
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-sm text-gray-400">Total Completions</div>
+                                <div className="text-lg font-bold text-white">{streakData.totalCompletions}</div>
+                              </div>
+                            </div>
+
+                            {/* Progress to next milestone */}
+                            {progress.next && (
+                              <div className="mt-3">
+                                <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
+                                  <span>Next Milestone: {progress.next} days</span>
+                                  <span>{streakData.streak}/{progress.next}</span>
+                                </div>
+                                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                                  <motion.div
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${progressPercent}%` }}
+                                    className="h-full bg-gradient-to-r from-orange-500 to-red-500"
+                                  />
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Completed milestones */}
+                            {progress.completed.length > 0 && (
+                              <div className="mt-3 flex flex-wrap gap-2">
+                                {progress.completed.map(milestone => (
+                                  <span key={milestone} className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full">
+                                    ✓ {milestone} days
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Milestone Rewards Info */}
+                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                      <h4 className="text-white font-bold mb-3 flex items-center gap-2">
+                        🎁 Milestone Rewards
+                      </h4>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+                        {STREAK_MILESTONES.map(milestone => {
+                          const reward = {
+                            3: { xp: 20, coins: 5 },
+                            7: { xp: 50, coins: 10 },
+                            14: { xp: 100, coins: 25 },
+                            30: { xp: 200, coins: 50 },
+                            60: { xp: 500, coins: 100 },
+                            100: { xp: 1000, coins: 250 }
+                          }[milestone];
+                          
+                          return (
+                            <div key={milestone} className="bg-white/5 rounded p-2">
+                              <div className="text-orange-400 font-bold">{milestone} days</div>
+                              <div className="text-gray-400 text-xs">+{reward.xp} XP, +{reward.coins} coins</div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </TabsContent>
+
+            {/* Tab 3: Achievements */}
             <TabsContent value="achievements">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {achievements.map(achievement => {
