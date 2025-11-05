@@ -409,58 +409,97 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
             >
               <div className="text-center mb-8">
                 <div className="text-6xl mb-4">⚡</div>
-                <h2 className="text-3xl font-bold text-white mb-2">Set Up a Weekly Quest</h2>
-                <p className="text-gray-300">Goals you want to hit multiple times per week</p>
+                <h2 className="text-3xl font-bold text-white mb-2">Set Up Weekly Quests</h2>
+                <p className="text-gray-300">Add all your weekly goals now</p>
+                <div className="mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 max-w-lg mx-auto">
+                  <p className="text-sm text-yellow-300">
+                    ⚠️ <span className="font-bold">Add ALL your weekly goals now!</span> After the tutorial, you can only create 1 new weekly quest per day.
+                  </p>
+                </div>
               </div>
 
               <div className="space-y-4 max-w-md mx-auto">
+                {/* Added Weekly Quests List */}
+                {weeklyQuests.length > 0 && (
+                  <div className="bg-white/5 rounded-lg p-4 space-y-2">
+                    <h3 className="text-sm font-bold text-white mb-2">Your Weekly Quests ({weeklyQuests.length}):</h3>
+                    {weeklyQuests.map((quest, index) => (
+                      <div key={index} className="flex items-center justify-between bg-white/10 rounded p-2">
+                        <span className="text-white text-sm">{quest.text} ({quest.target}x/week, +{quest.xpPerIncrement} XP)</span>
+                        <button
+                          onClick={() => handleRemoveWeeklyQuest(index)}
+                          className="text-red-400 hover:text-red-300 text-xs"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Add New Weekly Quest Form */}
                 <Input
-                  value={weeklyGoal}
-                  onChange={(e) => setWeeklyGoal(e.target.value)}
+                  value={currentWeeklyGoal}
+                  onChange={(e) => setCurrentWeeklyGoal(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleAddWeeklyQuest()}
                   placeholder="Go to gym / Call family / Study coding"
                   className="bg-white/10 border-white/20 text-white"
                   data-testid="weekly-goal-input"
                 />
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="text-sm text-gray-300 mb-2 block">Times per week:</label>
-                    <div className="grid grid-cols-4 gap-2">
-                      {['1', '2', '3', '4', '5', '6', '7'].map((num) => (
-                        <button
-                          key={num}
-                          onClick={() => setWeeklyTarget(num)}
-                          className={`py-2 rounded-lg font-bold transition-all text-xs ${
-                            weeklyTarget === num
-                              ? 'bg-purple-600 text-white'
-                              : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                          }`}
-                        >
-                          {num}x
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label className="text-sm text-gray-300 mb-2 block">XP per completion:</label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {['5', '10', '15'].map((xp) => (
-                        <button
-                          key={xp}
-                          onClick={() => setWeeklyXP(xp)}
-                          className={`py-2 rounded-lg font-bold transition-all ${
-                            weeklyXP === xp
-                              ? 'bg-purple-600 text-white'
-                              : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                          }`}
-                        >
-                          {xp}
-                        </button>
-                      ))}
-                    </div>
+                <div>
+                  <label className="text-sm text-gray-300 mb-2 block">
+                    How many times per week?
+                  </label>
+                  <div className="grid grid-cols-4 gap-3">
+                    {['1', '2', '3', '4', '5', '6', '7'].map((target) => (
+                      <button
+                        key={target}
+                        onClick={() => setCurrentWeeklyTarget(target)}
+                        className={`py-3 rounded-lg font-bold transition-all ${
+                          currentWeeklyTarget === target
+                            ? 'bg-purple-600 text-white'
+                            : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                        }`}
+                        data-testid={`target-${target}`}
+                      >
+                        {target}x
+                      </button>
+                    ))}
                   </div>
                 </div>
+
+                <div>
+                  <label className="text-sm text-gray-300 mb-2 block">
+                    Choose XP per completion:
+                  </label>
+                  <div className="grid grid-cols-3 gap-3">
+                    {['5', '10', '15'].map((xp) => (
+                      <button
+                        key={xp}
+                        onClick={() => setCurrentWeeklyXP(xp)}
+                        className={`py-3 rounded-lg font-bold transition-all ${
+                          currentWeeklyXP === xp
+                            ? 'bg-purple-600 text-white'
+                            : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                        }`}
+                        data-testid={`weekly-xp-${xp}`}
+                      >
+                        {xp} XP
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Add Quest Button */}
+                <button
+                  onClick={handleAddWeeklyQuest}
+                  disabled={!currentWeeklyGoal.trim()}
+                  className="w-full py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-all flex items-center justify-center gap-2"
+                >
+                  <Plus className="w-5 h-5" />
+                  Add Weekly Quest
+                </button>
 
                 <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                   <p className="text-sm text-blue-300">
