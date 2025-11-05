@@ -863,6 +863,7 @@ function App() {
           <WeeklyQuests
             weeklyQuests={gameState.weeklyQuests}
             weeklyStreak={gameState.weeklyStreak}
+            questStreaks={gameState.questStreaks}
             onAddWeekly={handleAddWeekly}
             onIncrementWeekly={handleIncrementWeekly}
             onDeleteWeekly={handleDeleteWeekly}
