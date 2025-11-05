@@ -9,7 +9,7 @@ import ConfirmModal from './ConfirmModal';
 import { getTimeUntilMidnight, formatCountdown, canCompleteQuest, canUndoQuest, getUndoTimeRemaining } from '../utils/timerUtils';
 import { formatStreakDisplay } from '../utils/streakSystem';
 
-const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, onAddDaily, onToggleDaily, onDeleteDaily, onUndoDaily }) => {
+const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, dailyQuestCreationLimit, canCreateDailyQuest, onAddDaily, onToggleDaily, onDeleteDaily, onUndoDaily }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [newXP, setNewXP] = useState('5');
