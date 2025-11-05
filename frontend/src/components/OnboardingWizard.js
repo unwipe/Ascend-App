@@ -471,7 +471,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                 {step === 8 && (
                   <>
                     <p className="mb-4">Spend your coins in the Reward Store!</p>
-                    <p>Buy power-ups like XP Multipliers, Streak Saver Tokens, and cosmetics.</p>
+                    <p>Buy power-ups like XP Multipliers, Streak Freeze, and cosmetics.</p>
                   </>
                 )}
                 {step === 9 && (
