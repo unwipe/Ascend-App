@@ -57,23 +57,17 @@ frontend:
         agent: "main"
         comment: "Added new '🔥 Streaks' tab to Profile Modal. Displays all active streaks sorted by count, with quest name, streak count, total completions, progress to next milestone, and completed milestone badges. Includes milestone rewards info table."
 
-  - task: "Streak Saver Functionality"
+  - task: "Milestone Rewards System"
     implemented: true
     working: "NA"
-    file: "/app/frontend/src/App.js, /app/frontend/src/utils/effectsUtils.js"
+    file: "/app/frontend/src/utils/streakSystem.js, /app/frontend/src/App.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Added handleUseStreakSaver() to activate streak protection. Created utility functions for checking and using streak saver."
-      - working: false
-        agent: "testing"
-        comment: "CRITICAL ISSUE: Cannot test Streak Saver functionality. Purchase and usage flow blocked by onboarding modal that prevents access to Store and Profile modals."
-      - working: "NA"
-        agent: "testing"
-        comment: "⚠️ PARTIALLY TESTED: Streak Saver purchase flow accessible but requires 30 coins (only had 20 from mini-games). Store shows correct price, purchase button properly disabled when insufficient funds. Implementation appears correct but full flow not testable due to coin limitation. Would need more coins to complete full test."
+        comment: "Implemented automatic milestone rewards. When quest reaches 3,7,14,30,60,100 day streaks, automatically awards XP and Coins. Toast notification shows milestone achievement. Rewards: 3d(20xp/5c), 7d(50xp/10c), 14d(100xp/25c), 30d(200xp/50c), 60d(500xp/100c), 100d(1000xp/250c)."
 
   - task: "Active Effects Component"
     implemented: true
