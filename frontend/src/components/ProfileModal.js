@@ -250,7 +250,7 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                             14: { xp: 100, coins: 5 },
                             30: { xp: 200, coins: 5 },
                             60: { xp: 500, coins: 5 },
-                            100: { xp: 1000, coins: 5, special: 'Phoenix 🦅' }
+                            100: { xp: 1000, coins: 5, special: 'Phoenix Character 🐦‍🔥' }
                           }[milestone];
                           
                           return (
