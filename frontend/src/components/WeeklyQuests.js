@@ -84,6 +84,18 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, questStreaks, weeklyQuestCre
                   {weeklyStreak}-week streak
                 </span>
               </div>
+              {tutorialCompleted && weeklyQuestCreation && (
+                <div className="text-xs text-gray-400 mt-1">
+                  {(() => {
+                    const today = new Date().toDateString();
+                    const lastResetDate = weeklyQuestCreation.lastResetDate 
+                      ? new Date(weeklyQuestCreation.lastResetDate).toDateString() 
+                      : null;
+                    const count = lastResetDate === today ? weeklyQuestCreation.count : 0;
+                    return `Created today: ${count}/1`;
+                  })()}
+                </div>
+              )}
             </div>
           </div>
           <Button
