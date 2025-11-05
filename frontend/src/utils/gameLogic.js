@@ -3,32 +3,26 @@
 // Export from levelSystem.js for consistency
 export { getLevelEmoji, getRankTitle, getXPForLevel, calculateLevel, getXPProgress } from './levelSystem';
 
-// Calculate required XP for next level (uses new exponential system)
+// Calculate required XP for next level (x1.5 exponential system)
 export const getRequiredXP = (level) => {
   const { getXPForLevel } = require('./levelSystem');
-  return getXPForLevel(level + 1) - getXPForLevel(level);
+  const currentLevelXP = getXPForLevel(level);
+  const nextLevelXP = getXPForLevel(level + 1);
+  return nextLevelXP - currentLevelXP;
 };
 
-// Check if user should level up (updated for new exponential system)
-export const checkLevelUp = (xp, currentLevel) => {
-  const { getXPForLevel } = require('./levelSystem');
-  const xpForNextLevel = getXPForLevel(currentLevel + 1);
+// Check if user should level up based on current XP
+export const checkLevelUp = (currentXP, currentLevel) => {
+  const { getXPForLevel, calculateLevel } = require('./levelSystem');
   
-  if (xp >= xpForNextLevel) {
-    // Calculate how many levels to jump (in case of large XP gains)
-    let newLevel = currentLevel + 1;
-    let xpNeeded = getXPForLevel(newLevel + 1);
-    
-    while (xp >= xpNeeded) {
-      newLevel++;
-      xpNeeded = getXPForLevel(newLevel + 1);
-    }
-    
+  // Calculate what level the user should be at based on their XP
+  const actualLevel = calculateLevel(currentXP);
+  
+  if (actualLevel > currentLevel) {
     return {
       shouldLevelUp: true,
-      newLevel: newLevel,
-      remainingXP: xp,
-      levelsGained: newLevel - currentLevel
+      newLevel: actualLevel,
+      levelsGained: actualLevel - currentLevel
     };
   }
   
