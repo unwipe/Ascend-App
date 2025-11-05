@@ -1,29 +1,29 @@
-// Level System with Emojis and Rank Titles
+// Level System with Emojis and Rank Titles (x1.5 Exponential Curve)
 
 export const levelEmojis = {
-  1: '🌱', 2: '🔥', 3: '⚡', 4: '💎', 5: '🏆',
-  6: '👑', 7: '🦁', 8: '🐉', 9: '🚀', 10: '⭐',
-  11: '🌟', 12: '💫', 13: '🔮', 14: '🦅', 15: '🌊',
-  16: '🌋', 17: '❄️', 18: '🦄', 19: '🛡️', 20: '⚔️',
-  21: '🌙', 22: '🌕', 23: '☀️', 24: '🪐', 25: '🌍',
-  26: '🌈', 27: '🎆', 28: '💥', 29: '🌠', 30: '🌌',
-  31: '🔱', 32: '🎖️', 33: '🏅', 34: '🦚', 35: '🎇',
-  36: '✨', 37: '💠', 38: '🔆', 39: '⚛️', 40: '🧬',
-  41: '🌐', 42: '🗺️', 43: '🎭', 44: '🎪', 45: '🎨',
-  46: '🦖', 47: '🐺', 48: '🦋', 49: '♾️', 50: '👑'
+  1: '🌱', 2: '🌿', 3: '🍀', 4: '🌾', 5: '🌳',
+  6: '🔥', 7: '🌟', 8: '⚡', 9: '💫', 10: '🔮',
+  11: '🗡️', 12: '⚔️', 13: '💎', 14: '🛡️', 15: '🎯',
+  16: '🏹', 17: '🌊', 18: '🌪️', 19: '🔱', 20: '🦁',
+  21: '🐺', 22: '🦅', 23: '🐉', 24: '🦂', 25: '🐅',
+  26: '⚡', 27: '🌋', 28: '❄️', 29: '🌙', 30: '☀️',
+  31: '🐉', 32: '👑', 33: '🔥', 34: '💠', 35: '🌌',
+  36: '⭐', 37: '🌠', 38: '🪐', 39: '🌀', 40: '🔆',
+  41: '⚡', 42: '🌋', 43: '🗿', 44: '🦾', 45: '🔱',
+  46: '🐦‍🔥', 47: '👁️', 48: '🌟', 49: '💫', 50: '🌌'
 };
 
 export const rankTitles = {
-  1: 'Novice', 2: 'Initiate', 3: 'Apprentice', 4: 'Adept', 5: 'Journeyman',
-  6: 'Skilled', 7: 'Expert', 8: 'Elite', 9: 'Master', 10: 'Champion',
-  11: 'Hero', 12: 'Warrior', 13: 'Guardian', 14: 'Sentinel', 15: 'Protector',
-  16: 'Defender', 17: 'Vanguard', 18: 'Paragon', 19: 'Exemplar', 20: 'Legend',
-  21: 'Mythic', 22: 'Fabled', 23: 'Renowned', 24: 'Illustrious', 25: 'Exalted',
-  26: 'Transcendent', 27: 'Ascendant', 28: 'Immortal', 29: 'Eternal', 30: 'Divine',
-  31: 'Celestial', 32: 'Cosmic', 33: 'Universal', 34: 'Infinite', 35: 'Omnipotent',
-  36: 'Supreme', 37: 'Ultimate', 38: 'Absolute', 39: 'Boundless', 40: 'Limitless',
-  41: 'Sovereign', 42: 'Emperor', 43: 'Overlord', 44: 'Titan', 45: 'Colossus',
-  46: 'Behemoth', 47: 'Leviathan', 48: 'Phoenix', 49: 'Apex', 50: 'Zenith'
+  1: 'Seedling', 2: 'Sprout', 3: 'Wanderer', 4: 'Pathfinder', 5: 'Trailblazer',
+  6: 'Ignited', 7: 'Radiant', 8: 'Charged', 9: 'Stellar', 10: 'Mystic',
+  11: 'Duelist', 12: 'Gladiator', 13: 'Crystalline', 14: 'Defender', 15: 'Sharpshooter',
+  16: 'Huntmaster', 17: 'Tidebreaker', 18: 'Stormcaller', 19: 'Waveborn', 20: 'Lionheart',
+  21: 'Wolfpack', 22: 'Skyward', 23: 'Dragonkin', 24: 'Venomstrike', 25: 'Tigerclaw',
+  26: 'Thunderborn', 27: 'Magmaforged', 28: 'Frostbound', 29: 'Moonlit', 30: 'Sunforged',
+  31: 'Wyrmslayer', 32: 'Sovereign', 33: 'Infernal', 34: 'Voidwalker', 35: 'Starborn',
+  36: 'Luminary', 37: 'Celestial', 38: 'Cosmic', 39: 'Eternal', 40: 'Radiant Soul',
+  41: 'Stormlord', 42: 'Titan', 43: 'Colossus', 44: 'Unstoppable', 45: 'Godslayer',
+  46: 'Phoenix', 47: 'Omniscient', 48: 'Transcendent', 49: 'Legendary', 50: 'Ascendant'
 };
 
 export const getLevelEmoji = (level) => {
