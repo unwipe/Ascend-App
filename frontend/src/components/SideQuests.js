@@ -9,7 +9,7 @@ import ConfirmModal from './ConfirmModal';
 import { canUndoQuest, getUndoTimeRemaining, formatCountdown } from '../utils/timerUtils';
 import { formatStreakDisplay } from '../utils/streakSystem';
 
-const SideQuests = ({ sideQuests, onAddSide, onToggleSide, onDeleteSide, onUndoSide }) => {
+const SideQuests = ({ sideQuests, questStreaks, onAddSide, onToggleSide, onDeleteSide, onUndoSide }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [newXP, setNewXP] = useState('5');
