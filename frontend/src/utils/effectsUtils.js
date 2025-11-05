@@ -151,19 +151,19 @@ export const useStreakSaver = () => {
 };
 
 /**
- * Calculate time remaining until mini-game cooldown expires
- * @param {string} lastPlayedTimestamp - ISO timestamp of last play
- * @param {number} cooldownMinutes - Cooldown duration in minutes (default: 30)
+ * Get GLOBAL mini-game cooldown status (applies to ALL mini-games)
  * @returns {object} { isAvailable, timeRemaining, formattedTime }
  */
-export const getMiniGameCooldown = (lastPlayedTimestamp, cooldownMinutes = 30) => {
-  if (!lastPlayedTimestamp) {
+export const getGlobalMiniGameCooldown = () => {
+  const cooldownData = JSON.parse(localStorage.getItem('miniGameCooldown') || '{}');
+  
+  if (!cooldownData.lastPlayedAt) {
     return { isAvailable: true, timeRemaining: 0, formattedTime: null };
   }
 
-  const lastPlayed = new Date(lastPlayedTimestamp);
+  const lastPlayed = new Date(cooldownData.lastPlayedAt);
   const now = new Date();
-  const cooldownMs = cooldownMinutes * 60 * 1000;
+  const cooldownMs = (cooldownData.cooldownMinutes || 30) * 60 * 1000;
   const nextAvailable = new Date(lastPlayed.getTime() + cooldownMs);
   const timeRemaining = nextAvailable - now;
 
@@ -190,4 +190,15 @@ export const getMiniGameCooldown = (lastPlayedTimestamp, cooldownMinutes = 30) =
     timeRemaining,
     formattedTime,
   };
+};
+
+/**
+ * Set GLOBAL mini-game cooldown after completing ANY mini-game
+ */
+export const setGlobalMiniGameCooldown = () => {
+  const cooldownData = {
+    lastPlayedAt: new Date().toISOString(),
+    cooldownMinutes: 30,
+  };
+  localStorage.setItem('miniGameCooldown', JSON.stringify(cooldownData));
 };
