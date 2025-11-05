@@ -46,12 +46,52 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
 
   const canProceed = () => {
     switch (step) {
-      case 1: return username.trim() !== '';
-      case 3: return mainQuest.trim() !== '' && objectives.filter(o => o.trim()).length >= 3;
-      case 4: return dailyHabit.trim() !== '';
-      case 5: return weeklyGoal.trim() !== '';
+      case 2: return username.trim() !== '';
+      case 3: return mainQuest.trim() !== '';
+      case 4: return dailyQuests.length > 0; // At least one daily quest added
+      case 5: return weeklyQuests.length > 0; // At least one weekly quest added
       default: return true;
     }
+  };
+
+  // Add daily quest to the list
+  const handleAddDailyQuest = () => {
+    if (currentDailyHabit.trim()) {
+      setDailyQuests([...dailyQuests, {
+        text: currentDailyHabit,
+        xp: parseInt(currentDailyXP),
+        completed: false,
+        completedAt: null
+      }]);
+      setCurrentDailyHabit('');
+      setCurrentDailyXP('10');
+    }
+  };
+
+  // Remove daily quest from the list
+  const handleRemoveDailyQuest = (index) => {
+    setDailyQuests(dailyQuests.filter((_, i) => i !== index));
+  };
+
+  // Add weekly quest to the list
+  const handleAddWeeklyQuest = () => {
+    if (currentWeeklyGoal.trim()) {
+      setWeeklyQuests([...weeklyQuests, {
+        text: currentWeeklyGoal,
+        target: parseInt(currentWeeklyTarget),
+        current: 0,
+        xpPerIncrement: parseInt(currentWeeklyXP),
+        lastProgressAt: null
+      }]);
+      setCurrentWeeklyGoal('');
+      setCurrentWeeklyTarget('3');
+      setCurrentWeeklyXP('10');
+    }
+  };
+
+  // Remove weekly quest from the list
+  const handleRemoveWeeklyQuest = (index) => {
+    setWeeklyQuests(weeklyQuests.filter((_, i) => i !== index));
   };
 
   return (
