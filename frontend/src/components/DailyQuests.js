@@ -7,6 +7,7 @@ import { Checkbox } from './ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import ConfirmModal from './ConfirmModal';
 import { getTimeUntilMidnight, formatCountdown, canCompleteQuest, canUndoQuest, getUndoTimeRemaining } from '../utils/timerUtils';
+import { formatStreakDisplay } from '../utils/streakSystem';
 
 const DailyQuests = ({ dailyQuests, dailyStreak, onAddDaily, onToggleDaily, onDeleteDaily, onUndoDaily }) => {
   const [isAdding, setIsAdding] = useState(false);
