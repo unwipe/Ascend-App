@@ -88,5 +88,7 @@ export const getInitialGameState = () => ({
   weeklyQuestCreation: {
     count: 0,
     lastResetDate: new Date().toISOString()
-  }
+  },
+  // Promo Codes Tracking
+  usedPromoCodes: [] // Array of redeemed promo codes
 });
