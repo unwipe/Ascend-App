@@ -33,23 +33,17 @@ frontend:
         agent: "main"
         comment: "Created streakSystem.js utility. Added individual quest streak tracking for Daily, Weekly, and Side Quests. Milestone rewards (3,7,14,30,60,100 days) award XP and Coins automatically. Each quest now has unique ID for tracking."
 
-  - task: "Mini-Game Cooldown Timers"
+  - task: "Streak Badges on Quest Components"
     implemented: true
-    working: true
-    file: "/app/frontend/src/components/MiniGames.js"
+    working: "NA"
+    file: "/app/frontend/src/components/DailyQuests.js, WeeklyQuests.js, SideQuests.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Added 30-minute cooldown to all mini-games. Cooldown timers update every second, show formatted countdown, disable button during cooldown."
-      - working: false
-        agent: "testing"
-        comment: "CRITICAL ISSUE: Cannot access Mini-Games modal due to onboarding modal blocking all interactions. Skip button clicks but modal remains open, preventing testing of cooldown functionality."
-      - working: true
-        agent: "testing"
-        comment: "✅ WORKING: 30-minute cooldown system works perfectly. After claiming rewards, buttons become disabled with 'On Cooldown' text. Timer displays 'Available in: 29m 20s' format and updates every second. Verified timer countdown is functional and accurate."
+        comment: "Updated all quest components to display individual streak badges. Format: '🔥 X days' with dynamic emoji based on streak count. Badge appears next to quest name in colored pill."
 
   - task: "XP Multiplier Functionality"
     implemented: true
