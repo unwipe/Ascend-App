@@ -234,7 +234,7 @@ agent_communication:
       6. Verify cooldown timer updates every second
       7. Purchase Streak Saver, use it, verify shows in Active Effects
       
-      Frontend URL: https://levelup-tasks-5.preview.emergentagent.com
+      Frontend URL: https://gameflow-tasks-3.preview.emergentagent.com
   - agent: "testing"
     message: |
       **CRITICAL TESTING BLOCKER IDENTIFIED:**
