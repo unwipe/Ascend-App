@@ -6,6 +6,7 @@ import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import ConfirmModal from './ConfirmModal';
 import { getTimeUntilMidnight, getTimeUntilMonday, formatCountdown, canCompleteQuest } from '../utils/timerUtils';
+import { formatStreakDisplay } from '../utils/streakSystem';
 
 const WeeklyQuests = ({ weeklyQuests, weeklyStreak, onAddWeekly, onIncrementWeekly, onDeleteWeekly }) => {
   const [isAdding, setIsAdding] = useState(false);
