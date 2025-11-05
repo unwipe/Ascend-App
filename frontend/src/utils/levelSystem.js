@@ -54,3 +54,75 @@ const toRoman = (num) => {
   }
   return result;
 };
+
+/**
+ * Calculate XP required for a specific level using gradual exponential curve
+ * Formula: Each level's increment grows gradually
+ * Level 1: 100 XP
+ * Level 2: 110 XP (increment: 10)
+ * Level 3: 122 XP (increment: 12)
+ * Level 4: 136 XP (increment: 14)
+ * The increment itself increases by 2 every level for early levels,
+ * then gradually increases more for higher levels
+ */
+export const getXPForLevel = (level) => {
+  if (level <= 1) return 100;
+  
+  let totalXP = 100; // Level 1 base
+  let increment = 10; // Starting increment
+  
+  for (let i = 2; i <= level; i++) {
+    totalXP += increment;
+    
+    // Gradually increase the increment itself
+    // Early levels (2-20): increment grows by 2 each level
+    // Mid levels (21-40): increment grows by 3 each level
+    // High levels (41+): increment grows by 4 each level
+    if (i <= 20) {
+      increment += 2;
+    } else if (i <= 40) {
+      increment += 3;
+    } else {
+      increment += 4;
+    }
+  }
+  
+  return totalXP;
+};
+
+/**
+ * Calculate current level based on total XP
+ */
+export const calculateLevel = (totalXP) => {
+  let level = 1;
+  let xpForNextLevel = getXPForLevel(2);
+  
+  while (totalXP >= xpForNextLevel) {
+    level++;
+    xpForNextLevel = getXPForLevel(level + 1);
+  }
+  
+  return level;
+};
+
+/**
+ * Calculate XP progress for current level
+ * Returns: { currentLevelXP, xpForCurrentLevel, xpForNextLevel, progress }
+ */
+export const getXPProgress = (totalXP) => {
+  const currentLevel = calculateLevel(totalXP);
+  const xpForCurrentLevel = getXPForLevel(currentLevel);
+  const xpForNextLevel = getXPForLevel(currentLevel + 1);
+  const xpNeededForCurrentLevel = xpForNextLevel - xpForCurrentLevel;
+  const currentLevelXP = totalXP - xpForCurrentLevel;
+  const progress = (currentLevelXP / xpNeededForCurrentLevel) * 100;
+  
+  return {
+    currentLevel,
+    currentLevelXP,
+    xpForCurrentLevel,
+    xpForNextLevel,
+    xpNeededForCurrentLevel,
+    progress: Math.min(100, Math.max(0, progress))
+  };
+};
