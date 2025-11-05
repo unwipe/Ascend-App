@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { Settings, AlertTriangle } from 'lucide-react';
+import { Settings, AlertTriangle, Gift } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
 import { Switch } from './ui/switch';
+import { Input } from './ui/input';
 import ConfirmModal from './ConfirmModal';
 import { APP_VERSION, APP_NAME } from '../utils/constants';
 
-const SettingsModal = ({ isOpen, onClose, settings = {}, onResetAll, onToggleStreakMode }) => {
+const SettingsModal = ({ isOpen, onClose, settings = {}, onResetAll, onToggleStreakMode, onRedeemPromoCode }) => {
   const [showFirstConfirm, setShowFirstConfirm] = useState(false);
   const [showSecondConfirm, setShowSecondConfirm] = useState(false);
   const [showStreakModeConfirm, setShowStreakModeConfirm] = useState(false);
   const [pendingStreakMode, setPendingStreakMode] = useState(null);
+  const [promoCode, setPromoCode] = useState('');
+  const [promoMessage, setPromoMessage] = useState({ text: '', type: '' });
 
   const handleFirstConfirm = () => {
     setShowFirstConfirm(false);
