@@ -583,10 +583,45 @@ function App() {
 
   // Weekly Quest handlers
   const handleAddWeekly = (quest) => {
-    setGameState(prev => ({
-      ...prev,
-      weeklyQuests: [...prev.weeklyQuests, quest]
-    }));
+    setGameState(prev => {
+      // Check weekly quest creation limit (only enforced after tutorial)
+      if (prev.tutorialCompleted) {
+        const today = new Date().toDateString();
+        const lastResetDate = prev.weeklyQuestCreation?.lastResetDate 
+          ? new Date(prev.weeklyQuestCreation.lastResetDate).toDateString() 
+          : null;
+        
+        let creationCount = prev.weeklyQuestCreation?.count || 0;
+        
+        // Reset count if it's a new day
+        if (lastResetDate !== today) {
+          creationCount = 0;
+        }
+        
+        // Check if limit reached (1 per day)
+        if (creationCount >= 1) {
+          toast.error('Weekly Quest creation limit reached (1/day). You can create more tomorrow!');
+          return prev; // Don't add the quest
+        }
+        
+        // Increment creation count
+        return {
+          ...prev,
+          weeklyQuests: [...prev.weeklyQuests, quest],
+          weeklyQuestCreation: {
+            count: creationCount + 1,
+            lastResetDate: new Date().toISOString()
+          }
+        };
+      }
+      
+      // During tutorial, allow unlimited creation
+      return {
+        ...prev,
+        weeklyQuests: [...prev.weeklyQuests, quest]
+      };
+    });
+    
     toast.success('Weekly Quest Added! ⚡');
   };
 
