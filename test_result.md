@@ -208,7 +208,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "All Prompt 8 features tested successfully"
+    - "All Prompt 9 anti-exploit fixes tested successfully"
   stuck_tasks: []
   test_all: true
   test_priority: "completed"
