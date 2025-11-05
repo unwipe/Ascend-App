@@ -44,6 +44,14 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
 
   const unlockedAvatars = getUnlockedAvatars(gameState.unlockedAvatars || []);
   const lockedAvatars = getLockedAvatars(gameState.unlockedAvatars || []);
+  
+  // Separate mythical avatars
+  const unlockedMythical = MYTHICAL_AVATARS.filter(avatar => 
+    gameState.unlockedAvatars?.includes(avatar.id)
+  );
+  const lockedMythical = MYTHICAL_AVATARS.filter(avatar => 
+    !gameState.unlockedAvatars?.includes(avatar.id)
+  );
 
   const stats = {
     level: gameState.level,
