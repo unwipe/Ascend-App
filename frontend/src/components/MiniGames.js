@@ -174,11 +174,11 @@ const MiniGames = ({ isOpen, onClose, onClaimReward }) => {
                           ))}
                         </ol>
                       </div>
-                      {cooldowns[game.id] && !cooldowns[game.id].isAvailable ? (
+                      {!globalCooldown.isAvailable ? (
                         <div className="w-full">
                           <div className="flex items-center justify-center gap-2 text-orange-400 mb-2 text-sm">
                             <Clock className="w-4 h-4" />
-                            <span>Available in: {cooldowns[game.id].formattedTime}</span>
+                            <span>Available in: {globalCooldown.formattedTime}</span>
                           </div>
                           <Button
                             disabled
