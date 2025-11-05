@@ -515,12 +515,12 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
               </div>
             </div>
 
-            {/* Locked Avatars */}
+            {/* Locked Premium Avatars */}
             {lockedAvatars.length > 0 && (
               <div>
                 <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
                   <Lock className="w-5 h-5" />
-                  Locked Avatars
+                  Locked Premium Avatars
                 </h3>
                 <div className="grid grid-cols-4 gap-3">
                   {lockedAvatars.map((avatar) => (
@@ -540,6 +540,65 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                 </div>
                 <p className="text-sm text-gray-400 mt-3 bg-blue-500/10 rounded-lg p-3">
                   💡 Purchase locked avatars in the Reward Store!
+                </p>
+              </div>
+            )}
+
+            {/* Mythical Avatars - Unlocked */}
+            {unlockedMythical.length > 0 && (
+              <div>
+                <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                  <span className="text-yellow-400">✨</span>
+                  Mythical Characters
+                </h3>
+                <div className="grid grid-cols-4 gap-3">
+                  {unlockedMythical.map((avatar) => (
+                    <button
+                      key={avatar.id}
+                      onClick={() => handleSelectAvatar(avatar)}
+                      className={`relative text-4xl p-4 rounded-lg transition-all border-2 ${
+                        selectedAvatar === avatar.emoji
+                          ? 'bg-gradient-to-br from-yellow-600/30 to-orange-600/30 border-yellow-400 scale-110 shadow-lg shadow-yellow-500/50'
+                          : 'bg-gradient-to-br from-yellow-500/10 to-orange-500/10 border-yellow-500/50 hover:border-yellow-400/70'
+                      }`}
+                      data-testid={`avatar-mythical-${avatar.id}`}
+                    >
+                      {avatar.emoji}
+                      <div className="absolute -top-1 -right-1 text-sm">✨</div>
+                    </button>
+                  ))}
+                </div>
+                <p className="text-sm text-yellow-300 mt-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3">
+                  ✨ Mythical characters earned through special achievements!
+                </p>
+              </div>
+            )}
+
+            {/* Mythical Avatars - Locked */}
+            {lockedMythical.length > 0 && (
+              <div>
+                <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                  <Lock className="w-5 h-5 text-yellow-400" />
+                  Locked Mythical Characters
+                </h3>
+                <div className="grid grid-cols-4 gap-3">
+                  {lockedMythical.map((avatar) => (
+                    <div
+                      key={avatar.id}
+                      className="relative text-4xl p-4 rounded-lg bg-gradient-to-br from-yellow-500/5 to-orange-500/5 border-2 border-yellow-500/30 opacity-50"
+                      title="These characters can only be obtained through special achievements, not purchasable."
+                      data-testid={`avatar-mythical-locked-${avatar.id}`}
+                    >
+                      {avatar.emoji}
+                      <div className="absolute top-1 right-1 text-lg">🔒</div>
+                      <div className="absolute bottom-0 left-0 right-0 text-[10px] text-yellow-400 font-bold text-center bg-black/50 py-1 rounded-b-lg">
+                        Achievement
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-sm text-gray-400 mt-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3">
+                  🏆 These characters can only be obtained through special achievements, not purchasable.
                 </p>
               </div>
             )}
