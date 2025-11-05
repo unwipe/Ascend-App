@@ -138,10 +138,14 @@ function App() {
       
       if (levelCheck.shouldLevelUp) {
         soundManager.play('levelUp');
-        setLevelUpData({ oldLevel: prev.level, newLevel: levelCheck.newLevel });
+        setLevelUpData({ 
+          oldLevel: prev.level, 
+          newLevel: levelCheck.newLevel,
+          levelsGained: levelCheck.levelsGained || 1
+        });
         return {
           ...prev,
-          xp: levelCheck.remainingXP,
+          xp: newXP, // Keep total XP accumulating
           level: levelCheck.newLevel,
           totalXPEarned: newTotalXP
         };
