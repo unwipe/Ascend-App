@@ -56,50 +56,34 @@ const toRoman = (num) => {
 };
 
 /**
- * Calculate XP required for a specific level using gradual exponential curve
- * Formula: Each level's increment grows gradually
- * Level 1: 100 XP
- * Level 2: 110 XP (increment: 10)
- * Level 3: 122 XP (increment: 12)
- * Level 4: 136 XP (increment: 14)
- * The increment itself increases by 2 every level for early levels,
- * then gradually increases more for higher levels
+ * Calculate XP required to reach a specific level (x1.5 exponential curve)
+ * Formula: XP_needed = Math.round(100 * Math.pow(1.5, level - 1))
+ * 
+ * Level 1: 100 XP (100 * 1.5^0 = 100)
+ * Level 2: 150 XP (100 * 1.5^1 = 150)
+ * Level 3: 225 XP (100 * 1.5^2 = 225)
+ * Level 4: 338 XP (100 * 1.5^3 = 337.5 ≈ 338)
+ * Level 5: 507 XP (100 * 1.5^4 = 506.25 ≈ 507)
  */
 export const getXPForLevel = (level) => {
-  if (level <= 1) return 100;
-  
-  let totalXP = 100; // Level 1 base
-  let increment = 10; // Starting increment
-  
-  for (let i = 2; i <= level; i++) {
-    totalXP += increment;
-    
-    // Gradually increase the increment itself
-    // Early levels (2-20): increment grows by 2 each level
-    // Mid levels (21-40): increment grows by 3 each level
-    // High levels (41+): increment grows by 4 each level
-    if (i <= 20) {
-      increment += 2;
-    } else if (i <= 40) {
-      increment += 3;
-    } else {
-      increment += 4;
-    }
-  }
-  
-  return totalXP;
+  return Math.round(100 * Math.pow(1.5, level - 1));
 };
 
 /**
- * Calculate current level based on total XP
+ * Calculate current level based on current XP
+ * User starts at Level 1 with 0 XP
+ * When XP reaches threshold, level up and carry over excess
  */
-export const calculateLevel = (totalXP) => {
-  let level = 1;
-  let xpForNextLevel = getXPForLevel(2);
+export const calculateLevel = (currentXP) => {
+  if (currentXP < 0) return 1; // Safety check
   
-  while (totalXP >= xpForNextLevel) {
+  let level = 1;
+  let xpNeededForNextLevel = getXPForLevel(level);
+  
+  // Keep leveling up while XP exceeds the threshold
+  while (currentXP >= xpNeededForNextLevel) {
     level++;
-    xpForNextLevel = getXPForLevel(level + 1);
+    xpNeededForNextLevel = getXPForLevel(level);
   }
   
   return level;
@@ -107,22 +91,25 @@ export const calculateLevel = (totalXP) => {
 
 /**
  * Calculate XP progress for current level
- * Returns: { currentLevelXP, xpForCurrentLevel, xpForNextLevel, progress }
+ * Returns progress bar data showing: currentXP / xpNeededForNextLevel
  */
-export const getXPProgress = (totalXP) => {
-  const currentLevel = calculateLevel(totalXP);
-  const xpForCurrentLevel = getXPForLevel(currentLevel);
-  const xpForNextLevel = getXPForLevel(currentLevel + 1);
-  const xpNeededForCurrentLevel = xpForNextLevel - xpForCurrentLevel;
-  const currentLevelXP = totalXP - xpForCurrentLevel;
-  const progress = (currentLevelXP / xpNeededForCurrentLevel) * 100;
+export const getXPProgress = (currentXP) => {
+  if (currentXP < 0) currentXP = 0; // Safety check
+  
+  const currentLevel = calculateLevel(currentXP);
+  const xpNeededForCurrentLevel = getXPForLevel(currentLevel);
+  const xpNeededForNextLevel = getXPForLevel(currentLevel + 1);
+  
+  // Calculate XP within current level (for progress bar)
+  const xpInCurrentLevel = currentLevel === 1 ? currentXP : currentXP - xpNeededForCurrentLevel;
+  const xpRequiredForLevelUp = xpNeededForNextLevel - xpNeededForCurrentLevel;
+  
+  const progress = (xpInCurrentLevel / xpRequiredForLevelUp) * 100;
   
   return {
     currentLevel,
-    currentLevelXP,
-    xpForCurrentLevel,
-    xpForNextLevel,
-    xpNeededForCurrentLevel,
+    currentXP: Math.max(0, xpInCurrentLevel), // XP toward next level
+    xpNeededForNextLevel: xpRequiredForLevelUp, // XP required for next level
     progress: Math.min(100, Math.max(0, progress))
   };
 };
