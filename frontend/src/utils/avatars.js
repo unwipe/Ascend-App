@@ -31,8 +31,8 @@ export const PAID_AVATARS = [
   { id: 'levitating-male', emoji: '🧘‍♂️', name: 'Levitating', price: 15, category: 'Levitating', locked: true },
   { id: 'levitating-female', emoji: '🧘‍♀️', name: 'Levitating Woman', price: 15, category: 'Levitating', locked: true },
   
-  // 25 coins - High-tier
-  { id: 'ninja', emoji: '🥷', name: 'Ninja', price: 25, category: 'Ninja', locked: true },
+  // 45 coins - High-tier (UPDATED from 25 to 45)
+  { id: 'ninja', emoji: '🥷', name: 'Ninja', price: 45, category: 'Ninja', locked: true },
   
   // 50 coins - Most Expensive (Ultimate unlock)
   { id: 'mage', emoji: '🧙‍♂️', name: 'Mage', price: 50, category: 'Mage', locked: true },
