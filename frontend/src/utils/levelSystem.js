@@ -68,7 +68,7 @@ const toRoman = (num) => {
  * Formula: XP_needed = Math.round(100 * Math.pow(1.5, level - 1))
  */
 export const getXPForLevel = (level) => {
-  return Math.round(100 * Math.pow(1.5, level - 1));
+  return Math.ceil(100 * Math.pow(1.5, level - 1));
 };
 
 /**
