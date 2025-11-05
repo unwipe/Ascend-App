@@ -2,11 +2,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Coins, Zap } from 'lucide-react';
 import { Progress } from './ui/progress';
-import { getRequiredXP, getLevelEmoji, getRankTitle } from '../utils/gameLogic';
+import { getLevelEmoji, getRankTitle, getXPProgress } from '../utils/gameLogic';
 
 const StatsCard = ({ level, xp, coins }) => {
-  const requiredXP = getRequiredXP(level);
-  const progress = (xp / requiredXP) * 100;
+  const xpProgress = getXPProgress(xp);
+  const progress = xpProgress.progress;
+  const requiredXP = xpProgress.xpNeededForCurrentLevel;
+  const currentLevelXP = xpProgress.currentLevelXP;
   const emoji = getLevelEmoji(level);
   const rankTitle = getRankTitle(level);
 
