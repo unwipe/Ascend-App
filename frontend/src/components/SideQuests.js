@@ -123,6 +123,9 @@ const SideQuests = ({ sideQuests, questStreaks, onAddSide, onToggleSide, onDelet
               {sideQuests.map((quest, index) => {
                 const undoTimer = undoTimers[index];
                 const showUndo = quest.completed && undoTimer;
+                const questId = quest.id || `side-${index}-${quest.text.slice(0, 10)}`;
+                const questStreak = questStreaks?.[questId]?.streak || 0;
+                const streakDisplay = formatStreakDisplay(questStreak);
 
                 return (
                   <motion.div
@@ -143,9 +146,16 @@ const SideQuests = ({ sideQuests, questStreaks, onAddSide, onToggleSide, onDelet
                       />
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <span className={`font-medium ${quest.completed ? 'text-green-400' : 'text-white'}`}>
-                            {quest.text}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className={`font-medium ${quest.completed ? 'text-green-400' : 'text-white'}`}>
+                              {quest.text}
+                            </span>
+                            {questStreak > 0 && (
+                              <span className="text-xs text-green-400 font-bold bg-green-500/10 px-2 py-0.5 rounded-full">
+                                {streakDisplay}
+                              </span>
+                            )}
+                          </div>
                           <span className="text-sm text-green-400 font-medium">+{quest.xp} XP</span>
                         </div>
                         
