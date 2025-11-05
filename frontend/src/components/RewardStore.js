@@ -8,10 +8,10 @@ import { PAID_AVATARS } from '../utils/avatars';
 
 const storeItems = [
   {
-    id: 'streak_saver',
-    icon: '🛡️',
-    name: 'Streak Saver Token',
-    description: 'Protect your streak! When your streak would break, you have 24 hours to complete your quests and save it.',
+    id: 'streak_freeze',
+    icon: '❄️',
+    name: 'Streak Freeze',
+    description: 'Freeze your streak! When your streak would break, you have 24 hours to complete your quests and maintain it.',
     price: 30,
     available: true,
     type: 'item'
