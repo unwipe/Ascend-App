@@ -12,7 +12,7 @@ import { formatStreakDisplay } from '../utils/streakSystem';
 const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, dailyQuestCreationLimit, canCreateDailyQuest, onAddDaily, onToggleDaily, onDeleteDaily, onUndoDaily }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTask, setNewTask] = useState('');
-  const [newXP, setNewXP] = useState('5');
+  const [newXP, setNewXP] = useState('10');
   const [deleteIndex, setDeleteIndex] = useState(null);
   const [completeIndex, setCompleteIndex] = useState(null);
   const [undoIndex, setUndoIndex] = useState(null);
