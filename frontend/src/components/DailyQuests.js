@@ -71,6 +71,18 @@ const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, dailyQuestCreatio
                   {dailyStreak}-day streak
                 </span>
               </div>
+              {tutorialCompleted && dailyQuestCreation && (
+                <div className="text-xs text-gray-400 mt-1">
+                  {(() => {
+                    const today = new Date().toDateString();
+                    const lastResetDate = dailyQuestCreation.lastResetDate 
+                      ? new Date(dailyQuestCreation.lastResetDate).toDateString() 
+                      : null;
+                    const count = lastResetDate === today ? dailyQuestCreation.count : 0;
+                    return `Created today: ${count}/2`;
+                  })()}
+                </div>
+              )}
             </div>
           </div>
           <Button
