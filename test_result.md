@@ -12,12 +12,12 @@
 #====================================================================================================
 
 user_problem_statement: |
-  Implement Prompt 8 features for Ascend:
-  1. Fix coin sound (shorter, quieter)
-  2. Add mini-game cooldown timers (30 minutes)
-  3. Make XP Multiplier functional with visual indicator
-  4. Make Streak Saver functional
-  5. Create Active Effects component
+  Test ALL Prompt 9 anti-exploit fixes for Ascend:
+  1. XP Multiplier - Confirmation & Duration (2 hours)
+  2. Streak Saver - Confirmation & Removal
+  3. Global Mini-Game Cooldown (all games share timer)
+  4. XP Refund Fix - Base XP Only (anti-farming)
+  5. Ninja Price increase (25 → 45 coins)
 
 frontend:
   - task: "Coin Sound Fix"
