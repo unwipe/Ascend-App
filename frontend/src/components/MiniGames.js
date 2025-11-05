@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
 import ConfirmModal from './ConfirmModal';
-import { getMiniGameCooldown } from '../utils/effectsUtils';
+import { getGlobalMiniGameCooldown, setGlobalMiniGameCooldown } from '../utils/effectsUtils';
 
 const miniGamesData = [
   {
