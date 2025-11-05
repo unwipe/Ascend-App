@@ -414,9 +414,21 @@ function App() {
     const quest = gameState.dailyQuests[index];
     const wasCompleted = quest.completed;
     
+    // Get multiplier and calculate XP
+    const baseXP = quest.xp;
+    const multiplier = getXPMultiplier();
+    const totalXP = baseXP * multiplier;
+    
     setGameState(prev => {
       const updatedQuests = prev.dailyQuests.map((q, i) =>
-        i === index ? { ...q, completed: !q.completed, completedAt: !q.completed ? new Date().toISOString() : null } : q
+        i === index ? { 
+          ...q, 
+          completed: !q.completed, 
+          completedAt: !q.completed ? new Date().toISOString() : null,
+          baseXP: !q.completed ? baseXP : null, // Store base XP for refund
+          totalXP: !q.completed ? totalXP : null, // Store total XP for display
+          multiplierApplied: !q.completed ? multiplier : null
+        } : q
       );
       
       const wasAnyCompleted = prev.dailyQuests.some(q => q.completed);
@@ -436,8 +448,8 @@ function App() {
     });
     
     if (!wasCompleted) {
-      addXP(quest.xp);
-      toast.success('Daily Quest Completed! ✅', { description: `+${quest.xp} XP earned!` });
+      addXP(baseXP); // addXP will apply the multiplier internally
+      // Don't show manual multiplier toast here since addXP handles it
     }
   };
 
