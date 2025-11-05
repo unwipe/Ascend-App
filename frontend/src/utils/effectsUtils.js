@@ -28,14 +28,14 @@ export const getActiveEffects = () => {
     }
   }
 
-  // Check Streak Saver
-  if (activeEffectsData.streakSaver?.active && activeEffectsData.streakSaver?.usesLeft > 0) {
+  // Check Streak Freeze
+  if (activeEffectsData.streakFreeze?.active && activeEffectsData.streakFreeze?.usesLeft > 0) {
     effects.push({
-      type: 'streakSaver',
-      name: 'Streak Saver',
-      icon: '🛡️',
-      timeRemaining: `${activeEffectsData.streakSaver.usesLeft} use(s) left`,
-      usesLeft: activeEffectsData.streakSaver.usesLeft,
+      type: 'streakFreeze',
+      name: 'Streak Freeze',
+      icon: '❄️',
+      timeRemaining: `${activeEffectsData.streakFreeze.usesLeft} use(s) left`,
+      usesLeft: activeEffectsData.streakFreeze.usesLeft,
     });
   }
 
