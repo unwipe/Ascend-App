@@ -878,6 +878,55 @@ function App() {
     toast.success('All data has been reset!');
   };
 
+  // Promo code redemption
+  const handleRedeemPromoCode = (code) => {
+    const result = redeemPromoCode(code, gameState.usedPromoCodes || []);
+    
+    if (result.success) {
+      const reward = result.reward;
+      
+      setGameState(prev => {
+        const updates = {};
+        
+        // Apply reward based on type
+        if (reward.type === 'xp') {
+          updates.xp = prev.xp + reward.amount;
+          updates.totalXPEarned = (prev.totalXPEarned || 0) + reward.amount;
+          
+          // Check for level up
+          const levelCheck = checkLevelUp(updates.xp, prev.level);
+          if (levelCheck.shouldLevelUp) {
+            soundManager.play('levelUp');
+            setLevelUpData({ 
+              oldLevel: prev.level, 
+              newLevel: levelCheck.newLevel,
+              levelsGained: levelCheck.levelsGained || 1
+            });
+            updates.level = levelCheck.newLevel;
+          }
+        } else if (reward.type === 'coins') {
+          updates.coins = prev.coins + reward.amount;
+          updates.totalCoinsEarned = (prev.totalCoinsEarned || 0) + reward.amount;
+        } else if (reward.type === 'item') {
+          updates.inventory = [...prev.inventory, { id: reward.itemId, name: reward.itemId }];
+        }
+        
+        // Track used promo code (only if not reusable)
+        if (!result.reward.reusable) {
+          updates.usedPromoCodes = [...(prev.usedPromoCodes || []), reward.code];
+        }
+        
+        return { ...prev, ...updates };
+      });
+      
+      // Show success toast with sound
+      soundManager.play('coins');
+      toast.success(result.message);
+    }
+    
+    return result;
+  };
+
   if (!gameState) {
     return (
       <div className="min-h-screen bg-gray-950 flex items-center justify-center">
