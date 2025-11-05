@@ -285,14 +285,21 @@ function App() {
     // Activate multiplier
     activateXPMultiplier();
 
-    // Remove from inventory
-    setGameState(prev => ({
-      ...prev,
-      inventory: prev.inventory.filter(item => item.id !== 'xp_multiplier' || !item.canRemove),
-    }));
+    // Remove from inventory (filter out one xp_multiplier item)
+    setGameState(prev => {
+      const newInventory = [...prev.inventory];
+      const itemIndex = newInventory.findIndex(item => item.id === 'xp_multiplier');
+      if (itemIndex !== -1) {
+        newInventory.splice(itemIndex, 1); // Remove the item
+      }
+      return {
+        ...prev,
+        inventory: newInventory,
+      };
+    });
 
     toast.success('XP Multiplier activated! 🔥', {
-      description: '2x XP for 1 hour!'
+      description: '2x XP for 2 hours!'
     });
   };
 
@@ -307,14 +314,21 @@ function App() {
     // Activate streak saver
     activateStreakSaver();
 
-    // Remove from inventory
-    setGameState(prev => ({
-      ...prev,
-      inventory: prev.inventory.filter(item => item.id !== 'streak_saver' || !item.canRemove),
-    }));
+    // Remove from inventory (filter out one streak_saver item)
+    setGameState(prev => {
+      const newInventory = [...prev.inventory];
+      const itemIndex = newInventory.findIndex(item => item.id === 'streak_saver');
+      if (itemIndex !== -1) {
+        newInventory.splice(itemIndex, 1); // Remove the item
+      }
+      return {
+        ...prev,
+        inventory: newInventory,
+      };
+    });
 
     toast.success('Streak Saver activated! 🛡️', {
-      description: 'Your next missed day will be forgiven!'
+      description: 'Your streak will be protected if you miss a day. You\'ll have 24 hours to complete your quests.'
     });
   };
 
