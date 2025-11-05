@@ -96,7 +96,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onSkip(); }}>
-      <DialogContent className="max-w-3xl bg-gradient-to-br from-gray-900/98 to-black/98 backdrop-blur-lg border border-white/20" data-testid="onboarding-wizard">
+      <DialogContent className="max-w-3xl max-h-[90vh] bg-gradient-to-br from-gray-900/98 to-black/98 backdrop-blur-lg border border-white/20 overflow-hidden flex flex-col" data-testid="onboarding-wizard">
         {/* Skip Button */}
         <button
           onClick={onSkip}
@@ -107,7 +107,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
         </button>
 
         {/* Progress Indicator */}
-        <div className="flex justify-center gap-2 mb-6">
+        <div className="flex justify-center gap-2 mb-6 flex-shrink-0">
           {[...Array(totalSteps)].map((_, i) => (
             <div
               key={i}
@@ -118,7 +118,9 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
           ))}
         </div>
 
-        <AnimatePresence mode="wait">
+        {/* Scrollable Content Area */}
+        <div className="overflow-y-auto flex-1 pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+          <AnimatePresence mode="wait">
           {/* Step 0: Welcome */}
           {step === 0 && (
             <motion.div
