@@ -853,6 +853,7 @@ function App() {
           <DailyQuests
             dailyQuests={gameState.dailyQuests}
             dailyStreak={gameState.dailyStreak}
+            questStreaks={gameState.questStreaks}
             onAddDaily={handleAddDaily}
             onToggleDaily={handleToggleDaily}
             onDeleteDaily={handleDeleteDaily}
