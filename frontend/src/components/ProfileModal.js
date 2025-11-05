@@ -67,11 +67,12 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
           </DialogHeader>
 
           <Tabs defaultValue="overview" className="mt-4">
-            <TabsList className="grid w-full grid-cols-5 bg-white/5">
+            <TabsList className="grid w-full grid-cols-6 bg-white/5">
               <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="streaks">🔥 Streaks</TabsTrigger>
               <TabsTrigger value="achievements"><Trophy className="w-4 h-4 mr-2" />Achievements</TabsTrigger>
               <TabsTrigger value="inventory"><Package className="w-4 h-4 mr-2" />Inventory</TabsTrigger>
-              <TabsTrigger value="history"><History className="w-4 h-4 mr-2" />Main Quest History</TabsTrigger>
+              <TabsTrigger value="history"><History className="w-4 h-4 mr-2" />History</TabsTrigger>
               <TabsTrigger value="stats"><BarChart3 className="w-4 h-4 mr-2" />Stats</TabsTrigger>
             </TabsList>
 
