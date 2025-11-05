@@ -669,9 +669,14 @@ function App() {
       if (milestoneRewards.length > 0) {
         milestoneRewards.forEach(reward => {
           setTimeout(() => {
-            toast.success(`🎉 ${reward.title}`, {
-              description: `+${reward.xp} XP & +${reward.coins} Coins for ${reward.milestone}-day streak!`
-            });
+            let description = `+${reward.xp} XP & +${reward.coins} Coins for ${reward.milestone}-day streak!`;
+            
+            // Special Phoenix Avatar unlock for 100-day milestone
+            if (reward.unlockPhoenix) {
+              description = `+${reward.xp} XP, +${reward.coins} Coins, and Phoenix Avatar unlocked! 🔥`;
+            }
+            
+            toast.success(`🎉 ${reward.title}`, { description });
             soundManager.play('achievement');
           }, 500);
         });
@@ -680,6 +685,14 @@ function App() {
       // Calculate total milestone rewards
       const totalMilestoneXP = milestoneRewards.reduce((sum, r) => sum + r.xp, 0);
       const totalMilestoneCoins = milestoneRewards.reduce((sum, r) => sum + r.coins, 0);
+      
+      // Check if Phoenix Avatar should be unlocked (100-day milestone)
+      const shouldUnlockPhoenix = milestoneRewards.some(r => r.unlockPhoenix);
+      let updatedUnlockedAvatars = prev.unlockedAvatars || [];
+      
+      if (shouldUnlockPhoenix && !updatedUnlockedAvatars.includes('phoenix')) {
+        updatedUnlockedAvatars = [...updatedUnlockedAvatars, 'phoenix'];
+      }
       
       return {
         ...prev,
@@ -691,7 +704,8 @@ function App() {
         xp: prev.xp + totalMilestoneXP,
         coins: prev.coins + totalMilestoneCoins,
         totalXPEarned: prev.totalXPEarned + totalMilestoneXP,
-        totalCoinsEarned: prev.totalCoinsEarned + totalMilestoneCoins
+        totalCoinsEarned: prev.totalCoinsEarned + totalMilestoneCoins,
+        unlockedAvatars: updatedUnlockedAvatars
       };
     });
     
