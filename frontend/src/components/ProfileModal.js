@@ -427,6 +427,21 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Item Use Confirmation Modal */}
+      <ItemUseConfirmModal
+        isOpen={confirmingItem !== null}
+        onClose={() => setConfirmingItem(null)}
+        onConfirm={() => {
+          if (confirmingItem?.type === 'xp_multiplier') {
+            onUseXPMultiplier();
+          } else if (confirmingItem?.type === 'streak_saver') {
+            onUseStreakSaver();
+          }
+          setConfirmingItem(null);
+        }}
+        itemData={confirmingItem}
+      />
     </>
   );
 };
