@@ -623,14 +623,49 @@ function App() {
 
   const handleToggleSide = (index) => {
     const quest = gameState.sideQuests[index];
+    const questId = quest.id || `side-${index}-${quest.text.slice(0, 10)}`;
     
-    setGameState(prev => ({
-      ...prev,
-      sideQuests: prev.sideQuests.map((q, i) =>
-        i === index ? { ...q, completed: true, completedAt: new Date().toISOString() } : q
-      ),
-      totalQuestsCompleted: prev.totalQuestsCompleted + 1
-    }));
+    setGameState(prev => {
+      // Update individual quest streak (Phase 1 - Prompt 10)
+      let updatedQuestStreaks = prev.questStreaks || {};
+      let milestoneRewards = [];
+      
+      const oldStreak = updatedQuestStreaks[questId]?.streak || 0;
+      updatedQuestStreaks = updateQuestStreak(updatedQuestStreaks, questId, quest.text);
+      const newStreak = updatedQuestStreaks[questId].streak;
+      
+      // Check for milestone rewards
+      milestoneRewards = checkMilestoneRewards(oldStreak, newStreak);
+      
+      // Award milestone rewards
+      if (milestoneRewards.length > 0) {
+        milestoneRewards.forEach(reward => {
+          setTimeout(() => {
+            toast.success(`🎉 ${reward.title}`, {
+              description: `+${reward.xp} XP & +${reward.coins} Coins for ${reward.milestone}-day streak!`
+            });
+            soundManager.play('achievement');
+          }, 500);
+        });
+      }
+      
+      // Calculate total milestone rewards
+      const totalMilestoneXP = milestoneRewards.reduce((sum, r) => sum + r.xp, 0);
+      const totalMilestoneCoins = milestoneRewards.reduce((sum, r) => sum + r.coins, 0);
+      
+      return {
+        ...prev,
+        sideQuests: prev.sideQuests.map((q, i) =>
+          i === index ? { ...q, id: questId, completed: true, completedAt: new Date().toISOString() } : q
+        ),
+        questStreaks: updatedQuestStreaks,
+        totalQuestsCompleted: prev.totalQuestsCompleted + 1,
+        xp: prev.xp + totalMilestoneXP,
+        coins: prev.coins + totalMilestoneCoins,
+        totalXPEarned: prev.totalXPEarned + totalMilestoneXP,
+        totalCoinsEarned: prev.totalCoinsEarned + totalMilestoneCoins
+      };
+    });
     
     addXP(quest.xp);
     toast.success('Side Quest Completed! ✅', { description: `+${quest.xp} XP earned!` });
