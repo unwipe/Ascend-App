@@ -307,21 +307,21 @@ function App() {
     });
   };
 
-  // Use Streak Saver from inventory
-  const handleUseStreakSaver = () => {
+  // Use Streak Freeze from inventory
+  const handleUseStreakFreeze = () => {
     // Check if already active
-    if (isStreakSaverActive()) {
-      toast.error('Streak Saver is already active!');
+    if (isStreakFreezeActive()) {
+      toast.error('Streak Freeze is already active!');
       return;
     }
 
-    // Activate streak saver
-    activateStreakSaver();
+    // Activate streak freeze
+    activateStreakFreeze();
 
-    // Remove from inventory (filter out one streak_saver item)
+    // Remove from inventory (filter out one streak_freeze item)
     setGameState(prev => {
       const newInventory = [...prev.inventory];
-      const itemIndex = newInventory.findIndex(item => item.id === 'streak_saver');
+      const itemIndex = newInventory.findIndex(item => item.id === 'streak_freeze' || item.id === 'streak_saver');
       if (itemIndex !== -1) {
         newInventory.splice(itemIndex, 1); // Remove the item
       }
@@ -331,8 +331,8 @@ function App() {
       };
     });
 
-    toast.success('Streak Saver activated! 🛡️', {
-      description: 'Your streak will be protected if you miss a day. You\'ll have 24 hours to complete your quests.'
+    toast.success('Streak Freeze activated! ❄️', {
+      description: 'Your streak will be frozen if you miss a day. You\'ll have 24 hours to complete your quests.'
     });
   };
 
