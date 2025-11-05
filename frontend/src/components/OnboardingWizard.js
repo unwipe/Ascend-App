@@ -13,11 +13,13 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   const [avatar, setAvatar] = useState('😊');
   const [mainQuest, setMainQuest] = useState('');
   const [objectives, setObjectives] = useState(['', '', '']);
-  const [dailyHabit, setDailyHabit] = useState('');
-  const [dailyXP, setDailyXP] = useState('10');
-  const [weeklyGoal, setWeeklyGoal] = useState('');
-  const [weeklyTarget, setWeeklyTarget] = useState('3');
-  const [weeklyXP, setWeeklyXP] = useState('10');
+  const [dailyQuests, setDailyQuests] = useState([]);
+  const [currentDailyHabit, setCurrentDailyHabit] = useState('');
+  const [currentDailyXP, setCurrentDailyXP] = useState('10');
+  const [weeklyQuests, setWeeklyQuests] = useState([]);
+  const [currentWeeklyGoal, setCurrentWeeklyGoal] = useState('');
+  const [currentWeeklyTarget, setCurrentWeeklyTarget] = useState('3');
+  const [currentWeeklyXP, setCurrentWeeklyXP] = useState('10');
 
   const totalSteps = 11;
 
