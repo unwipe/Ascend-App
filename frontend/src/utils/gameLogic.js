@@ -6,9 +6,7 @@ export { getLevelEmoji, getRankTitle, getXPForLevel, calculateLevel, getXPProgre
 // Calculate required XP for next level (x1.5 exponential system)
 export const getRequiredXP = (level) => {
   const { getXPForLevel } = require('./levelSystem');
-  const currentLevelXP = getXPForLevel(level);
-  const nextLevelXP = getXPForLevel(level + 1);
-  return nextLevelXP - currentLevelXP;
+  return getXPForLevel(level);
 };
 
 // Check if user should level up based on current XP
