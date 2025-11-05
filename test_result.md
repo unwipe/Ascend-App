@@ -12,12 +12,13 @@
 #====================================================================================================
 
 user_problem_statement: |
-  Test ALL Prompt 9 anti-exploit fixes for Ascend:
-  1. XP Multiplier - Confirmation & Duration (2 hours)
-  2. Streak Saver - Confirmation & Removal
-  3. Global Mini-Game Cooldown (all games share timer)
-  4. XP Refund Fix - Base XP Only (anti-farming)
-  5. Ninja Price increase (25 → 45 coins)
+  Prompt 10: The Perfection Update - Phase 1
+  Implement Individual Quest Streaks System:
+  1. Track streaks for each quest individually (Daily, Weekly, Side Quests)
+  2. Milestone rewards at 3, 7, 14, 30, 60, 100 days (XP + Coins)
+  3. Display streak badges (🔥) next to quests
+  4. Add "Streaks" tab in Profile Modal showing all active streaks
+  5. Visual progress bars for milestone tracking
 
 frontend:
   - task: "Coin Sound Fix"
