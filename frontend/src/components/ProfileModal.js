@@ -329,13 +329,13 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                                 question: 'Are you sure you want to activate it now?',
                                 effect: '2x XP for 2 hours',
                               });
-                            } else if (item.id === 'streak_saver') {
+                            } else if (item.id === 'streak_freeze' || item.id === 'streak_saver') {
                               setConfirmingItem({
-                                type: 'streak_saver',
-                                icon: '🛡️',
-                                title: 'Activate Streak Saver?',
+                                type: 'streak_freeze',
+                                icon: '❄️',
+                                title: 'Activate Streak Freeze?',
                                 question: 'Are you sure you want to activate it now?',
-                                effect: 'When your streak ends, you have 24 hours to complete your daily quests and save your streak.',
+                                effect: 'When your streak ends, you have 24 hours to complete your quests and maintain your streak.',
                               });
                             }
                           }}
