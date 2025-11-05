@@ -140,6 +140,66 @@ frontend:
         agent: "testing"
         comment: "✅ FIXED: Skip tutorial functionality now works perfectly. Skip button (X icon) successfully closes the modal and dashboard becomes fully accessible. All header buttons are clickable and functional."
 
+  - task: "Ninja Avatar Price Fix"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/utils/avatars.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Ninja avatar price correctly updated from 25 to 45 coins. Visible in store with proper pricing to prevent exploitation."
+
+  - task: "Global Mini-Game Cooldown"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/utils/effectsUtils.js, /app/frontend/src/components/MiniGames.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Global cooldown system working perfectly. All mini-games share same cooldown timer. After playing one game, ALL games show 'On Cooldown' status with synchronized countdown. Prevents farming by switching between games."
+
+  - task: "XP Multiplier Duration & Confirmation"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/utils/effectsUtils.js, /app/frontend/src/components/ItemUseConfirmModal.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: XP Multiplier duration updated to 2 hours (was 1 hour). Confirmation modal implemented with proper title '⚡ Activate XP Multiplier?', effect description '2x XP for 2 hours', and one-time use warning. Item properly removed from inventory after activation."
+
+  - task: "Streak Saver Confirmation Modal"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/ItemUseConfirmModal.js, /app/frontend/src/components/ProfileModal.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Streak Saver confirmation modal implemented with proper title '🛡️ Activate Streak Saver?', 24-hour protection message, and one-time use warning. Item properly removed from inventory after activation."
+
+  - task: "XP Refund Fix (Base XP Only)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ CODE VERIFIED: Lines 460-480 in App.js implement proper XP refund logic. Only refunds base XP (quest.baseXP), not multiplied XP. Shows warning 'base XP only' and 'Multiplier bonus not refunded'. Prevents XP farming via complete/undo with active multiplier."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
