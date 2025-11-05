@@ -110,11 +110,11 @@ export const deactivateEffect = (effectType) => {
 };
 
 /**
- * Activate Streak Saver
+ * Activate Streak Freeze
  */
-export const activateStreakSaver = () => {
+export const activateStreakFreeze = () => {
   const activeEffects = JSON.parse(localStorage.getItem('activeEffects') || '{}');
-  activeEffects.streakSaver = {
+  activeEffects.streakFreeze = {
     active: true,
     usesLeft: 1,
     activatedAt: new Date().toISOString(),
@@ -123,25 +123,50 @@ export const activateStreakSaver = () => {
 };
 
 /**
- * Check if Streak Saver is active
+ * Check if Streak Freeze is active
  */
-export const isStreakSaverActive = () => {
+export const isStreakFreezeActive = () => {
   const activeEffects = JSON.parse(localStorage.getItem('activeEffects') || '{}');
-  return activeEffects.streakSaver?.active && activeEffects.streakSaver?.usesLeft > 0;
+  return activeEffects.streakFreeze?.active && activeEffects.streakFreeze?.usesLeft > 0;
 };
 
 /**
- * Use Streak Saver (decrement uses)
+ * Use Streak Freeze (decrement uses)
  */
-export const useStreakSaver = () => {
+export const useStreakFreeze = () => {
   const activeEffects = JSON.parse(localStorage.getItem('activeEffects') || '{}');
   
-  if (activeEffects.streakSaver?.active && activeEffects.streakSaver?.usesLeft > 0) {
-    activeEffects.streakSaver.usesLeft -= 1;
+  if (activeEffects.streakFreeze?.active && activeEffects.streakFreeze?.usesLeft > 0) {
+    activeEffects.streakFreeze.usesLeft -= 1;
     
-    if (activeEffects.streakSaver.usesLeft === 0) {
-      activeEffects.streakSaver.active = false;
+    if (activeEffects.streakFreeze.usesLeft === 0) {
+      activeEffects.streakFreeze.active = false;
     }
+    
+    localStorage.setItem('activeEffects', JSON.stringify(activeEffects));
+    return true;
+  }
+  
+  return false;
+};
+
+/**
+ * Convert old Streak Saver to new Streak Freeze (migration helper)
+ */
+export const migrateStreakSaverToFreeze = () => {
+  const activeEffects = JSON.parse(localStorage.getItem('activeEffects') || '{}');
+  
+  // Check if old streak saver exists
+  if (activeEffects.streakSaver) {
+    // Convert to new Streak Freeze format
+    activeEffects.streakFreeze = {
+      active: activeEffects.streakSaver.active,
+      usesLeft: activeEffects.streakSaver.usesLeft,
+      activatedAt: activeEffects.streakSaver.activatedAt
+    };
+    
+    // Remove old streak saver
+    delete activeEffects.streakSaver;
     
     localStorage.setItem('activeEffects', JSON.stringify(activeEffects));
     return true;
