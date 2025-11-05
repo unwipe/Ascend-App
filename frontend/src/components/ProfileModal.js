@@ -12,7 +12,7 @@ import { getActiveStreaks, getMilestoneProgress, STREAK_MILESTONES } from '../ut
 import { toast } from 'sonner';
 import ItemUseConfirmModal from './ItemUseConfirmModal';
 
-const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMultiplier, onUseStreakSaver }) => {
+const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMultiplier, onUseStreakFreeze }) => {
   const [isEditingUsername, setIsEditingUsername] = useState(false);
   const [tempUsername, setTempUsername] = useState(gameState.username);
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
