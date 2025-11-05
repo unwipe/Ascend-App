@@ -53,6 +53,13 @@ function App() {
       const streakStatus = checkStreakStatus(savedData.lastLoginDate);
       let updatedState = { ...savedData, lastLoginDate: new Date().toISOString() };
       
+      // Recalculate level based on total XP (for new exponential system)
+      // This ensures existing users get correct level after system update
+      const correctLevel = calculateLevel(updatedState.xp);
+      if (correctLevel !== updatedState.level) {
+        updatedState.level = correctLevel;
+      }
+      
       // Handle daily reset
       if (streakStatus.isNewDay) {
         updatedState.dailyQuests = updatedState.dailyQuests.map(q => ({ ...q, completed: false }));
