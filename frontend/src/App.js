@@ -934,6 +934,8 @@ function App() {
             dailyQuests={gameState.dailyQuests}
             dailyStreak={gameState.dailyStreak}
             questStreaks={gameState.questStreaks}
+            dailyQuestCreation={gameState.dailyQuestCreation}
+            tutorialCompleted={gameState.tutorialCompleted}
             onAddDaily={handleAddDaily}
             onToggleDaily={handleToggleDaily}
             onDeleteDaily={handleDeleteDaily}
