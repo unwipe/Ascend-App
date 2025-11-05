@@ -115,14 +115,14 @@ const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, dailyQuestCreatio
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="5">+5 XP</SelectItem>
                   <SelectItem value="10">+10 XP</SelectItem>
                   <SelectItem value="15">+15 XP</SelectItem>
+                  <SelectItem value="20">+20 XP</SelectItem>
                 </SelectContent>
               </Select>
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                 <p className="text-xs text-blue-300">
-                  💡 <span className="font-bold">Tip:</span> Choose XP based on how hard the task is. Be honest with yourself!
+                  💡 <span className="font-bold">Tip:</span> Daily Quests give low base XP. Build streaks to earn big milestone rewards!
                 </p>
               </div>
             </div>
