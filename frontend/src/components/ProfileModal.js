@@ -9,6 +9,7 @@ import { getLevelEmoji, getRankTitle } from '../utils/levelSystem';
 import { achievements } from '../utils/achievements';
 import { FREE_AVATARS, PAID_AVATARS, getUnlockedAvatars, getLockedAvatars } from '../utils/avatars';
 import { toast } from 'sonner';
+import ItemUseConfirmModal from './ItemUseConfirmModal';
 
 const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMultiplier, onUseStreakSaver }) => {
   const [isEditingUsername, setIsEditingUsername] = useState(false);
