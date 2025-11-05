@@ -73,24 +73,19 @@ const miniGamesData = [
 const MiniGames = ({ isOpen, onClose, onClaimReward }) => {
   const [expandedGame, setExpandedGame] = useState(null);
   const [claimingGame, setClaimingGame] = useState(null);
-  const [cooldowns, setCooldowns] = useState({});
+  const [globalCooldown, setGlobalCooldown] = useState({ isAvailable: true });
 
-  // Update cooldowns every second
+  // Update GLOBAL cooldown every second
   useEffect(() => {
     if (!isOpen) return;
 
-    const updateCooldowns = () => {
-      const newCooldowns = {};
-      miniGamesData.forEach(game => {
-        const lastPlayed = localStorage.getItem(`miniGame_${game.id}_lastPlayed`);
-        const cooldownInfo = getMiniGameCooldown(lastPlayed, 30); // 30 minute cooldown
-        newCooldowns[game.id] = cooldownInfo;
-      });
-      setCooldowns(newCooldowns);
+    const updateCooldown = () => {
+      const cooldownInfo = getGlobalMiniGameCooldown(); // Global cooldown for ALL games
+      setGlobalCooldown(cooldownInfo);
     };
 
-    updateCooldowns();
-    const interval = setInterval(updateCooldowns, 1000);
+    updateCooldown();
+    const interval = setInterval(updateCooldown, 1000);
     return () => clearInterval(interval);
   }, [isOpen]);
 
@@ -100,16 +95,15 @@ const MiniGames = ({ isOpen, onClose, onClaimReward }) => {
 
   const confirmClaim = () => {
     if (claimingGame) {
-      // Save completion timestamp
-      const now = new Date().toISOString();
-      localStorage.setItem(`miniGame_${claimingGame.id}_lastPlayed`, now);
+      // Set GLOBAL cooldown (affects ALL mini-games)
+      setGlobalMiniGameCooldown();
       
       // Award coins
       onClaimReward(claimingGame.reward);
       
-      // Update cooldowns immediately
-      const cooldownInfo = getMiniGameCooldown(now, 30);
-      setCooldowns(prev => ({ ...prev, [claimingGame.id]: cooldownInfo }));
+      // Update cooldown display immediately
+      const cooldownInfo = getGlobalMiniGameCooldown();
+      setGlobalCooldown(cooldownInfo);
       
       setClaimingGame(null);
     }
