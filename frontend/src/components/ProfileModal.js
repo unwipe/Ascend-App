@@ -202,9 +202,21 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                         <Button 
                           onClick={() => {
                             if (item.id === 'xp_multiplier') {
-                              onUseXPMultiplier();
+                              setConfirmingItem({
+                                type: 'xp_multiplier',
+                                icon: '⚡',
+                                title: 'Activate XP Multiplier?',
+                                question: 'Are you sure you want to activate it now?',
+                                effect: '2x XP for 2 hours',
+                              });
                             } else if (item.id === 'streak_saver') {
-                              onUseStreakSaver();
+                              setConfirmingItem({
+                                type: 'streak_saver',
+                                icon: '🛡️',
+                                title: 'Activate Streak Saver?',
+                                question: 'Are you sure you want to activate it now?',
+                                effect: 'When your streak ends, you have 24 hours to complete your daily quests and save your streak.',
+                              });
                             }
                           }}
                           className="w-full mt-3 bg-purple-600 hover:bg-purple-700" 
