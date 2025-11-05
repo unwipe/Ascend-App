@@ -134,6 +134,9 @@ const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, onAddDaily, onTog
             {dailyQuests.map((quest, index) => {
               const canComplete = !quest.completed || canCompleteQuest(quest.completedAt);
               const timer = timers[index];
+              const questId = quest.id || `daily-${index}-${quest.text.slice(0, 10)}`;
+              const questStreak = questStreaks?.[questId]?.streak || 0;
+              const streakDisplay = formatStreakDisplay(questStreak);
 
               return (
                 <motion.div
@@ -153,9 +156,16 @@ const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, onAddDaily, onTog
                     />
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <span className={`font-medium ${quest.completed ? 'text-green-400' : 'text-white'}`}>
-                          {quest.text}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className={`font-medium ${quest.completed ? 'text-green-400' : 'text-white'}`}>
+                            {quest.text}
+                          </span>
+                          {questStreak > 0 && (
+                            <span className="text-xs text-orange-400 font-bold bg-orange-500/10 px-2 py-0.5 rounded-full">
+                              {streakDisplay}
+                            </span>
+                          )}
+                        </div>
                         <span className="text-sm text-blue-400 font-medium">+{quest.xp} XP</span>
                       </div>
                       
