@@ -175,6 +175,9 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, questStreaks, onAddWeekly, o
               const isComplete = quest.current >= quest.target;
               const canProgress = !quest.lastProgressAt || canCompleteQuest(quest.lastProgressAt);
               const timer = progressTimers[index];
+              const questId = quest.id || `weekly-${index}-${quest.text.slice(0, 10)}`;
+              const questStreak = questStreaks?.[questId]?.streak || 0;
+              const streakDisplay = formatStreakDisplay(questStreak);
               
               return (
                 <motion.div
@@ -187,9 +190,16 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, questStreaks, onAddWeekly, o
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <span className={`font-medium ${isComplete ? 'text-green-400' : 'text-white'}`}>
-                          {quest.text}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className={`font-medium ${isComplete ? 'text-green-400' : 'text-white'}`}>
+                            {quest.text}
+                          </span>
+                          {questStreak > 0 && (
+                            <span className="text-xs text-purple-400 font-bold bg-purple-500/10 px-2 py-0.5 rounded-full">
+                              {streakDisplay}
+                            </span>
+                          )}
+                        </div>
                         <span className="text-xs text-purple-400">+{quest.xpPerIncrement || 5} XP per visit</span>
                       </div>
                     </div>
