@@ -470,7 +470,14 @@ function App() {
       totalQuestsCompleted: Math.max(0, prev.totalQuestsCompleted - 1)
     }));
     
-    toast.info(`Daily task undone. ${quest.xp} XP refunded.`);
+    // Show appropriate message based on whether multiplier was active
+    if (hadMultiplier) {
+      toast.info(`Daily task undone. -${refundXP} XP refunded (base XP only)`, {
+        description: '⚠️ Multiplier bonus not refunded'
+      });
+    } else {
+      toast.info(`Daily task undone. ${refundXP} XP refunded.`);
+    }
   };
 
   const handleDeleteDaily = (index) => {
