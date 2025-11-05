@@ -1,23 +1,37 @@
 // Game logic utility functions
 
-// Calculate required XP for next level
+// Export from levelSystem.js for consistency
+export { getLevelEmoji, getRankTitle, getXPForLevel, calculateLevel, getXPProgress } from './levelSystem';
+
+// Calculate required XP for next level (uses new exponential system)
 export const getRequiredXP = (level) => {
-  return 500 + (level - 1) * 50;
+  const { getXPForLevel } = require('./levelSystem');
+  return getXPForLevel(level + 1) - getXPForLevel(level);
 };
 
-// Export from levelSystem.js for consistency
-export { getLevelEmoji, getRankTitle } from './levelSystem';
-
-// Check if user should level up
-export const checkLevelUp = (xp, level) => {
-  const requiredXP = getRequiredXP(level);
-  if (xp >= requiredXP) {
+// Check if user should level up (updated for new exponential system)
+export const checkLevelUp = (xp, currentLevel) => {
+  const { getXPForLevel } = require('./levelSystem');
+  const xpForNextLevel = getXPForLevel(currentLevel + 1);
+  
+  if (xp >= xpForNextLevel) {
+    // Calculate how many levels to jump (in case of large XP gains)
+    let newLevel = currentLevel + 1;
+    let xpNeeded = getXPForLevel(newLevel + 1);
+    
+    while (xp >= xpNeeded) {
+      newLevel++;
+      xpNeeded = getXPForLevel(newLevel + 1);
+    }
+    
     return {
       shouldLevelUp: true,
-      newLevel: level + 1,
-      remainingXP: xp - requiredXP
+      newLevel: newLevel,
+      remainingXP: xp,
+      levelsGained: newLevel - currentLevel
     };
   }
+  
   return { shouldLevelUp: false };
 };
 
