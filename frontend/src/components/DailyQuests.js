@@ -47,7 +47,7 @@ const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, dailyQuestCreatio
         completedAt: null
       });
       setNewTask('');
-      setNewXP('5');
+      setNewXP('10');
       setIsAdding(false);
     }
   };
