@@ -420,10 +420,14 @@ function App() {
     const multiplier = getXPMultiplier();
     const totalXP = baseXP * multiplier;
     
+    // Generate quest ID if not exists
+    const questId = quest.id || `daily-${index}-${quest.text.slice(0, 10)}`;
+    
     setGameState(prev => {
       const updatedQuests = prev.dailyQuests.map((q, i) =>
         i === index ? { 
-          ...q, 
+          ...q,
+          id: questId, // Ensure quest has an ID
           completed: !q.completed, 
           completedAt: !q.completed ? new Date().toISOString() : null,
           baseXP: !q.completed ? baseXP : null, // Store base XP for refund
@@ -440,11 +444,45 @@ function App() {
         newStreak = prev.dailyStreak + 1;
       }
       
+      // Update individual quest streak (Phase 1 - Prompt 10)
+      let updatedQuestStreaks = prev.questStreaks || {};
+      let milestoneRewards = [];
+      
+      if (!wasCompleted) {
+        const oldStreak = updatedQuestStreaks[questId]?.streak || 0;
+        updatedQuestStreaks = updateQuestStreak(updatedQuestStreaks, questId, quest.text);
+        const newStreak = updatedQuestStreaks[questId].streak;
+        
+        // Check for milestone rewards
+        milestoneRewards = checkMilestoneRewards(oldStreak, newStreak);
+        
+        // Award milestone rewards
+        if (milestoneRewards.length > 0) {
+          milestoneRewards.forEach(reward => {
+            setTimeout(() => {
+              toast.success(`🎉 ${reward.title}`, {
+                description: `+${reward.xp} XP & +${reward.coins} Coins for ${reward.milestone}-day streak!`
+              });
+              soundManager.play('achievement');
+            }, 500);
+          });
+        }
+      }
+      
+      // Calculate total milestone rewards
+      const totalMilestoneXP = milestoneRewards.reduce((sum, r) => sum + r.xp, 0);
+      const totalMilestoneCoins = milestoneRewards.reduce((sum, r) => sum + r.coins, 0);
+      
       return {
         ...prev,
         dailyQuests: updatedQuests,
         dailyStreak: newStreak,
-        totalQuestsCompleted: wasCompleted ? prev.totalQuestsCompleted : prev.totalQuestsCompleted + 1
+        questStreaks: updatedQuestStreaks,
+        totalQuestsCompleted: wasCompleted ? prev.totalQuestsCompleted : prev.totalQuestsCompleted + 1,
+        xp: prev.xp + totalMilestoneXP,
+        coins: prev.coins + totalMilestoneCoins,
+        totalXPEarned: prev.totalXPEarned + totalMilestoneXP,
+        totalCoinsEarned: prev.totalCoinsEarned + totalMilestoneCoins
       };
     });
     
