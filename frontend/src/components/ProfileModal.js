@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { getLevelEmoji, getRankTitle } from '../utils/levelSystem';
 import { achievements } from '../utils/achievements';
 import { FREE_AVATARS, PAID_AVATARS, getUnlockedAvatars, getLockedAvatars } from '../utils/avatars';
+import { getActiveStreaks, getMilestoneProgress, STREAK_MILESTONES } from '../utils/streakSystem';
 import { toast } from 'sonner';
 import ItemUseConfirmModal from './ItemUseConfirmModal';
 
