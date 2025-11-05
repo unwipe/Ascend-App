@@ -239,13 +239,13 @@ agent_communication:
          - Total completions counter
          - Milestone rewards info table
       
-      **Milestone Rewards:**
+      **Milestone Rewards (UPDATED):**
       - 3 days: +20 XP, +5 Coins
-      - 7 days: +50 XP, +10 Coins
-      - 14 days: +100 XP, +25 Coins
-      - 30 days: +200 XP, +50 Coins
-      - 60 days: +500 XP, +100 Coins
-      - 100 days: +1000 XP, +250 Coins
+      - 7 days: +50 XP, +5 Coins
+      - 14 days: +100 XP, +5 Coins
+      - 30 days: +200 XP, +5 Coins
+      - 60 days: +500 XP, +5 Coins
+      - 100 days: +1000 XP, +5 Coins, **+ Phoenix Avatar 🦅** (Special Unlock)
       
       **TEST SCENARIOS:**
       1. Skip onboarding tutorial
