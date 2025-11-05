@@ -7,6 +7,7 @@ import { Checkbox } from './ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import ConfirmModal from './ConfirmModal';
 import { canUndoQuest, getUndoTimeRemaining, formatCountdown } from '../utils/timerUtils';
+import { formatStreakDisplay } from '../utils/streakSystem';
 
 const SideQuests = ({ sideQuests, onAddSide, onToggleSide, onDeleteSide, onUndoSide }) => {
   const [isAdding, setIsAdding] = useState(false);
