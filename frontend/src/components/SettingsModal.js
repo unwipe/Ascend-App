@@ -46,6 +46,28 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, onResetAll, onToggleStr
 
   const individualStreaksEnabled = settings.individualDailyStreaks || false;
 
+  const handleRedeemPromo = () => {
+    if (!promoCode.trim()) {
+      setPromoMessage({ text: '❌ Please enter a promo code', type: 'error' });
+      return;
+    }
+    
+    const result = onRedeemPromoCode(promoCode);
+    setPromoMessage({ text: result.message, type: result.success ? 'success' : 'error' });
+    
+    if (result.success) {
+      setPromoCode('');
+      // Clear message after 3 seconds
+      setTimeout(() => setPromoMessage({ text: '', type: '' }), 3000);
+    }
+  };
+
+  const handlePromoKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleRedeemPromo();
+    }
+  };
+
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
