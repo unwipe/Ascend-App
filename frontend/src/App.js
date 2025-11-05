@@ -1099,6 +1099,7 @@ function App() {
         settings={gameState.settings || {}}
         onResetAll={handleResetAll}
         onToggleStreakMode={handleToggleStreakMode}
+        onRedeemPromoCode={handleRedeemPromoCode}
       />
       
       <LevelUpModal
