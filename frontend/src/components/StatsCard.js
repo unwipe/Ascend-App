@@ -7,8 +7,8 @@ import { getLevelEmoji, getRankTitle, getXPProgress } from '../utils/gameLogic';
 const StatsCard = ({ level, xp, coins }) => {
   const xpProgress = getXPProgress(xp);
   const progress = xpProgress.progress;
-  const requiredXP = xpProgress.xpNeededForCurrentLevel;
-  const currentLevelXP = xpProgress.currentLevelXP;
+  const xpNeededForNextLevel = xpProgress.xpNeededForNextLevel;
+  const currentXP = xpProgress.currentXP;
   const emoji = getLevelEmoji(level);
   const rankTitle = getRankTitle(level);
 
