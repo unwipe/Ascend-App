@@ -500,9 +500,9 @@ function App() {
             setTimeout(() => {
               let description = `+${reward.xp} XP & +${reward.coins} Coins for ${reward.milestone}-day streak!`;
               
-              // Special Phoenix Avatar unlock for 100-day milestone
+              // Special Phoenix Character unlock for 100-day milestone
               if (reward.unlockPhoenix) {
-                description = `+${reward.xp} XP, +${reward.coins} Coins, and Phoenix Avatar unlocked! 🔥`;
+                description = `+${reward.xp} XP, +${reward.coins} Coins, and Phoenix Character unlocked! 🐦‍🔥`;
               }
               
               toast.success(`🎉 ${reward.title}`, { description });
