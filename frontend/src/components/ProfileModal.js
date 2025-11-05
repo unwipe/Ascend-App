@@ -555,8 +555,8 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
         onConfirm={() => {
           if (confirmingItem?.type === 'xp_multiplier') {
             onUseXPMultiplier();
-          } else if (confirmingItem?.type === 'streak_saver') {
-            onUseStreakSaver();
+          } else if (confirmingItem?.type === 'streak_freeze') {
+            onUseStreakFreeze();
           }
           setConfirmingItem(null);
         }}
