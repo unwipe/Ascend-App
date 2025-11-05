@@ -460,9 +460,14 @@ function App() {
         if (milestoneRewards.length > 0) {
           milestoneRewards.forEach(reward => {
             setTimeout(() => {
-              toast.success(`🎉 ${reward.title}`, {
-                description: `+${reward.xp} XP & +${reward.coins} Coins for ${reward.milestone}-day streak!`
-              });
+              let description = `+${reward.xp} XP & +${reward.coins} Coins for ${reward.milestone}-day streak!`;
+              
+              // Special Phoenix Avatar unlock for 100-day milestone
+              if (reward.unlockPhoenix) {
+                description = `+${reward.xp} XP, +${reward.coins} Coins, and Phoenix Avatar unlocked! 🔥`;
+              }
+              
+              toast.success(`🎉 ${reward.title}`, { description });
               soundManager.play('achievement');
             }, 500);
           });
