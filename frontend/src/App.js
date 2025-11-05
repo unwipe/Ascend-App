@@ -456,13 +456,17 @@ function App() {
   const handleUndoDaily = (index) => {
     const quest = gameState.dailyQuests[index];
     
+    // Refund ONLY base XP, not multiplied XP (anti-farming fix)
+    const refundXP = quest.baseXP || quest.xp;
+    const hadMultiplier = quest.multiplierApplied && quest.multiplierApplied > 1;
+    
     setGameState(prev => ({
       ...prev,
       dailyQuests: prev.dailyQuests.map((q, i) =>
-        i === index ? { ...q, completed: false, completedAt: null } : q
+        i === index ? { ...q, completed: false, completedAt: null, baseXP: null, totalXP: null, multiplierApplied: null } : q
       ),
-      xp: Math.max(0, prev.xp - quest.xp),
-      totalXPEarned: Math.max(0, prev.totalXPEarned - quest.xp),
+      xp: Math.max(0, prev.xp - refundXP),
+      totalXPEarned: Math.max(0, prev.totalXPEarned - refundXP),
       totalQuestsCompleted: Math.max(0, prev.totalQuestsCompleted - 1)
     }));
     
