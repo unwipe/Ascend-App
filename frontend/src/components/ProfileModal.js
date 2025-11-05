@@ -16,6 +16,7 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
   const [tempUsername, setTempUsername] = useState(gameState.username);
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(gameState.avatar);
+  const [confirmingItem, setConfirmingItem] = useState(null);
 
   const handleSaveUsername = () => {
     if (tempUsername.trim()) {
