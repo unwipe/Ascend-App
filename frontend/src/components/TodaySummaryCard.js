@@ -58,7 +58,7 @@ const TodaySummaryCard = ({ gameState }) => {
     const interval = setInterval(loadTodayStats, 2000);
 
     return () => clearInterval(interval);
-  }, [gameState, hasShownConfetti]);
+  }, [gameState?.xp, gameState?.coins, gameState?.totalQuestsCompleted, hasShownConfetti]);
 
   const totalQuests = todayStats.questsCompleted 
     ? Object.values(todayStats.questsCompleted).reduce((a, b) => a + b, 0)
