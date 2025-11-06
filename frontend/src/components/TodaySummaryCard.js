@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, Coins, Target, Zap, CheckCircle2, Flame } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import { getTodayProgress, onDailyLogsUpdate } from '../utils/dailyLogs';
 
 const TodaySummaryCard = ({ gameState }) => {
   const [todayStats, setTodayStats] = useState({
