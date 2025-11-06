@@ -112,8 +112,12 @@ export const redeemPromoCode = async (code, jwtToken) => {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || 'Failed to redeem promo code');
+    try {
+      const error = await response.json();
+      throw new Error(error.detail || 'Failed to redeem promo code');
+    } catch {
+      throw new Error(`Failed to redeem promo code: ${response.status}`);
+    }
   }
 
   return response.json();
