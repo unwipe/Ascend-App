@@ -221,6 +221,55 @@ test_plan:
   test_all: false
   test_priority: "completed"
 
+backend:
+  - task: "Google OAuth Authentication"
+    implemented: true
+    working: "unknown"
+    file: "/app/backend/server.py, /app/backend/auth.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: "unknown"
+        agent: "main"
+        comment: "Implemented Google OAuth flow with token verification, JWT creation, and user creation/login. Need to test /api/auth/google endpoint with valid Google token."
+
+  - task: "User Data Management APIs"
+    implemented: true
+    working: "unknown"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: "unknown"
+        agent: "main"
+        comment: "Implemented GET /api/user/{google_id} and POST /api/user/update endpoints with JWT authentication. Need to test data retrieval and updates."
+
+  - task: "Promo Code Redemption"
+    implemented: true
+    working: "unknown"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "unknown"
+        agent: "main"
+        comment: "Implemented POST /api/promo/redeem endpoint with validation, usage tracking, and reward distribution. Need to test redemption flow."
+
+  - task: "Database Schema & Collections"
+    implemented: true
+    working: "unknown"
+    file: "/app/backend/models.py, /app/backend/seed_promos.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "unknown"
+        agent: "main"
+        comment: "Defined Pydantic models for User and PromoCode. Created seed script for promo codes. Need to verify database operations and data integrity."
+
 agent_communication:
   - agent: "main"
     message: |
