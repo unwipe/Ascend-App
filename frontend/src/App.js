@@ -358,6 +358,7 @@ function App() {
       
       if (levelCheck.shouldLevelUp) {
         soundManager.play('levelUp');
+        triggerLevelUpConfetti(); // 🎉 Confetti on level up
         setLevelUpData({ 
           oldLevel: prev.level, 
           newLevel: levelCheck.newLevel,
