@@ -44,10 +44,19 @@ const SideQuests = ({ sideQuests, questStreaks, usedSuggestions, onAddSide, onTo
         completed: false,
         completedAt: null
       });
+      // Mark suggestion as used
+      if (onMarkSuggestionUsed) {
+        onMarkSuggestionUsed(newTask.trim());
+      }
       setNewTask('');
       setNewXP('5');
       setIsAdding(false);
     }
+  };
+
+  const handleSelectSuggestion = (suggestion) => {
+    setNewTask(suggestion);
+    setIsAdding(true);
   };
 
   return (
