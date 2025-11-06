@@ -54,16 +54,18 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
   );
 
   const stats = {
-    level: gameState.level,
-    totalXP: gameState.totalXPEarned,
-    dailyStreak: gameState.dailyStreak,
-    weeklyStreak: gameState.weeklyStreak,
-    longestDailyStreak: gameState.longestDailyStreak,
-    longestWeeklyStreak: gameState.longestWeeklyStreak,
-    totalQuests: gameState.totalQuestsCompleted,
-    totalCoins: gameState.totalCoinsEarned,
-    coinsSpent: gameState.totalCoinsSpent,
-    memberSince: new Date(gameState.memberSince).toLocaleDateString()
+    level: gameState.level || 1,
+    totalXP: gameState.totalXPEarned || gameState.xp || 0,
+    dailyStreak: gameState.dailyStreak || 0,
+    weeklyStreak: gameState.weeklyStreak || 0,
+    longestDailyStreak: gameState.longestDailyStreak || 0,
+    longestWeeklyStreak: gameState.longestWeeklyStreak || 0,
+    totalQuests: gameState.totalQuestsCompleted || 0,
+    totalCoins: gameState.totalCoinsEarned || gameState.coins || 0,
+    coinsSpent: gameState.totalCoinsSpent || 0,
+    memberSince: gameState.memberSince 
+      ? new Date(gameState.memberSince).toLocaleDateString() 
+      : new Date().toLocaleDateString()
   };
 
   return (
