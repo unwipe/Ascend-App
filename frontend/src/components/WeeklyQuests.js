@@ -60,11 +60,20 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, questStreaks, weeklyQuestCre
         xpPerIncrement: parseInt(newXP),
         lastProgressAt: null
       });
+      // Mark suggestion as used
+      if (onMarkSuggestionUsed) {
+        onMarkSuggestionUsed(newTask.trim());
+      }
       setNewTask('');
       setNewTarget('3');
       setNewXP('10');
       setIsAdding(false);
     }
+  };
+
+  const handleSelectSuggestion = (suggestion) => {
+    setNewTask(suggestion);
+    setIsAdding(true);
   };
 
   return (
