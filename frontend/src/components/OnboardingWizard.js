@@ -97,6 +97,16 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
     setWeeklyQuests(weeklyQuests.filter((_, i) => i !== index));
   };
 
+  // Handle inspiration suggestion
+  const handleSelectSuggestion = (suggestion) => {
+    if (inspirationQuestType === 'daily') {
+      setCurrentDailyHabit(suggestion);
+    } else if (inspirationQuestType === 'weekly') {
+      setCurrentWeeklyGoal(suggestion);
+    }
+    setShowInspiration(false);
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onSkip(); }}>
       <DialogContent className="max-w-3xl max-h-[90vh] bg-gradient-to-br from-gray-900/98 to-black/98 backdrop-blur-lg border border-white/20 overflow-hidden flex flex-col" data-testid="onboarding-wizard">
