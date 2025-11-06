@@ -260,6 +260,14 @@ const SideQuests = ({ sideQuests, questStreaks, usedSuggestions, onAddSide, onTo
         confirmText="Delete"
         variant="danger"
       />
+
+      <InspirationModal
+        isOpen={showInspiration}
+        onClose={() => setShowInspiration(false)}
+        questType="sideQuest"
+        onSelectSuggestion={handleSelectSuggestion}
+        usedSuggestions={usedSuggestions || []}
+      />
     </>
   );
 };
