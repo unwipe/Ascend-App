@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Plus, Trash2, Calendar, Clock } from 'lucide-react';
+import { Zap, Plus, Trash2, Calendar, Clock, Lightbulb } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import ConfirmModal from './ConfirmModal';
+import InspirationModal from './InspirationModal';
 import { getTimeUntilMidnight, getTimeUntilMonday, formatCountdown, canCompleteQuest } from '../utils/timerUtils';
 import { formatStreakDisplay } from '../utils/streakSystem';
 
-const WeeklyQuests = ({ weeklyQuests, weeklyStreak, questStreaks, weeklyQuestCreation, tutorialCompleted, onAddWeekly, onIncrementWeekly, onDeleteWeekly }) => {
+const WeeklyQuests = ({ weeklyQuests, weeklyStreak, questStreaks, weeklyQuestCreation, tutorialCompleted, usedSuggestions, onAddWeekly, onIncrementWeekly, onDeleteWeekly, onMarkSuggestionUsed }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [newTarget, setNewTarget] = useState('3');
@@ -17,6 +18,7 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, questStreaks, weeklyQuestCre
   const [incrementIndex, setIncrementIndex] = useState(null);
   const [mondayTimer, setMondayTimer] = useState('');
   const [progressTimers, setProgressTimers] = useState({});
+  const [showInspiration, setShowInspiration] = useState(false);
 
   // Update Monday reset timer
   useEffect(() => {
