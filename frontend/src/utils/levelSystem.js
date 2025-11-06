@@ -56,19 +56,19 @@ const toRoman = (num) => {
 };
 
 /**
- * Calculate XP required for a specific level (x1.5 exponential curve)
+ * Calculate XP required for a specific level (x1.25 exponential curve)
  * This returns the amount of XP needed to level up FROM this level
  * 
  * Level 1: 100 XP needed to reach Level 2
- * Level 2: 150 XP needed to reach Level 3  
- * Level 3: 225 XP needed to reach Level 4
- * Level 4: 338 XP needed to reach Level 5
- * Level 5: 507 XP needed to reach Level 6
+ * Level 2: 125 XP needed to reach Level 3  
+ * Level 3: 156 XP needed to reach Level 4
+ * Level 4: 195 XP needed to reach Level 5
+ * Level 5: 244 XP needed to reach Level 6
  * 
- * Formula: XP_needed = Math.round(100 * Math.pow(1.5, level - 1))
+ * Formula: XP_needed = Math.ceil(100 * Math.pow(1.25, level - 1))
  */
 export const getXPForLevel = (level) => {
-  return Math.ceil(100 * Math.pow(1.5, level - 1));
+  return Math.ceil(100 * Math.pow(1.25, level - 1));
 };
 
 /**
