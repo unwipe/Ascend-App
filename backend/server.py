@@ -114,17 +114,26 @@ async def google_auth(auth_request: GoogleAuthRequest):
             logger.info(f"New user created: {google_user['email']}")
         
         # Generate JWT token
-        jwt_token = create_jwt_token({
-            'google_id': google_id,
-            'email': google_user['email']
-        })
+        try:
+            jwt_token = create_jwt_token({
+                'google_id': google_id,
+                'email': google_user['email']
+            })
+            logger.info(f"JWT token created successfully for user: {google_user['email']}")
+        except Exception as jwt_error:
+            logger.error(f"JWT token creation failed: {type(jwt_error).__name__}: {str(jwt_error)}")
+            import traceback
+            logger.error(f"JWT traceback: {traceback.format_exc()}")
+            raise
         
         return AuthResponse(token=jwt_token, user=user_data)
         
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Auth error: {str(e)}")
+        logger.error(f"Auth error: {type(e).__name__}: {str(e)}")
+        import traceback
+        logger.error(f"Auth traceback: {traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=f"Authentication failed: {str(e)}")
 
 
