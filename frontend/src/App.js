@@ -1056,6 +1056,7 @@ function App() {
     });
     
     addXP(quest.xp);
+    soundManager.play('questComplete'); // 🎵 Quest completion sound
     toast.success('Side Quest Completed! ✅', { description: `+${quest.xp} XP earned!` });
     
     // Log to daily logs
