@@ -200,14 +200,21 @@ function App() {
         setShowOnboarding(true);
       }
       
+      console.log('🟢 [App] Login successful!');
       toast.success(`Welcome back, ${userData.name}! 🎮`);
       
       // Sync to server immediately
+      console.log('🔵 [App] Syncing to server...');
       syncToServer(mergedState, userData.token);
       
     } catch (error) {
-      console.error('Login failed:', error);
-      toast.error('Login failed. Please try again.');
+      console.error('🔴 [App] Login failed:', {
+        message: error.message,
+        stack: error.stack,
+        fullError: error
+      });
+      toast.error(error.message || 'Login failed. Please try again.');
+      throw error; // Re-throw to propagate to WelcomeModal
     }
   };
 
