@@ -109,11 +109,11 @@ const InspirationModal = ({ isOpen, onClose, questType, onSelectSuggestion, used
         </div>
 
         {/* Footer */}
-        <div className="flex-shrink-0 pt-4 border-t border-white/10 flex justify-end gap-2">
+        <div className="flex-shrink-0 pt-4 border-t border-gray-700/50 flex justify-end gap-2">
           <Button
             onClick={onClose}
             variant="outline"
-            className="border-white/20 text-white hover:bg-white/10"
+            className="border-gray-600/50 text-gray-300 hover:bg-gray-800/50 hover:text-gray-100"
           >
             Close
           </Button>
