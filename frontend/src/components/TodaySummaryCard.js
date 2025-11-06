@@ -109,7 +109,7 @@ const TodaySummaryCard = ({ gameState }) => {
             <p className="text-xs text-gray-400">Quests Done</p>
           </div>
           <p className="text-2xl font-bold text-green-400">{totalQuests}</p>
-          {totalQuests > 0 && (
+          {totalQuests > 0 && todayStats.questsCompleted && (
             <div className="flex gap-1 mt-1 text-xs text-gray-500">
               {todayStats.questsCompleted.daily > 0 && <span>📅{todayStats.questsCompleted.daily}</span>}
               {todayStats.questsCompleted.weekly > 0 && <span>⚡{todayStats.questsCompleted.weekly}</span>}
