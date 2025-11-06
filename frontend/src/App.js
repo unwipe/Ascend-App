@@ -908,8 +908,18 @@ function App() {
       };
     });
     
-    addXP(quest.xpPerIncrement || 5);
-    toast.success('Progress Updated! 💪', { description: `+${quest.xpPerIncrement || 5} XP earned!` });
+    const xpGained = quest.xpPerIncrement || 5;
+    addXP(xpGained);
+    toast.success('Progress Updated! 💪', { description: `+${xpGained} XP earned!` });
+    
+    // Log to daily logs
+    logXPGain(xpGained);
+    
+    // Check if quest is complete
+    const updatedQuest = gameState.weeklyQuests[index];
+    if (updatedQuest && updatedQuest.current >= updatedQuest.target) {
+      logQuestCompletion('weekly');
+    }
   };
 
   const handleDeleteWeekly = (index) => {
