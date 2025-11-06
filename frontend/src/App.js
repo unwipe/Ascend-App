@@ -22,6 +22,7 @@ import DailyCheckIn from './components/DailyCheckIn';
 import ActiveEffects from './components/ActiveEffects';
 import WelcomeModal from './components/WelcomeModal';
 import TodaySummaryCard from './components/TodaySummaryCard';
+import PhoenixUnlockModal from './components/PhoenixUnlockModal';
 import { loadGameData, saveGameData, getInitialGameState } from './utils/localStorage';
 import { logXPGain, logCoinsEarned, logQuestCompletion, logStreakChange, cleanOldLogs } from './utils/dailyLogs';
 import { checkLevelUp, checkStreakStatus, getWeekStart, calculateLevel } from './utils/gameLogic';
