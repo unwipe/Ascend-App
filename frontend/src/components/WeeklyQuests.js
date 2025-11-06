@@ -317,6 +317,14 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, questStreaks, weeklyQuestCre
         confirmText="Delete"
         variant="danger"
       />
+
+      <InspirationModal
+        isOpen={showInspiration}
+        onClose={() => setShowInspiration(false)}
+        questType="weeklyQuest"
+        onSelectSuggestion={handleSelectSuggestion}
+        usedSuggestions={usedSuggestions || []}
+      />
     </>
   );
 };
