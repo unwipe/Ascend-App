@@ -108,7 +108,7 @@ async def google_auth(auth_request: GoogleAuthRequest):
                 'level': 1,
                 'coins': 0,
                 'quests': {'daily': [], 'weekly': [], 'main': None, 'side': []},
-                'streaks': {},
+                'streaks': {'dailyStreak': 0, 'weeklyStreak': 0, 'longestDailyStreak': 0, 'longestWeeklyStreak': 0},
                 'quest_streaks': {},
                 'inventory': [],  # Array, not object!
                 'active_effects': [],
@@ -123,6 +123,16 @@ async def google_auth(auth_request: GoogleAuthRequest):
                 'daily_check_in_date': None,
                 'main_quest_history': [],
                 'achievements': [],
+                # Profile stats
+                'totalXPEarned': 0,
+                'totalQuestsCompleted': 0,
+                'totalCoinsEarned': 0,
+                'totalCoinsSpent': 0,
+                'totalPurchases': 0,
+                'mainQuestsCompleted': 0,
+                'memberSince': datetime.now(timezone.utc).isoformat(),
+                'miniGamesPlayed': {},
+                # Timestamps
                 'created_at': datetime.now(timezone.utc).isoformat(),
                 'updated_at': datetime.now(timezone.utc).isoformat()
             }
