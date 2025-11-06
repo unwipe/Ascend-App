@@ -277,8 +277,15 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
 
             {/* Tab 3: Achievements */}
             <TabsContent value="achievements">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {achievements.map(achievement => {
+              {achievements.length === 0 ? (
+                <div className="text-center py-16">
+                  <div className="text-6xl mb-4">🏆</div>
+                  <p className="text-lg text-gray-300 mb-2">No achievements yet</p>
+                  <p className="text-sm text-gray-500">Keep playing to unlock amazing achievements!</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {achievements.map(achievement => {
                   const isUnlocked = gameState.unlockedAchievements?.includes(achievement.id);
                   return (
                     <motion.div
