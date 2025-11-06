@@ -118,9 +118,11 @@ export const logXPGain = (amount) => {
  */
 export const logCoinsEarned = (amount) => {
   const todayLog = getTodayLog();
-  return updateTodayLog({
+  const result = updateTodayLog({
     coins: todayLog.coins + amount
   });
+  emitDailyLogsUpdate();
+  return result;
 };
 
 /**
