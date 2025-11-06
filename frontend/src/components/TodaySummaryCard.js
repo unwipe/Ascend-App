@@ -23,31 +23,41 @@ const TodaySummaryCard = ({ gameState }) => {
   useEffect(() => {
     if (!gameState) return;
 
-    // Get today's date string
-    const today = new Date().toISOString().split('T')[0];
+    const loadTodayStats = () => {
+      // Get today's date string
+      const today = new Date().toISOString().split('T')[0];
 
-    // Load daily logs from localStorage
-    const logsStr = localStorage.getItem('ascend_daily_logs');
-    const logs = logsStr ? JSON.parse(logsStr) : {};
-    const todayLog = logs[today] || {
-      xp: 0,
-      coins: 0,
-      completed: { daily: 0, weekly: 0, side: 0, main: 0 },
-      streakChanges: { daily: 0, weekly: 0 }
+      // Load daily logs from localStorage
+      const logsStr = localStorage.getItem('ascend_daily_logs');
+      const logs = logsStr ? JSON.parse(logsStr) : {};
+      const todayLog = logs[today] || {
+        xp: 0,
+        coins: 0,
+        completed: { daily: 0, weekly: 0, side: 0, main: 0 },
+        streakChanges: { daily: 0, weekly: 0 }
+      };
+
+      setTodayStats(todayLog);
+
+      // Show confetti if XP gained today and haven't shown yet
+      if (todayLog.xp > 0 && !hasShownConfetti) {
+        confetti({
+          particleCount: 50,
+          spread: 60,
+          origin: { x: 0.5, y: 0.3 },
+          colors: ['#60a5fa', '#34d399', '#fbbf24']
+        });
+        setHasShownConfetti(true);
+      }
     };
 
-    setTodayStats(todayLog);
+    // Load initially
+    loadTodayStats();
 
-    // Show confetti if XP gained today and haven't shown yet
-    if (todayLog.xp > 0 && !hasShownConfetti) {
-      confetti({
-        particleCount: 50,
-        spread: 60,
-        origin: { x: 0.5, y: 0.3 },
-        colors: ['#60a5fa', '#34d399', '#fbbf24']
-      });
-      setHasShownConfetti(true);
-    }
+    // Poll for updates every 2 seconds to catch localStorage changes
+    const interval = setInterval(loadTodayStats, 2000);
+
+    return () => clearInterval(interval);
   }, [gameState, hasShownConfetti]);
 
   const totalQuests = todayStats.questsCompleted 
