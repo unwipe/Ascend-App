@@ -141,14 +141,24 @@ const MainQuest = ({ mainQuest, mainQuestCooldown, onAddMainQuest, onEditMainQue
         <div className="text-6xl mb-4">🎯</div>
         <h3 className="text-2xl font-bold text-white mb-2">No Current Main Quest</h3>
         <p className="text-gray-300 mb-6">Set your biggest goal and start your journey!</p>
-        <Button
-          onClick={() => setIsAdding(true)}
-          className="bg-blue-600 hover:bg-blue-700"
-          data-testid="add-main-quest-btn"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Add Main Quest
-        </Button>
+        <div className="flex items-center justify-center gap-2">
+          <Button
+            onClick={() => setIsAdding(true)}
+            className="bg-blue-600 hover:bg-blue-700"
+            data-testid="add-main-quest-btn"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Add Main Quest
+          </Button>
+          <Button
+            onClick={() => setShowInspiration(true)}
+            variant="outline"
+            className="border-yellow-500/50 text-yellow-400 hover:bg-yellow-500/10"
+            title="Need Inspiration?"
+          >
+            <Lightbulb className="w-4 h-4" />
+          </Button>
+        </div>
       </motion.div>
     );
   }
