@@ -155,17 +155,27 @@ const MainQuest = ({ mainQuest, mainQuestCooldown, onAddMainQuest, onEditMainQue
 
   if (isAdding || isEditing) {
     return (
+      <>
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 shadow-xl"
         data-testid="main-quest-form"
       >
-        <div className="flex items-center gap-2 mb-4">
-          <Target className="w-6 h-6 text-blue-400" />
-          <h3 className="text-xl font-bold text-white">
-            {isEditing ? 'Edit Main Quest' : 'Add Main Quest'}
-          </h3>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Target className="w-6 h-6 text-blue-400" />
+            <h3 className="text-xl font-bold text-white">
+              {isEditing ? 'Edit Main Quest' : 'Add Main Quest'}
+            </h3>
+          </div>
+          <button
+            onClick={() => setShowInspiration(true)}
+            className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10 rounded-lg p-2 transition-all"
+            title="Need Inspiration?"
+          >
+            <Lightbulb className="w-5 h-5" />
+          </button>
         </div>
         
         <div className="space-y-4">
