@@ -1136,6 +1136,13 @@ function App() {
       // Show success toast with sound
       soundManager.play('coins');
       toast.success(result.message);
+      
+      // Log rewards
+      if (reward.type === 'xp') {
+        logXPGain(reward.amount);
+      } else if (reward.type === 'coins') {
+        logCoinsEarned(reward.amount);
+      }
     }
     
     return result;
