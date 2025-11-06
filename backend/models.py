@@ -41,7 +41,7 @@ class UserData(BaseModel):
     quest_streaks: Dict[str, Any] = Field(default_factory=dict)
     
     # Inventory & Effects
-    inventory: Dict[str, Any] = Field(default_factory=dict)
+    inventory: List[Dict[str, Any]] = Field(default_factory=list)
     active_effects: List[Dict[str, Any]] = Field(default_factory=list)
     
     # Settings & Metadata
