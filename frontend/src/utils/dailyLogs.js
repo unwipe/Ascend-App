@@ -106,9 +106,11 @@ export const updateTodayLog = (updates) => {
  */
 export const logXPGain = (amount) => {
   const todayLog = getTodayLog();
-  return updateTodayLog({
+  const result = updateTodayLog({
     xp: todayLog.xp + amount
   });
+  emitDailyLogsUpdate();
+  return result;
 };
 
 /**
