@@ -65,10 +65,29 @@ async def google_auth(auth_request: GoogleAuthRequest):
         if existing_user:
             # User exists - update last login and return
             existing_user['updated_at'] = datetime.now(timezone.utc).isoformat()
-            await db.users.update_one(
-                {"google_id": google_id},
-                {"$set": {"updated_at": existing_user['updated_at']}}
-            )
+            
+            # MIGRATION: Convert inventory from object to array if needed
+            if existing_user.get('inventory') and not isinstance(existing_user['inventory'], list):
+                logger.info(f"🔧 [Migration] Converting inventory from object to array for {google_user['email']}")
+                old_inventory = existing_user['inventory']
+                # Convert object to array of items
+                existing_user['inventory'] = []
+                if isinstance(old_inventory, dict):
+                    for item_name, count in old_inventory.items():
+                        if isinstance(count, int) and count > 0:
+                            for _ in range(count):
+                                existing_user['inventory'].append({'name': item_name, 'count': 1})
+                
+                # Update database with migrated inventory
+                await db.users.update_one(
+                    {"google_id": google_id},
+                    {"$set": {"inventory": existing_user['inventory'], "updated_at": existing_user['updated_at']}}
+                )
+            else:
+                await db.users.update_one(
+                    {"google_id": google_id},
+                    {"$set": {"updated_at": existing_user['updated_at']}}
+                )
             
             # Convert datetime strings back to datetime objects for Pydantic
             if isinstance(existing_user.get('created_at'), str):
@@ -77,7 +96,7 @@ async def google_auth(auth_request: GoogleAuthRequest):
                 existing_user['updated_at'] = datetime.fromisoformat(existing_user['updated_at'])
             
             user_data = UserData(**existing_user)
-            logger.info(f"Existing user logged in: {google_user['email']}")
+            logger.info(f"🟢 [Auth] Existing user logged in: {google_user['email']}")
         else:
             # New user - create account
             new_user_data = {
