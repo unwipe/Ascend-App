@@ -29,6 +29,7 @@ import { getXPMultiplier, activateXPMultiplier, activateStreakFreeze, isStreakFr
 import { updateQuestStreak, checkMilestoneRewards, getActiveStreaks } from './utils/streakSystem';
 import { redeemPromoCode } from './utils/promoCodes';
 import { authenticateWithGoogle, updateUserData, checkOnlineStatus } from './utils/api';
+import { normalizeGameState, mergeGameStates } from './utils/stateNormalizer';
 import '@/App.css';
 
 function App() {
