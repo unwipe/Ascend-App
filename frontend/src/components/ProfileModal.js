@@ -313,7 +313,7 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
 
             {/* Tab 3: Inventory */}
             <TabsContent value="inventory">
-              {gameState.inventory?.length === 0 ? (
+              {(!gameState.inventory || !Array.isArray(gameState.inventory) || gameState.inventory.length === 0) ? (
                 <div className="text-center py-16">
                   <Package className="w-16 h-16 text-gray-600 mx-auto mb-4" />
                   <p className="text-gray-400 text-lg">Your inventory is empty.</p>
@@ -321,7 +321,7 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                 </div>
               ) : (
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {gameState.inventory?.map((item, index) => (
+                  {Array.isArray(gameState.inventory) && gameState.inventory.map((item, index) => (
                     <div key={index} className="bg-white/10 rounded-xl p-4 border border-white/20">
                       <div className="text-4xl text-center mb-2">{item.icon}</div>
                       <h3 className="font-bold text-white text-center">{item.name}</h3>
