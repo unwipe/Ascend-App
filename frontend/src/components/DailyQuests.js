@@ -160,8 +160,10 @@ const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, dailyQuestCreatio
         )}
 
         {dailyQuests.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">
-            <p>No daily quests yet. Add your first habit!</p>
+          <div className="text-center py-12">
+            <div className="text-6xl mb-4">📅</div>
+            <p className="text-lg text-gray-300 mb-2">No daily quests yet</p>
+            <p className="text-sm text-gray-500">Click the + button above to add your first daily habit!</p>
           </div>
         ) : (
           <div className="space-y-2">
