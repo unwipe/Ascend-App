@@ -433,6 +433,9 @@ function App() {
     toast.success(`${item.name} added to inventory! ✨`, {
       description: 'Check your profile to use it.'
     });
+    
+    // Log coins spent
+    logCoinsEarned(-item.price);
   };
 
   // Avatar purchase handler
