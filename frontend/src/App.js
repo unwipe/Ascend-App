@@ -1042,10 +1042,12 @@ function App() {
             questStreaks={gameState.questStreaks}
             dailyQuestCreation={gameState.dailyQuestCreation}
             tutorialCompleted={gameState.tutorialCompleted}
+            usedSuggestions={gameState.usedSuggestions}
             onAddDaily={handleAddDaily}
             onToggleDaily={handleToggleDaily}
             onDeleteDaily={handleDeleteDaily}
             onUndoDaily={handleUndoDaily}
+            onMarkSuggestionUsed={handleMarkSuggestionUsed}
           />
           
           <WeeklyQuests
