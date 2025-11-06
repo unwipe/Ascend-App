@@ -143,8 +143,8 @@ const TodaySummaryCard = ({ gameState }) => {
             <div>
               <p className="text-sm text-gray-400">Weekly</p>
               <p className="text-lg font-bold text-purple-400">
-                {gameState.weeklyStreak}
-                {todayStats.streakChanges.weekly !== 0 && (
+                {gameState?.weeklyStreak || 0}
+                {todayStats.streakChanges?.weekly !== 0 && (
                   <span className={`text-xs ml-1 ${todayStats.streakChanges.weekly > 0 ? 'text-green-400' : 'text-red-400'}`}>
                     {todayStats.streakChanges.weekly > 0 ? '+' : ''}{todayStats.streakChanges.weekly}
                   </span>
