@@ -63,6 +63,9 @@ def create_jwt_token(user_data: dict) -> str:
     Returns:
         JWT token string
     """
+    if not JWT_SECRET:
+        raise ValueError("JWT_SECRET is not configured")
+    
     expires = datetime.now(timezone.utc) + timedelta(minutes=JWT_EXPIRATION_MINUTES)
     
     payload = {
@@ -72,7 +75,9 @@ def create_jwt_token(user_data: dict) -> str:
         'iat': datetime.now(timezone.utc)
     }
     
-    token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
+    # Ensure secret is a string (not bytes) for python-jose
+    secret_key = JWT_SECRET if isinstance(JWT_SECRET, str) else JWT_SECRET.decode('utf-8')
+    token = jwt.encode(payload, secret_key, algorithm=JWT_ALGORITHM)
     return token
 
 
