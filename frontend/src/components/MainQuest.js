@@ -257,7 +257,7 @@ const MainQuest = ({ mainQuest, mainQuestCooldown, onAddMainQuest, onEditMainQue
       <InspirationModal
         isOpen={showInspiration}
         onClose={() => setShowInspiration(false)}
-        questType="main"
+        questType="mainQuest"
         onSelectSuggestion={handleSelectSuggestion}
         usedSuggestions={[]}
       />
@@ -385,7 +385,7 @@ const MainQuest = ({ mainQuest, mainQuestCooldown, onAddMainQuest, onEditMainQue
       <InspirationModal
         isOpen={showInspiration}
         onClose={() => setShowInspiration(false)}
-        questType="main"
+        questType="mainQuest"
         onSelectSuggestion={handleSelectSuggestion}
         usedSuggestions={[]}
       />
