@@ -157,6 +157,14 @@ export function mergeGameStates(serverData, localData) {
     ...localData,
     ...serverData,
     
+    // Use local avatar (emoji) if exists, don't use Google URL
+    avatar: localData?.avatar && !localData.avatar.startsWith('http') 
+      ? localData.avatar 
+      : '😊',
+    
+    // Use server name if available, otherwise local username
+    username: serverData?.name || localData?.username || 'Adventurer',
+    
     // Keep higher values
     xp: Math.max(
       Number(localData?.xp ?? 0), 
