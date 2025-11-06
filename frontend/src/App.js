@@ -1134,6 +1134,23 @@ function App() {
               🌌
             </motion.div>
             <h1 className="text-2xl font-bold text-white">Ascend</h1>
+            
+            {/* Online/Offline Indicator */}
+            {user && (
+              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                {isOnline ? (
+                  <>
+                    <Wifi className="w-4 h-4 text-green-400" />
+                    <span className="text-xs text-green-400 hidden sm:inline">Online</span>
+                  </>
+                ) : (
+                  <>
+                    <WifiOff className="w-4 h-4 text-gray-400" />
+                    <span className="text-xs text-gray-400 hidden sm:inline">Offline</span>
+                  </>
+                )}
+              </div>
+            )}
           </div>
           
           <div className="flex gap-2">
