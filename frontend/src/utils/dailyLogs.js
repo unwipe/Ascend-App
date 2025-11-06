@@ -180,5 +180,6 @@ export const cleanOldLogs = () => {
   });
   
   saveDailyLogs(cleanedLogs);
+  emitDailyLogsUpdate();
   return cleanedLogs;
 };
