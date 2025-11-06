@@ -253,7 +253,7 @@ async def redeem_promo(
         inventory[item_id] = inventory.get(item_id, 0) + 1
         update_dict['inventory'] = inventory
         reward_amount = 1
-        message = f"Redeemed! Item added to inventory"
+        message = "Redeemed! Item added to inventory"
     else:
         raise HTTPException(status_code=500, detail="Invalid promo code type")
     
