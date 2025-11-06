@@ -48,10 +48,19 @@ const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, dailyQuestCreatio
         completed: false,
         completedAt: null
       });
+      // Mark suggestion as used
+      if (onMarkSuggestionUsed) {
+        onMarkSuggestionUsed(newTask.trim());
+      }
       setNewTask('');
       setNewXP('10');
       setIsAdding(false);
     }
+  };
+
+  const handleSelectSuggestion = (suggestion) => {
+    setNewTask(suggestion);
+    setIsAdding(true);
   };
 
   return (
