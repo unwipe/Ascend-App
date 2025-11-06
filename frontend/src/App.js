@@ -756,6 +756,12 @@ function App() {
       
       if (shouldUnlockPhoenix && !updatedUnlockedAvatars.includes('phoenix')) {
         updatedUnlockedAvatars = [...updatedUnlockedAvatars, 'phoenix'];
+        triggerPhoenixConfetti(); // 🎉 Special confetti for Phoenix unlock!
+      }
+      
+      // Trigger confetti for milestone rewards
+      if (milestoneRewards.length > 0) {
+        triggerStreakConfetti();
       }
       
       return {
