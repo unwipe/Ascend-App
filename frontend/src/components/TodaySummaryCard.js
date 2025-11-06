@@ -107,12 +107,12 @@ const TodaySummaryCard = ({ gameState }) => {
             <p className="text-xs text-gray-400">Quests Done</p>
           </div>
           <p className="text-2xl font-bold text-green-400">{totalQuests}</p>
-          {totalQuests > 0 && todayStats.questsCompleted && (
+          {totalQuests > 0 && todayStats.completed && (
             <div className="flex gap-1 mt-1 text-xs text-gray-500">
-              {todayStats.questsCompleted.daily > 0 && <span>📅{todayStats.questsCompleted.daily}</span>}
-              {todayStats.questsCompleted.weekly > 0 && <span>⚡{todayStats.questsCompleted.weekly}</span>}
-              {todayStats.questsCompleted.side > 0 && <span>⭐{todayStats.questsCompleted.side}</span>}
-              {todayStats.questsCompleted.main > 0 && <span>🎯{todayStats.questsCompleted.main}</span>}
+              {todayStats.completed.daily > 0 && <span>📅{todayStats.completed.daily}</span>}
+              {todayStats.completed.weekly > 0 && <span>⚡{todayStats.completed.weekly}</span>}
+              {todayStats.completed.side > 0 && <span>⭐{todayStats.completed.side}</span>}
+              {todayStats.completed.main > 0 && <span>🎯{todayStats.completed.main}</span>}
             </div>
           )}
         </motion.div>
