@@ -4,14 +4,15 @@
 export const STREAK_MILESTONES = [3, 7, 14, 30, 60, 100];
 
 // Milestone rewards (XP + Coins + Special Unlocks)
+// XP rewards doubled for better progression
 export const getMilestoneReward = (milestone) => {
   const rewards = {
-    3: { xp: 20, coins: 5, title: '3-Day Streak!' },
-    7: { xp: 50, coins: 5, title: 'Week Warrior!' },
-    14: { xp: 100, coins: 5, title: '2-Week Champion!' },
-    30: { xp: 200, coins: 5, title: 'Monthly Master!' },
-    60: { xp: 500, coins: 5, title: '60-Day Legend!' },
-    100: { xp: 1000, coins: 5, title: '100-Day Titan!', unlockPhoenix: true }
+    3: { xp: 40, coins: 5, title: '3-Day Streak!' },
+    7: { xp: 100, coins: 5, title: 'Week Warrior!' },
+    14: { xp: 200, coins: 5, title: '2-Week Champion!' },
+    30: { xp: 400, coins: 5, title: 'Monthly Master!' },
+    60: { xp: 1000, coins: 5, title: '60-Day Legend!' },
+    100: { xp: 2000, coins: 5, title: '100-Day Titan!', unlockPhoenix: true }
   };
   return rewards[milestone] || null;
 };
