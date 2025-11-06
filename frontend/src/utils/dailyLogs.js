@@ -51,7 +51,7 @@ export const saveDailyLogs = (logs) => {
 };
 
 /**
- * Get today's log
+ * Get today's log (alias for getTodayProgress for consistency)
  */
 export const getTodayLog = () => {
   const logs = loadDailyLogs();
@@ -64,6 +64,11 @@ export const getTodayLog = () => {
     streakChanges: { daily: 0, weekly: 0 }
   };
 };
+
+/**
+ * Get today's progress (public API for components)
+ */
+export const getTodayProgress = getTodayLog;
 
 /**
  * Update today's log
