@@ -23,23 +23,21 @@ export const authenticateWithGoogle = async (googleToken) => {
 
     console.log('🔵 [API] Response status:', response.status, response.statusText);
     
-    // Clone response before reading body to avoid "body already used" error
-    const responseClone = response.clone();
-    
-    if (!response.ok) {
-      try {
-        const error = await response.json();
-        console.error('🔴 [API] Backend error response:', error);
-        throw new Error(error.detail || 'Authentication failed');
-      } catch (jsonError) {
-        // If JSON parsing fails, use text
-        const errorText = await responseClone.text();
-        console.error('🔴 [API] Backend error (text):', errorText);
-        throw new Error(`Authentication failed: ${response.status} ${response.statusText}`);
-      }
+    // Parse response
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      console.error('🔴 [API] Failed to parse response as JSON:', parseError);
+      throw new Error('Invalid response from server');
     }
-
-    const data = await response.json();
+    
+    // Check if request was successful
+    if (!response.ok) {
+      console.error('🔴 [API] Backend error response:', data);
+      throw new Error(data.detail || 'Authentication failed');
+    }
+    
     console.log('🟢 [API] Backend success response received');
     return data;
   } catch (fetchError) {
