@@ -76,7 +76,7 @@ class UserUpdateRequest(BaseModel):
     quests: Optional[Dict[str, Any]] = None
     streaks: Optional[Dict[str, Any]] = None
     quest_streaks: Optional[Dict[str, Any]] = None
-    inventory: Optional[Dict[str, Any]] = None
+    inventory: Optional[List[Dict[str, Any]]] = None
     active_effects: Optional[List[Dict[str, Any]]] = None
     settings: Optional[Dict[str, Any]] = None
     used_promo_codes: Optional[List[str]] = None
