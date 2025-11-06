@@ -99,10 +99,12 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
 
   // Handle inspiration suggestion
   const handleSelectSuggestion = (suggestion) => {
-    if (inspirationQuestType === 'daily') {
+    if (inspirationQuestType === 'dailyQuest') {
       setCurrentDailyHabit(suggestion);
-    } else if (inspirationQuestType === 'weekly') {
+    } else if (inspirationQuestType === 'weeklyQuest') {
       setCurrentWeeklyGoal(suggestion);
+    } else if (inspirationQuestType === 'mainQuest') {
+      setMainQuest(suggestion);
     }
     setShowInspiration(false);
   };
