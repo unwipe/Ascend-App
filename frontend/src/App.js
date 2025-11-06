@@ -741,6 +741,13 @@ function App() {
     if (!wasCompleted) {
       addXP(baseXP); // addXP will apply the multiplier internally
       // Don't show manual multiplier toast here since addXP handles it
+      
+      // Log to daily logs
+      logXPGain(totalXP + totalMilestoneXP);
+      logQuestCompletion('daily');
+    } else {
+      // Undo - subtract from daily logs
+      logXPGain(-(totalXP || baseXP));
     }
   };
 
