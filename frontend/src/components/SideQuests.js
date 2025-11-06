@@ -136,8 +136,10 @@ const SideQuests = ({ sideQuests, questStreaks, usedSuggestions, onAddSide, onTo
         )}
 
         {sideQuests.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">
-            <p>No side quests. Add a one-time task!</p>
+          <div className="text-center py-12">
+            <div className="text-6xl mb-4">⭐</div>
+            <p className="text-lg text-gray-300 mb-2">No side quests yet</p>
+            <p className="text-sm text-gray-500">Add optional one-time challenges for extra rewards!</p>
           </div>
         ) : (
           <div className="space-y-2">
