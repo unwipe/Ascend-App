@@ -32,6 +32,7 @@ import { updateQuestStreak, checkMilestoneRewards, getActiveStreaks } from './ut
 import { redeemPromoCode } from './utils/promoCodes';
 import { authenticateWithGoogle, updateUserData, checkOnlineStatus } from './utils/api';
 import { normalizeGameState, mergeGameStates } from './utils/stateNormalizer';
+import { triggerLevelUpConfetti, triggerStreakConfetti, triggerPhoenixConfetti } from './utils/confettiEffects';
 import '@/App.css';
 
 function App() {
