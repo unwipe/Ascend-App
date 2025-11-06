@@ -401,4 +401,8 @@ app.add_middleware(
 async def shutdown_db_client():
     client.close()
     logger.info("MongoDB connection closed")
+
+import logging
+for r in app.router.routes:
+    logging.getLogger(__name__).info(f"Route: {getattr(r, 'path', '')} – {getattr(r, 'methods', '')}")
  
