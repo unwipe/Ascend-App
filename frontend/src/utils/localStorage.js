@@ -1,4 +1,5 @@
 // localStorage utility functions for Ascend
+import { normalizeGameState } from './stateNormalizer';
 
 const STORAGE_KEY = 'ascend_game_data';
 
@@ -6,7 +7,10 @@ const STORAGE_KEY = 'ascend_game_data';
 export const loadGameData = () => {
   try {
     const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : null;
+    const parsed = data ? JSON.parse(data) : null;
+    
+    // Normalize to ensure correct types
+    return parsed ? normalizeGameState(parsed) : null;
   } catch (error) {
     console.error('Error loading game data:', error);
     return null;
