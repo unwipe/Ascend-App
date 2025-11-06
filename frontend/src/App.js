@@ -566,6 +566,7 @@ function App() {
       };
     });
 
+    soundManager.play('itemUse');
     toast.success('Streak Freeze activated! ❄️', {
       description: 'Your streak will be frozen if you miss a day. You\'ll have 24 hours to complete your quests.'
     });
