@@ -459,6 +459,7 @@ function App() {
       inventory: [...prev.inventory, newItem]
     }));
 
+    soundManager.play('itemPurchase');
     toast.success(`${item.name} added to inventory! ✨`, {
       description: 'Check your profile to use it.'
     });
