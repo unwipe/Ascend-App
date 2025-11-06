@@ -900,6 +900,7 @@ function App() {
       if (allComplete && !wereAllComplete) {
         newStreak = prev.weeklyStreak + 1;
         addXP(10);
+        soundManager.play('questComplete'); // 🎵 Quest completion sound
         toast.success('All Weekly Quests Completed! 🎉', { description: '+10 Bonus XP!' });
       }
       
