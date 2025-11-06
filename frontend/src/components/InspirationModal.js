@@ -73,7 +73,7 @@ const InspirationModal = ({ isOpen, onClose, questType, onSelectSuggestion, used
           <div className="space-y-4">
             {Object.entries(suggestions).map(([category, items]) => (
               <div key={category}>
-                <h3 className="text-lg font-bold text-white mb-2">{category}</h3>
+                <h3 className="text-lg font-semibold text-gray-300 mb-2">{category}</h3>
                 <div className="space-y-2">
                   {items.map((suggestion, index) => {
                     const isUsed = isSuggestionUsed(suggestion);
@@ -87,10 +87,10 @@ const InspirationModal = ({ isOpen, onClose, questType, onSelectSuggestion, used
                         whileTap={{ scale: 0.98 }}
                         className={`w-full text-left p-3 rounded-lg transition-all border ${
                           isSelected
-                            ? 'bg-green-500/30 border-green-500/50 text-white'
+                            ? 'bg-green-500/20 border-green-500/40 text-gray-100'
                             : isUsed
-                            ? 'bg-white/5 border-white/10 text-gray-400 opacity-60'
-                            : 'bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30'
+                            ? 'bg-gray-800/30 border-gray-700/30 text-gray-500 opacity-60'
+                            : 'bg-gray-800/50 border-gray-700/40 text-gray-300 hover:bg-gray-800/70 hover:border-gray-600/50'
                         }`}
                       >
                         <div className="flex items-start justify-between gap-2">
