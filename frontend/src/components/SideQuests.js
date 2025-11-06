@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ScrollText, Plus, Trash2, Undo2 } from 'lucide-react';
+import { ScrollText, Plus, Trash2, Undo2, Lightbulb } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Checkbox } from './ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import ConfirmModal from './ConfirmModal';
+import InspirationModal from './InspirationModal';
 import { canUndoQuest, getUndoTimeRemaining, formatCountdown } from '../utils/timerUtils';
 import { formatStreakDisplay } from '../utils/streakSystem';
 
-const SideQuests = ({ sideQuests, questStreaks, onAddSide, onToggleSide, onDeleteSide, onUndoSide }) => {
+const SideQuests = ({ sideQuests, questStreaks, usedSuggestions, onAddSide, onToggleSide, onDeleteSide, onUndoSide, onMarkSuggestionUsed }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [newXP, setNewXP] = useState('5');
@@ -17,6 +18,7 @@ const SideQuests = ({ sideQuests, questStreaks, onAddSide, onToggleSide, onDelet
   const [completeIndex, setCompleteIndex] = useState(null);
   const [undoIndex, setUndoIndex] = useState(null);
   const [undoTimers, setUndoTimers] = useState({});
+  const [showInspiration, setShowInspiration] = useState(false);
 
   // Update undo timers
   useEffect(() => {
