@@ -143,8 +143,18 @@ function App() {
 
   // Handle Google Login
   const handleGoogleLogin = async (googleToken) => {
+    console.log('🔵 [App] handleGoogleLogin called');
+    console.log('🔵 [App] Token preview:', googleToken ? googleToken.substring(0, 50) + '...' : 'NONE');
+    
     try {
+      console.log('🔵 [App] Calling authenticateWithGoogle API...');
       const response = await authenticateWithGoogle(googleToken);
+      console.log('🟢 [App] Backend response received:', {
+        hasToken: !!response.token,
+        hasUser: !!response.user,
+        userEmail: response.user?.email,
+        userName: response.user?.name
+      });
       
       const userData = {
         google_id: response.user.google_id,
@@ -154,6 +164,7 @@ function App() {
         token: response.token
       };
       
+      console.log('🔵 [App] Saving user to localStorage');
       // Save user to localStorage
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
