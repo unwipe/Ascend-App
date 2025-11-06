@@ -22,7 +22,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   const [currentWeeklyTarget, setCurrentWeeklyTarget] = useState('3');
   const [currentWeeklyXP, setCurrentWeeklyXP] = useState('10');
   const [showInspiration, setShowInspiration] = useState(false);
-  const [inspirationQuestType, setInspirationQuestType] = useState('daily');
+  const [inspirationQuestType, setInspirationQuestType] = useState('dailyQuest');
 
   const totalSteps = 11;
 
