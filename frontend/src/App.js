@@ -1418,6 +1418,11 @@ function App() {
         type={streakBroken}
       />
       
+      <PhoenixUnlockModal
+        isOpen={showPhoenixUnlock}
+        onClose={() => setShowPhoenixUnlock(false)}
+      />
+      
       <XPGainAnimation
         xp={xpAnimation.amount}
         visible={xpAnimation.visible}
