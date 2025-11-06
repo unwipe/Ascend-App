@@ -166,7 +166,20 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll
                 <h3 className="text-sm font-medium text-white mb-3">Account</h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 pb-3 border-b border-white/10">
-                    <div className="text-2xl">{user.avatar || '👤'}</div>
+                    {/* Display avatar as image if it's a URL, otherwise as emoji */}
+                    {user.avatar && user.avatar.startsWith('http') ? (
+                      <img 
+                        src={user.avatar} 
+                        alt="Profile" 
+                        className="w-12 h-12 rounded-full border-2 border-white/20"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="70" font-size="70">👤</text></svg>';
+                        }}
+                      />
+                    ) : (
+                      <div className="text-4xl">{user.avatar || '👤'}</div>
+                    )}
                     <div className="flex-1">
                       <p className="text-sm font-medium text-white">{user.name}</p>
                       <p className="text-xs text-gray-400">{user.email}</p>
