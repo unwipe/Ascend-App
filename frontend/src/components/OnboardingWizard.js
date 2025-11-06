@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, X, Sparkles, Plus } from 'lucide-react';
+import { ArrowRight, ArrowLeft, X, Sparkles, Plus, Lightbulb } from 'lucide-react';
 import { Dialog, DialogContent } from './ui/dialog';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { FREE_AVATARS } from '../utils/avatars';
+import InspirationModal from './InspirationModal';
 
 const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   const [step, setStep] = useState(0);
