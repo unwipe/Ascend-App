@@ -46,6 +46,7 @@ function App() {
   const [levelUpData, setLevelUpData] = useState(null);
   const [xpAnimation, setXpAnimation] = useState({ visible: false, amount: 0 });
   const [streakBroken, setStreakBroken] = useState(null);
+  const [showPhoenixUnlock, setShowPhoenixUnlock] = useState(false);
   
   // Auth & Sync state
   const [user, setUser] = useState(null);
