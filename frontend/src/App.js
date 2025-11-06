@@ -488,6 +488,7 @@ function App() {
       unlockedAvatars: [...(prev.unlockedAvatars || []), avatar.id]
     }));
 
+    soundManager.play('itemPurchase');
     toast.success(`${avatar.name} avatar unlocked! 🎉`, {
       description: 'Change it in your Profile!'
     });
