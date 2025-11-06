@@ -52,6 +52,9 @@ function App() {
 
   // Initialize game state and check login
   useEffect(() => {
+    // Clean old daily logs (keep last 30 days)
+    cleanOldLogs();
+    
     // Check if user is logged in
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
