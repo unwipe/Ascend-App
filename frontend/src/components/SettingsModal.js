@@ -160,6 +160,31 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll
               </div>
             </div>
 
+            {/* Account Section */}
+            {user && (
+              <div className="bg-white/5 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-white mb-3">Account</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 pb-3 border-b border-white/10">
+                    <div className="text-2xl">{user.avatar || '👤'}</div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-white">{user.name}</p>
+                      <p className="text-xs text-gray-400">{user.email}</p>
+                    </div>
+                  </div>
+                  
+                  <Button
+                    onClick={onLogout}
+                    variant="outline"
+                    className="w-full border-white/20 text-white hover:bg-white/10"
+                    data-testid="logout-btn"
+                  >
+                    Logout
+                  </Button>
+                </div>
+              </div>
+            )}
+
             {/* Danger Zone */}
             <div className="bg-red-500/10 border-2 border-red-500/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-3">
