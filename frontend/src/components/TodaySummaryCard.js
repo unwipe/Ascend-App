@@ -50,7 +50,9 @@ const TodaySummaryCard = ({ gameState }) => {
     }
   }, [gameState, hasShownConfetti]);
 
-  const totalQuests = Object.values(todayStats.questsCompleted).reduce((a, b) => a + b, 0);
+  const totalQuests = todayStats.questsCompleted 
+    ? Object.values(todayStats.questsCompleted).reduce((a, b) => a + b, 0)
+    : 0;
 
   return (
     <motion.div
