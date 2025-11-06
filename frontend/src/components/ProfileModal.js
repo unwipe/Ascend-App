@@ -373,9 +373,9 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
 
                 {!gameState.mainQuestHistory || gameState.mainQuestHistory.length === 0 ? (
                   <div className="text-center py-16">
-                    <History className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-                    <p className="text-gray-400 text-lg">No Main Quests completed yet.</p>
-                    <p className="text-gray-500">Start your first Main Quest to see it here!</p>
+                    <div className="text-6xl mb-4">📜</div>
+                    <p className="text-lg text-gray-300 mb-2">No quest history yet</p>
+                    <p className="text-sm text-gray-500">Complete your first main quest to see it here!</p>
                   </div>
                 ) : (
                   <>
