@@ -153,12 +153,14 @@ export const logQuestCompletion = (questType) => {
 export const logStreakChange = (streakType, change) => {
   const todayLog = getTodayLog();
   
-  return updateTodayLog({
+  const result = updateTodayLog({
     streakChanges: {
       ...todayLog.streakChanges,
       [streakType]: todayLog.streakChanges[streakType] + change
     }
   });
+  emitDailyLogsUpdate();
+  return result;
 };
 
 /**
