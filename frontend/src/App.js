@@ -1066,10 +1066,12 @@ function App() {
           <SideQuests
             sideQuests={gameState.sideQuests}
             questStreaks={gameState.questStreaks}
+            usedSuggestions={gameState.usedSuggestions}
             onAddSide={handleAddSide}
             onToggleSide={handleToggleSide}
             onDeleteSide={handleDeleteSide}
             onUndoSide={handleUndoSide}
+            onMarkSuggestionUsed={handleMarkSuggestionUsed}
           />
         </div>
       </main>
