@@ -19,6 +19,22 @@ user_problem_statement: |
   3. Display streak badges (🔥) next to quests
   4. Add "Streaks" tab in Profile Modal showing all active streaks
   5. Visual progress bars for milestone tracking
+  
+  Prompt 11: Backend Integration & Google Login Setup
+  1. FastAPI backend with MongoDB for persistent data storage
+  2. Google OAuth authentication (verify token, create/login users)
+  3. JWT-based session management for protected API routes
+  4. User data synchronization (save game state to server)
+  5. Cross-device sync capability
+  6. Promo code redemption system with backend validation
+  
+  Prompt 12: Progress Summary + Autosave + Empty States + Final Polish
+  1. "Today's Progress Summary" dashboard card showing daily XP, coins, quests completed
+  2. Daily progress logging system (tracks progress throughout the day)
+  3. Reliable autosave mechanism with sync status indicator
+  4. Consistent empty states across all quest lists and profile sections
+  5. Confetti animations on level-up and streak milestones
+  6. Enhanced sound effects integration
 
 frontend:
   - task: "Individual Quest Streak System"
