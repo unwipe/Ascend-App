@@ -1328,7 +1328,15 @@ function App() {
         visible={xpAnimation.visible}
         onComplete={() => setXpAnimation({ visible: false, amount: 0 })}
       />
+      
+      {/* Welcome/Login Modal */}
+      <WelcomeModal
+        isOpen={showWelcome}
+        onGoogleLogin={handleGoogleLogin}
+        onContinueWithoutAccount={handleContinueWithoutAccount}
+      />
     </div>
+    </GoogleOAuthProvider>
   );
 }
 
