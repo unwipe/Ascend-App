@@ -357,6 +357,30 @@ async def root():
         }
     }
 
+@api_router.get("/health")
+async def health_check():
+    """
+    Health check endpoint for production monitoring
+    Returns OK if service is running and DB is accessible
+    """
+    try:
+        # Ping MongoDB to verify connection
+        await db.command('ping')
+        
+        return {
+            "ok": True,
+            "status": "healthy",
+            "environment": os.environ.get('ENVIRONMENT', 'production'),
+            "database": "connected",
+            "version": "1.0.0"
+        }
+    except Exception as e:
+        logger.error(f"Health check failed: {str(e)}")
+        raise HTTPException(
+            status_code=503,
+            detail={"ok": False, "status": "unhealthy", "error": str(e)}
+        )
+
 
 # Include the router in the main app
 app.include_router(api_router)
