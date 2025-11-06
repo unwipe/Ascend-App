@@ -137,12 +137,14 @@ export const logQuestCompletion = (questType) => {
     return todayLog;
   }
   
-  return updateTodayLog({
+  const result = updateTodayLog({
     completed: {
       ...todayLog.completed,
       [questType]: todayLog.completed[questType] + 1
     }
   });
+  emitDailyLogsUpdate();
+  return result;
 };
 
 /**
