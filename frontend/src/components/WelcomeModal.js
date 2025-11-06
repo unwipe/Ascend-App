@@ -104,7 +104,7 @@ const WelcomeModal = ({ isOpen, onGoogleLogin, onContinueWithoutAccount }) => {
                 <div className="bg-white rounded-lg px-6 py-3">
                   <div className="animate-spin h-5 w-5 border-2 border-blue-600 border-t-transparent rounded-full mx-auto"></div>
                 </div>
-              ) : (
+              ) : isOpen ? (
                 <GoogleLogin
                   onSuccess={handleGoogleSuccess}
                   onError={handleGoogleError}
@@ -114,7 +114,7 @@ const WelcomeModal = ({ isOpen, onGoogleLogin, onContinueWithoutAccount }) => {
                   text="continue_with"
                   shape="rectangular"
                 />
-              )}
+              ) : null}
             </div>
 
             {/* Error Message */}
