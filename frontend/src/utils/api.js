@@ -62,8 +62,12 @@ export const getUserData = async (googleId, jwtToken) => {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || 'Failed to fetch user data');
+    try {
+      const error = await response.json();
+      throw new Error(error.detail || 'Failed to fetch user data');
+    } catch {
+      throw new Error(`Failed to fetch user data: ${response.status}`);
+    }
   }
 
   return response.json();
