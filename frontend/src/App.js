@@ -128,6 +128,150 @@ function App() {
     }
   }, []);
 
+  // Check online status periodically
+  useEffect(() => {
+    const checkStatus = async () => {
+      const online = await checkOnlineStatus();
+      setIsOnline(online);
+    };
+    
+    checkStatus();
+    const interval = setInterval(checkStatus, 60000); // Check every minute
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Handle Google Login
+  const handleGoogleLogin = async (googleToken) => {
+    try {
+      const response = await authenticateWithGoogle(googleToken);
+      
+      const userData = {
+        google_id: response.user.google_id,
+        email: response.user.email,
+        name: response.user.name,
+        avatar: response.user.avatar,
+        token: response.token
+      };
+      
+      // Save user to localStorage
+      localStorage.setItem('user', JSON.stringify(userData));
+      setUser(userData);
+      setShowWelcome(false);
+      
+      // Merge server data with local data
+      const localData = loadGameData();
+      const serverData = response.user;
+      
+      // Use server data if it exists, otherwise use local
+      const mergedState = {
+        ...getInitialGameState(),
+        ...localData,
+        ...serverData,
+        // Keep higher values for XP, coins, and streaks
+        xp: Math.max(localData?.xp || 0, serverData.xp || 0),
+        level: Math.max(localData?.level || 1, serverData.level || 1),
+        coins: Math.max(localData?.coins || 0, serverData.coins || 0),
+        dailyStreak: Math.max(localData?.dailyStreak || 0, serverData.streaks?.dailyStreak || 0),
+        weeklyStreak: Math.max(localData?.weeklyStreak || 0, serverData.streaks?.weeklyStreak || 0),
+        // Use server quests if they exist
+        dailyQuests: serverData.quests?.daily?.length > 0 ? serverData.quests.daily : localData?.dailyQuests || [],
+        weeklyQuests: serverData.quests?.weekly?.length > 0 ? serverData.quests.weekly : localData?.weeklyQuests || [],
+        mainQuest: serverData.quests?.main || localData?.mainQuest || null,
+        sideQuests: serverData.quests?.side?.length > 0 ? serverData.quests.side : localData?.sideQuests || [],
+      };
+      
+      setGameState(mergedState);
+      saveGameData(mergedState);
+      
+      // Show onboarding if never completed
+      if (!serverData.settings?.tutorialCompleted && !localData?.tutorialCompleted) {
+        setShowOnboarding(true);
+      }
+      
+      toast.success(`Welcome back, ${userData.name}! 🎮`);
+      
+      // Sync to server immediately
+      syncToServer(mergedState, userData.token);
+      
+    } catch (error) {
+      console.error('Login failed:', error);
+      toast.error('Login failed. Please try again.');
+    }
+  };
+
+  // Handle continue without account
+  const handleContinueWithoutAccount = () => {
+    setShowWelcome(false);
+    const localData = loadGameData();
+    
+    if (!localData) {
+      const initialState = getInitialGameState();
+      setGameState(initialState);
+      setShowOnboarding(true);
+    } else if (!localData.tutorialCompleted) {
+      setShowOnboarding(true);
+    }
+    
+    toast.info('Playing offline. Login anytime to sync your progress!');
+  };
+
+  // Handle Logout
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+    setShowWelcome(true);
+    setIsOnline(false);
+    toast.success('Logged out successfully');
+  };
+
+  // Sync to server
+  const syncToServer = async (state, token) => {
+    if (!token) return;
+    
+    try {
+      await updateUserData({
+        xp: state.xp,
+        level: state.level,
+        coins: state.coins,
+        quests: {
+          daily: state.dailyQuests,
+          weekly: state.weeklyQuests,
+          main: state.mainQuest,
+          side: state.sideQuests
+        },
+        streaks: {
+          dailyStreak: state.dailyStreak,
+          weeklyStreak: state.weeklyStreak,
+          longestDailyStreak: state.longestDailyStreak,
+          longestWeeklyStreak: state.longestWeeklyStreak
+        },
+        quest_streaks: state.questStreaks || {},
+        inventory: state.inventory || {},
+        active_effects: state.activeEffects || [],
+        settings: {
+          tutorialCompleted: state.tutorialCompleted,
+          soundEnabled: state.soundEnabled
+        },
+        used_promo_codes: state.usedPromoCodes || [],
+        used_inspiration_suggestions: state.usedInspirationSuggestions || [],
+        daily_quest_creation_count: state.dailyQuestCreationCount,
+        daily_quest_creation_date: state.dailyQuestCreationDate,
+        weekly_quest_creation_count: state.weeklyQuestCreationCount,
+        weekly_quest_creation_date: state.weeklyQuestCreationDate,
+        main_quest_cooldown: state.mainQuestCooldown,
+        daily_check_in_date: state.dailyCheckInDate,
+        main_quest_history: state.mainQuestHistory || [],
+        achievements: state.unlockedAchievements || []
+      }, token);
+      
+      setIsOnline(true);
+    } catch (error) {
+      setIsOnline(false);
+      console.error('Sync failed:', error);
+    }
+  };
+
   // Auto-save whenever game state changes
   useEffect(() => {
     if (gameState && gameState.tutorialCompleted) {
