@@ -285,8 +285,11 @@ function App() {
       }, token);
       
       setIsOnline(true);
+      setSyncStatus('synced');
+      setHasUnsyncedChanges(false);
     } catch (error) {
       setIsOnline(false);
+      setSyncStatus('offline');
       console.error('Sync failed:', error);
     }
   };
