@@ -1125,9 +1125,8 @@ function App() {
   }
 
   return (
-    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-      <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black">
-        <Toaster position="top-center" richColors />
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black">
+      <Toaster position="top-center" richColors />
       
       {/* Header */}
       <header className="sticky top-0 z-50 bg-black/50 backdrop-blur-lg border-b border-white/10">
