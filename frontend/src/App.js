@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Gamepad2, Settings as SettingsIcon, User, ShoppingBag } from 'lucide-react';
+import { Gamepad2, Settings as SettingsIcon, User, ShoppingBag, Wifi, WifiOff } from 'lucide-react';
 import { Toaster } from './components/ui/sonner';
 import { toast } from 'sonner';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import StatsCard from './components/StatsCard';
 import MainQuest from './components/MainQuest';
 import DailyQuests from './components/DailyQuests';
@@ -19,6 +20,7 @@ import XPGainAnimation from './components/XPGainAnimation';
 import StreakBrokenModal from './components/StreakBrokenModal';
 import DailyCheckIn from './components/DailyCheckIn';
 import ActiveEffects from './components/ActiveEffects';
+import WelcomeModal from './components/WelcomeModal';
 import { loadGameData, saveGameData, getInitialGameState } from './utils/localStorage';
 import { checkLevelUp, checkStreakStatus, getWeekStart, calculateLevel } from './utils/gameLogic';
 import { checkAchievements } from './utils/achievements';
@@ -26,6 +28,7 @@ import { soundManager } from './utils/soundEffects';
 import { getXPMultiplier, activateXPMultiplier, activateStreakFreeze, isStreakFreezeActive, useStreakFreeze, migrateStreakSaverToFreeze } from './utils/effectsUtils';
 import { updateQuestStreak, checkMilestoneRewards, getActiveStreaks } from './utils/streakSystem';
 import { redeemPromoCode } from './utils/promoCodes';
+import { authenticateWithGoogle, updateUserData, checkOnlineStatus } from './utils/api';
 import '@/App.css';
 
 function App() {
