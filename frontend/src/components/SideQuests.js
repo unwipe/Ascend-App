@@ -72,14 +72,25 @@ const SideQuests = ({ sideQuests, questStreaks, usedSuggestions, onAddSide, onTo
             <ScrollText className="w-6 h-6 text-green-400" />
             <h3 className="text-xl font-bold text-white">Side Quests</h3>
           </div>
-          <Button
-            onClick={() => setIsAdding(!isAdding)}
-            size="sm"
-            className="bg-green-600 hover:bg-green-700"
-            data-testid="add-side-quest-btn"
-          >
-            <Plus className="w-4 h-4" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={() => setShowInspiration(true)}
+              size="sm"
+              variant="ghost"
+              className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10"
+              title="Need Inspiration?"
+            >
+              <Lightbulb className="w-5 h-5" />
+            </Button>
+            <Button
+              onClick={() => setIsAdding(!isAdding)}
+              size="sm"
+              className="bg-green-600 hover:bg-green-700"
+              data-testid="add-side-quest-btn"
+            >
+              <Plus className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
 
         {isAdding && (
