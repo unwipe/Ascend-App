@@ -788,6 +788,7 @@ function App() {
     
     if (!wasCompleted) {
       addXP(baseXP); // addXP will apply the multiplier internally
+      soundManager.play('questComplete'); // 🎵 Quest completion sound
       // Don't show manual multiplier toast here since addXP handles it
       
       // Log to daily logs
