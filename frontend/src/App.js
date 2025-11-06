@@ -47,15 +47,32 @@ function App() {
   const [showWelcome, setShowWelcome] = useState(false);
   const [isOnline, setIsOnline] = useState(false);
 
-  // Initialize game state
+  // Initialize game state and check login
   useEffect(() => {
+    // Check if user is logged in
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      try {
+        const userData = JSON.parse(savedUser);
+        setUser(userData);
+        setShowWelcome(false);
+      } catch (err) {
+        console.error('Failed to parse user data:', err);
+        localStorage.removeItem('user');
+        setShowWelcome(true);
+      }
+    } else {
+      // No user logged in - show welcome modal
+      setShowWelcome(true);
+    }
+    
     // Migrate old Streak Saver to Streak Freeze (Phase 2 - Prompt 10)
     migrateStreakSaverToFreeze();
     
     const savedData = loadGameData();
     if (savedData) {
       // Check if tutorial completed
-      if (!savedData.tutorialCompleted) {
+      if (!savedData.tutorialCompleted && !showWelcome) {
         setShowOnboarding(true);
       }
 
