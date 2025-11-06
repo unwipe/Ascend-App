@@ -48,8 +48,8 @@ const TodaySummaryCard = ({ gameState }) => {
     refresh
   ]);
 
-  const totalQuests = todayStats.questsCompleted 
-    ? Object.values(todayStats.questsCompleted).reduce((a, b) => a + b, 0)
+  const totalQuests = todayStats.completed 
+    ? Object.values(todayStats.completed).reduce((a, b) => a + b, 0)
     : 0;
 
   return (
