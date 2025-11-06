@@ -1215,6 +1215,10 @@ function App() {
           coins={gameState.coins} 
         />
         
+        {gameState.tutorialCompleted && (
+          <TodaySummaryCard gameState={gameState} />
+        )}
+        
         <ActiveEffects />
         
         <MotivationalQuote />
