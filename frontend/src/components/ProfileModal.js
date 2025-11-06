@@ -318,7 +318,8 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                     </motion.div>
                   );
                 })}
-              </div>
+                </div>
+              )}
             </TabsContent>
 
             {/* Tab 3: Inventory */}
