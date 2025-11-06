@@ -1303,9 +1303,11 @@ function App() {
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
         settings={gameState.settings || {}}
+        user={user}
         onResetAll={handleResetAll}
         onToggleStreakMode={handleToggleStreakMode}
         onRedeemPromoCode={handleRedeemPromoCode}
+        onLogout={handleLogout}
       />
       
       <LevelUpModal
