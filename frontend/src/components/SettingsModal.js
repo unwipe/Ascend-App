@@ -7,7 +7,7 @@ import { Input } from './ui/input';
 import ConfirmModal from './ConfirmModal';
 import { APP_VERSION, APP_NAME } from '../utils/constants';
 
-const SettingsModal = ({ isOpen, onClose, settings = {}, onResetAll, onToggleStreakMode, onRedeemPromoCode }) => {
+const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll, onToggleStreakMode, onRedeemPromoCode, onLogout }) => {
   const [showFirstConfirm, setShowFirstConfirm] = useState(false);
   const [showSecondConfirm, setShowSecondConfirm] = useState(false);
   const [showStreakModeConfirm, setShowStreakModeConfirm] = useState(false);
