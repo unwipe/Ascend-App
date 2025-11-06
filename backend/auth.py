@@ -5,8 +5,14 @@ from jose import JWTError, jwt
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 import os
+from pathlib import Path
+from dotenv import load_dotenv
 from fastapi import HTTPException, Security
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
+# Load environment variables
+ROOT_DIR = Path(__file__).parent
+load_dotenv(ROOT_DIR / '.env')
 
 # JWT Configuration
 JWT_SECRET = os.environ.get('JWT_SECRET')
