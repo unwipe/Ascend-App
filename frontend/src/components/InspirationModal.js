@@ -52,18 +52,18 @@ const InspirationModal = ({ isOpen, onClose, questType, onSelectSuggestion, used
         </DialogHeader>
 
         {/* Scrollable content */}
-        <div className="overflow-y-auto flex-1 pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+        <div className="overflow-y-auto flex-1 pr-2 scrollbar-thin scrollbar-thumb-gray-700/50 scrollbar-track-transparent">
           {/* Definition Section */}
-          <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4 mb-4">
-            <p className="text-gray-200 text-sm leading-relaxed">
-              <span className="font-bold text-blue-300">What is this?</span> {definition}
+          <div className="bg-gray-800/40 border border-gray-700/40 rounded-lg p-4 mb-4">
+            <p className="text-gray-300 text-sm leading-relaxed">
+              <span className="font-bold text-gray-200">What is this?</span> {definition}
             </p>
           </div>
 
           {/* Random Suggestion Button */}
           <Button
             onClick={handleRandomSuggestion}
-            className="w-full mb-4 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-bold py-3"
+            className="w-full mb-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3"
           >
             <Shuffle className="w-5 h-5 mr-2" />
             🎲 Random Suggestion
