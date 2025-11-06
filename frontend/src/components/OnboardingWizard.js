@@ -523,15 +523,27 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                   </div>
                 </div>
 
-                {/* Add Quest Button */}
-                <button
-                  onClick={handleAddWeeklyQuest}
-                  disabled={!currentWeeklyGoal.trim()}
-                  className="w-full py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-all flex items-center justify-center gap-2"
-                >
-                  <Plus className="w-5 h-5" />
-                  Add Weekly Quest
-                </button>
+                {/* Add Quest Button with Inspiration */}
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleAddWeeklyQuest}
+                    disabled={!currentWeeklyGoal.trim()}
+                    className="flex-1 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-all flex items-center justify-center gap-2"
+                  >
+                    <Plus className="w-5 h-5" />
+                    Add Weekly Quest
+                  </button>
+                  <button
+                    onClick={() => {
+                      setInspirationQuestType('weekly');
+                      setShowInspiration(true);
+                    }}
+                    className="py-3 px-4 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 font-bold rounded-lg transition-all flex items-center justify-center gap-2"
+                    title="Need Inspiration?"
+                  >
+                    <Lightbulb className="w-5 h-5" />
+                  </button>
+                </div>
 
                 <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                   <p className="text-sm text-blue-300">
