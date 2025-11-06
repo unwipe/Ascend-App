@@ -536,6 +536,7 @@ function App() {
       };
     });
 
+    soundManager.play('itemUse');
     toast.success('XP Multiplier activated! 🔥', {
       description: '2x XP for 2 hours!'
     });
