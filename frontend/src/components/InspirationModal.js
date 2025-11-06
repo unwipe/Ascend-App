@@ -35,14 +35,6 @@ const InspirationModal = ({ isOpen, onClose, questType, onSelectSuggestion, used
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[85vh] bg-gray-900/90 backdrop-blur-lg border border-gray-700/50 overflow-hidden flex flex-col">
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-300 transition-colors z-50"
-        >
-          <X className="w-5 h-5" />
-        </button>
-
         {/* Header */}
         <DialogHeader className="flex-shrink-0">
           <DialogTitle className="text-2xl font-bold text-gray-100 flex items-center gap-2">
