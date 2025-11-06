@@ -41,6 +41,11 @@ function App() {
   const [levelUpData, setLevelUpData] = useState(null);
   const [xpAnimation, setXpAnimation] = useState({ visible: false, amount: 0 });
   const [streakBroken, setStreakBroken] = useState(null);
+  
+  // Auth & Sync state
+  const [user, setUser] = useState(null);
+  const [showWelcome, setShowWelcome] = useState(false);
+  const [isOnline, setIsOnline] = useState(false);
 
   // Initialize game state
   useEffect(() => {
