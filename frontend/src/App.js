@@ -272,10 +272,15 @@ function App() {
     }
   };
 
-  // Auto-save whenever game state changes
+  // Auto-save and sync whenever game state changes
   useEffect(() => {
     if (gameState && gameState.tutorialCompleted) {
       saveGameData(gameState);
+      
+      // Sync to server if logged in
+      if (user?.token) {
+        syncToServer(gameState, user.token);
+      }
       
       // Check for new achievements
       const newAchievements = checkAchievements(gameState, gameState.unlockedAchievements);
