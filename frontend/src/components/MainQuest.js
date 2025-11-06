@@ -380,6 +380,15 @@ const MainQuest = ({ mainQuest, mainQuestCooldown, onAddMainQuest, onEditMainQue
         description="Did you complete this objective correctly? You'll earn +25 XP. Make sure you've actually completed this before marking it done!"
         confirmText="Yes, I Completed It"
       />
+
+      {/* Inspiration Modal */}
+      <InspirationModal
+        isOpen={showInspiration}
+        onClose={() => setShowInspiration(false)}
+        questType="main"
+        onSelectSuggestion={handleSelectSuggestion}
+        usedSuggestions={[]}
+      />
     </>
   );
 };
