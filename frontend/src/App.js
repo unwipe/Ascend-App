@@ -49,6 +49,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [showWelcome, setShowWelcome] = useState(false);
   const [isOnline, setIsOnline] = useState(false);
+  const [syncStatus, setSyncStatus] = useState('synced'); // 'synced' | 'saving' | 'offline'
+  const [hasUnsyncedChanges, setHasUnsyncedChanges] = useState(false);
 
   // Initialize game state and check login
   useEffect(() => {
