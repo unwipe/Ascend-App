@@ -1206,13 +1206,18 @@ function App() {
             </motion.div>
             <h1 className="text-2xl font-bold text-white">Ascend</h1>
             
-            {/* Online/Offline Indicator */}
+            {/* Online/Offline & Sync Status Indicator */}
             {user && (
               <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-                {isOnline ? (
+                {syncStatus === 'synced' && isOnline ? (
                   <>
-                    <Wifi className="w-4 h-4 text-green-400" />
-                    <span className="text-xs text-green-400 hidden sm:inline">Online</span>
+                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                    <span className="text-xs text-green-400 hidden sm:inline">Synced</span>
+                  </>
+                ) : syncStatus === 'saving' ? (
+                  <>
+                    <div className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></div>
+                    <span className="text-xs text-yellow-400 hidden sm:inline">Saving...</span>
                   </>
                 ) : (
                   <>
