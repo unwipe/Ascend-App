@@ -1056,9 +1056,11 @@ function App() {
             questStreaks={gameState.questStreaks}
             weeklyQuestCreation={gameState.weeklyQuestCreation}
             tutorialCompleted={gameState.tutorialCompleted}
+            usedSuggestions={gameState.usedSuggestions}
             onAddWeekly={handleAddWeekly}
             onIncrementWeekly={handleIncrementWeekly}
             onDeleteWeekly={handleDeleteWeekly}
+            onMarkSuggestionUsed={handleMarkSuggestionUsed}
           />
           
           <SideQuests
