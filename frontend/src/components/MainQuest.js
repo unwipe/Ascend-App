@@ -242,6 +242,16 @@ const MainQuest = ({ mainQuest, mainQuestCooldown, onAddMainQuest, onEditMainQue
           </div>
         </div>
       </motion.div>
+
+      {/* Inspiration Modal */}
+      <InspirationModal
+        isOpen={showInspiration}
+        onClose={() => setShowInspiration(false)}
+        questType="main"
+        onSelectSuggestion={handleSelectSuggestion}
+        usedSuggestions={[]}
+      />
+      </>
     );
   }
 
