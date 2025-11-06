@@ -25,6 +25,9 @@ db = client[os.environ.get('DB_NAME', 'test_database')]
 
 # Create the main app without a prefix
 app = FastAPI(title="Ascend API", version="1.0.0")
+@app.get("/health")
+def health():
+    return {"ok": True}
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
@@ -398,3 +401,4 @@ app.add_middleware(
 async def shutdown_db_client():
     client.close()
     logger.info("MongoDB connection closed")
+ 
