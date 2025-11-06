@@ -284,13 +284,25 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
 
               <div className="space-y-4 max-w-md mx-auto">
                 <div>
-                  <Input
-                    value={mainQuest}
-                    onChange={(e) => setMainQuest(e.target.value)}
-                    placeholder="Get Healthy / Learn Spanish / Read More Books"
-                    className="bg-white/10 border-white/20 text-white"
-                    data-testid="main-quest-input"
-                  />
+                  <div className="flex gap-2">
+                    <Input
+                      value={mainQuest}
+                      onChange={(e) => setMainQuest(e.target.value)}
+                      placeholder="Get Healthy / Learn Spanish / Read More Books"
+                      className="bg-white/10 border-white/20 text-white flex-1"
+                      data-testid="main-quest-input"
+                    />
+                    <button
+                      onClick={() => {
+                        setInspirationQuestType('main');
+                        setShowInspiration(true);
+                      }}
+                      className="py-2 px-3 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 font-bold rounded-lg transition-all flex items-center justify-center"
+                      title="Need Inspiration?"
+                    >
+                      <Lightbulb className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
 
                 <div>
