@@ -763,6 +763,7 @@ function App() {
       if (shouldUnlockPhoenix && !updatedUnlockedAvatars.includes('phoenix')) {
         updatedUnlockedAvatars = [...updatedUnlockedAvatars, 'phoenix'];
         triggerPhoenixConfetti(); // 🎉 Special confetti for Phoenix unlock!
+        soundManager.play('phoenixUnlock'); // 🎵 Epic sound for legendary unlock!
         setShowPhoenixUnlock(true); // 🦅 Show the Phoenix Unlock Modal!
       }
       
@@ -940,6 +941,7 @@ function App() {
       if (shouldUnlockPhoenix && !updatedUnlockedAvatars.includes('phoenix')) {
         updatedUnlockedAvatars = [...updatedUnlockedAvatars, 'phoenix'];
         triggerPhoenixConfetti(); // 🎉 Special confetti for Phoenix unlock!
+        soundManager.play('phoenixUnlock'); // 🎵 Epic sound for legendary unlock!
         setShowPhoenixUnlock(true); // 🦅 Show the Phoenix Unlock Modal!
       }
       
@@ -1032,6 +1034,7 @@ function App() {
       if (shouldUnlockPhoenix && !updatedUnlockedAvatars.includes('phoenix')) {
         updatedUnlockedAvatars = [...updatedUnlockedAvatars, 'phoenix'];
         triggerPhoenixConfetti(); // 🎉 Special confetti for Phoenix unlock!
+        soundManager.play('phoenixUnlock'); // 🎵 Epic sound for legendary unlock!
         setShowPhoenixUnlock(true); // 🦅 Show the Phoenix Unlock Modal!
       }
       
