@@ -131,6 +131,18 @@ export function normalizeGameState(state = {}) {
     // Cooldowns
     mainQuestCooldown: state.mainQuestCooldown || null,
     dailyCheckInDate: state.dailyCheckInDate || null,
+    
+    // Unlocked content
+    unlockedAvatars: Array.isArray(state.unlockedAvatars)
+      ? state.unlockedAvatars
+      : ['professional-person', 'professional-woman', 'person-pouting', 'man-pouting', 'woman-pouting', 'person-headscarf', 'male-teacher', 'female-teacher'],
+    
+    // Other metadata
+    lastLoginDate: state.lastLoginDate || new Date().toISOString(),
+    isFirstTime: state.isFirstTime ?? true,
+    miniGameCooldowns: state.miniGameCooldowns && typeof state.miniGameCooldowns === 'object'
+      ? state.miniGameCooldowns
+      : {},
   };
 }
 
