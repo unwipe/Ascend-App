@@ -290,13 +290,18 @@ async def redeem_promo(
         reward_amount = promo['amount']
         message = f"Redeemed! +{reward_amount} Coins"
     elif reward_type == 'item':
-        # Add item to inventory
-        inventory = user.get('inventory', {})
+        # Add item to inventory (inventory is an array)
+        inventory = user.get('inventory', [])
+        if not isinstance(inventory, list):
+            # Migration: convert old dict inventory to array
+            inventory = []
+        
         item_id = promo['item_id']
-        inventory[item_id] = inventory.get(item_id, 0) + 1
+        # Add item as object to array
+        inventory.append({'name': item_id, 'count': 1})
         update_dict['inventory'] = inventory
         reward_amount = 1
-        message = "Redeemed! Item added to inventory"
+        message = f"Redeemed! {item_id} added to inventory"
     else:
         raise HTTPException(status_code=500, detail="Invalid promo code type")
     
