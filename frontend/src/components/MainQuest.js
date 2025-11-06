@@ -17,6 +17,7 @@ const MainQuest = ({ mainQuest, mainQuestCooldown, onAddMainQuest, onEditMainQue
   const [showObjectiveModal, setShowObjectiveModal] = useState(false);
   const [pendingObjectiveIndex, setPendingObjectiveIndex] = useState(null);
   const [cooldownTimer, setCooldownTimer] = useState('');
+  const [showInspiration, setShowInspiration] = useState(false);
 
   // Calculate cooldown time remaining
   useEffect(() => {
