@@ -549,7 +549,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                   </button>
                   <button
                     onClick={() => {
-                      setInspirationQuestType('weekly');
+                      setInspirationQuestType('weeklyQuest');
                       setShowInspiration(true);
                     }}
                     className="py-3 px-4 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 font-bold rounded-lg transition-all flex items-center justify-center gap-2"
