@@ -254,7 +254,7 @@ backend:
 
   - task: "Promo Code Redemption"
     implemented: true
-    working: false
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
@@ -266,6 +266,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "❌ CRITICAL ISSUE: Promo code redemption has inventory schema inconsistency. Lines 294-297 in server.py treat inventory as dict/object for item rewards, but new users are created with inventory as array (line 113). This will cause runtime errors when redeeming item-type promo codes. Endpoint authentication works correctly."
+      - working: true
+        agent: "main"
+        comment: "✅ FIXED: Updated promo redemption code to handle array inventory format. Item redemption now properly appends items to inventory array. Added migration safety check for old dict inventories."
 
   - task: "Database Schema & Collections"
     implemented: true
