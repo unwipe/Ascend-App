@@ -1336,13 +1336,16 @@ function App() {
       />
       
       {/* Welcome/Login Modal */}
-      <WelcomeModal
-        isOpen={showWelcome}
-        onGoogleLogin={handleGoogleLogin}
-        onContinueWithoutAccount={handleContinueWithoutAccount}
-      />
+      {showWelcome && (
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+          <WelcomeModal
+            isOpen={showWelcome}
+            onGoogleLogin={handleGoogleLogin}
+            onContinueWithoutAccount={handleContinueWithoutAccount}
+          />
+        </GoogleOAuthProvider>
+      )}
     </div>
-    </GoogleOAuthProvider>
   );
 }
 
