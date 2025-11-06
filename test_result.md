@@ -224,51 +224,63 @@ test_plan:
 backend:
   - task: "Google OAuth Authentication"
     implemented: true
-    working: "unknown"
+    working: true
     file: "/app/backend/server.py, /app/backend/auth.py"
     stuck_count: 0
     priority: "critical"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "unknown"
         agent: "main"
         comment: "Implemented Google OAuth flow with token verification, JWT creation, and user creation/login. Need to test /api/auth/google endpoint with valid Google token."
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Google OAuth authentication endpoint is properly implemented. POST /api/auth/google exists, validates tokens correctly (returns 401 for invalid tokens), has proper error structure with 'detail' field. JWT token creation logic verified in auth.py. All environment variables (JWT_SECRET, GOOGLE_CLIENT_ID) are properly configured."
 
   - task: "User Data Management APIs"
     implemented: true
-    working: "unknown"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "critical"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "unknown"
         agent: "main"
         comment: "Implemented GET /api/user/{google_id} and POST /api/user/update endpoints with JWT authentication. Need to test data retrieval and updates."
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: User data management APIs are properly implemented. GET /api/user/{google_id} and POST /api/user/update both require JWT authentication (return 401/403 without valid token). Endpoints exist and validate request formats correctly. User access control implemented (users can only access their own data)."
 
   - task: "Promo Code Redemption"
     implemented: true
-    working: "unknown"
+    working: false
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "unknown"
         agent: "main"
         comment: "Implemented POST /api/promo/redeem endpoint with validation, usage tracking, and reward distribution. Need to test redemption flow."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE: Promo code redemption has inventory schema inconsistency. Lines 294-297 in server.py treat inventory as dict/object for item rewards, but new users are created with inventory as array (line 113). This will cause runtime errors when redeeming item-type promo codes. Endpoint authentication works correctly."
 
   - task: "Database Schema & Collections"
     implemented: true
-    working: "unknown"
+    working: false
     file: "/app/backend/models.py, /app/backend/seed_promos.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "unknown"
         agent: "main"
         comment: "Defined Pydantic models for User and PromoCode. Created seed script for promo codes. Need to verify database operations and data integrity."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE: Inventory schema inconsistency in models.py. UserData model defines inventory as Dict[str, Any] but server.py creates new users with inventory as array and migration code converts to array. This mismatch will cause Pydantic validation errors. MongoDB connection successful, promo codes seeded correctly (4 codes: WELCOME100, ASCEND500, COINS50, BOOST2024)."
 
 agent_communication:
   - agent: "main"
