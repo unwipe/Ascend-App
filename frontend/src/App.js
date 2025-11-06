@@ -742,7 +742,7 @@ function App() {
               }
               
               toast.success(`🎉 ${reward.title}`, { description });
-              soundManager.play('achievement');
+              soundManager.play('streakMilestone');
             }, 500);
           });
         }
