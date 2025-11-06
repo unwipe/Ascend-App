@@ -1174,7 +1174,7 @@ function App() {
       });
       
       // Show success toast with sound
-      soundManager.play('coins');
+      soundManager.play('promoRedeem');
       toast.success(result.message);
       
       // Log rewards
