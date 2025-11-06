@@ -87,6 +87,11 @@ const MainQuest = ({ mainQuest, mainQuestCooldown, onAddMainQuest, onEditMainQue
   const totalCount = mainQuest?.objectives.length || 0;
   const progress = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
 
+  const handleSelectSuggestion = (suggestion) => {
+    setTitle(suggestion);
+    setShowInspiration(false);
+  };
+
   // Check if cooldown is active
   const isCooldownActive = mainQuestCooldown && new Date(mainQuestCooldown) > new Date();
 
