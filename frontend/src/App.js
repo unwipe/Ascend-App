@@ -927,6 +927,14 @@ function App() {
     return result;
   };
 
+  // Mark suggestion as used
+  const handleMarkSuggestionUsed = (suggestion) => {
+    setGameState(prev => ({
+      ...prev,
+      usedSuggestions: [...(prev.usedSuggestions || []), suggestion.toLowerCase()]
+    }));
+  };
+
   if (!gameState) {
     return (
       <div className="min-h-screen bg-gray-950 flex items-center justify-center">
