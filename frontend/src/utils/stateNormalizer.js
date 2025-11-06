@@ -20,8 +20,9 @@ export function toArray(maybeArr) {
 export function normalizeGameState(state = {}) {
   return {
     // User info
-    username: state.username || 'Adventurer',
-    avatar: state.avatar || '😊',
+    username: state.username || state.name || 'Adventurer',
+    // Don't use Google profile URL as avatar - only use emoji avatars
+    avatar: (state.avatar && !state.avatar.startsWith('http')) ? state.avatar : '😊',
     
     // Progress
     xp: Number(state.xp ?? 0),
