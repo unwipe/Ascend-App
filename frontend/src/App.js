@@ -294,12 +294,27 @@ function App() {
     }
   };
 
+  // Periodic autosave (every 60 seconds)
+  useEffect(() => {
+    if (!user?.token) return;
+    
+    const interval = setInterval(() => {
+      if (hasUnsyncedChanges && gameState && gameState.tutorialCompleted) {
+        console.log('🔵 [Autosave] Syncing unsynced changes...');
+        syncToServer(gameState, user.token);
+      }
+    }, 60000); // 60 seconds
+    
+    return () => clearInterval(interval);
+  }, [user, hasUnsyncedChanges, gameState]);
+
   // Auto-save and sync whenever game state changes
   useEffect(() => {
     if (gameState && gameState.tutorialCompleted) {
       saveGameData(gameState);
+      setHasUnsyncedChanges(true); // Mark as having unsynced changes
       
-      // Sync to server if logged in
+      // Sync to server if logged in (debounced by periodic autosave)
       if (user?.token) {
         syncToServer(gameState, user.token);
       }
