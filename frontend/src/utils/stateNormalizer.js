@@ -102,6 +102,18 @@ export function normalizeGameState(state = {}) {
         ? state.achievements
         : toArray(state.unlockedAchievements || state.achievements),
     
+    // Stats for profile
+    totalXPEarned: Number(state.totalXPEarned ?? state.xp ?? 0),
+    totalQuestsCompleted: Number(state.totalQuestsCompleted ?? 0),
+    totalCoinsEarned: Number(state.totalCoinsEarned ?? state.coins ?? 0),
+    totalCoinsSpent: Number(state.totalCoinsSpent ?? 0),
+    totalPurchases: Number(state.totalPurchases ?? 0),
+    memberSince: state.memberSince || state.created_at || new Date().toISOString(),
+    miniGamesPlayed: state.miniGamesPlayed && typeof state.miniGamesPlayed === 'object'
+      ? state.miniGamesPlayed
+      : {},
+    mainQuestsCompleted: Number(state.mainQuestsCompleted ?? 0),
+    
     // Promo codes and inspiration
     usedPromoCodes: Array.isArray(state.usedPromoCodes) 
       ? state.usedPromoCodes 
