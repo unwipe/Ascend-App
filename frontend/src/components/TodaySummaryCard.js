@@ -19,45 +19,34 @@ const TodaySummaryCard = ({ gameState }) => {
     }
   });
 
+  // Refresh function to load today's progress
+  const refresh = useCallback(() => {
+    const progress = getTodayProgress();
+    setTodayStats(progress);
+  }, []);
+
+  // Subscribe to daily logs update events
   useEffect(() => {
-    if (!gameState) return;
+    // Load initial data
+    refresh();
+    
+    // Subscribe to updates
+    const unsubscribe = onDailyLogsUpdate(refresh);
+    
+    return unsubscribe;
+  }, [refresh]);
 
-    const loadTodayStats = () => {
-      // Get today's date string
-      const today = new Date().toISOString().split('T')[0];
-
-      // Load daily logs from localStorage
-      const logsStr = localStorage.getItem('ascend_daily_logs');
-      const logs = logsStr ? JSON.parse(logsStr) : {};
-      const todayLog = logs[today] || {
-        xp: 0,
-        coins: 0,
-        completed: { daily: 0, weekly: 0, side: 0, main: 0 },
-        streakChanges: { daily: 0, weekly: 0 }
-      };
-
-      setTodayStats(todayLog);
-
-      // Show confetti if XP gained today and haven't shown yet
-      if (todayLog.xp > 0 && !hasShownConfetti) {
-        confetti({
-          particleCount: 50,
-          spread: 60,
-          origin: { x: 0.5, y: 0.3 },
-          colors: ['#60a5fa', '#34d399', '#fbbf24']
-        });
-        setHasShownConfetti(true);
-      }
-    };
-
-    // Load initially
-    loadTodayStats();
-
-    // Poll for updates every 2 seconds to catch localStorage changes
-    const interval = setInterval(loadTodayStats, 2000);
-
-    return () => clearInterval(interval);
-  }, [gameState?.xp, gameState?.coins, gameState?.totalQuestsCompleted, hasShownConfetti]);
+  // Also react to direct gameState prop changes as fallback
+  useEffect(() => {
+    refresh();
+  }, [
+    gameState?.xp,
+    gameState?.coins,
+    gameState?.dailyStreak,
+    gameState?.weeklyStreak,
+    gameState?.totalQuestsCompleted,
+    refresh
+  ]);
 
   const totalQuests = todayStats.questsCompleted 
     ? Object.values(todayStats.questsCompleted).reduce((a, b) => a + b, 0)
