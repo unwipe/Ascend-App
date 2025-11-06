@@ -67,8 +67,9 @@ async def google_auth(auth_request: GoogleAuthRequest):
             existing_user['updated_at'] = datetime.now(timezone.utc).isoformat()
             
             # MIGRATION: Convert inventory from object to array if needed
-            if existing_user.get('inventory') and not isinstance(existing_user['inventory'], list):
-                logger.info(f"🔧 [Migration] Converting inventory from object to array for {google_user['email']}")
+            inventory_needs_migration = False
+            if 'inventory' in existing_user and not isinstance(existing_user['inventory'], list):
+                logger.info(f"🔧 [Migration] Converting inventory from dict to array for {google_user['email']}")
                 old_inventory = existing_user['inventory']
                 # Convert object to array of items
                 existing_user['inventory'] = []
@@ -77,8 +78,15 @@ async def google_auth(auth_request: GoogleAuthRequest):
                         if isinstance(count, int) and count > 0:
                             for _ in range(count):
                                 existing_user['inventory'].append({'name': item_name, 'count': 1})
-                
-                # Update database with migrated inventory
+                inventory_needs_migration = True
+            elif 'inventory' not in existing_user:
+                # Add inventory field if missing
+                logger.info(f"🔧 [Migration] Adding missing inventory field for {google_user['email']}")
+                existing_user['inventory'] = []
+                inventory_needs_migration = True
+            
+            # Update database with migrated inventory
+            if inventory_needs_migration:
                 await db.users.update_one(
                     {"google_id": google_id},
                     {"$set": {"inventory": existing_user['inventory'], "updated_at": existing_user['updated_at']}}
