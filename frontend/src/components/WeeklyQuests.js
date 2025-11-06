@@ -199,8 +199,10 @@ const WeeklyQuests = ({ weeklyQuests, weeklyStreak, questStreaks, weeklyQuestCre
         )}
 
         {weeklyQuests.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">
-            <p>No weekly quests yet. Add your first goal!</p>
+          <div className="text-center py-12">
+            <div className="text-6xl mb-4">⚡</div>
+            <p className="text-lg text-gray-300 mb-2">No weekly goals yet</p>
+            <p className="text-sm text-gray-500">Set your first weekly goal to build long-term habits!</p>
           </div>
         ) : (
           <div className="space-y-2">
