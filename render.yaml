@@ -1,0 +1,32 @@
+services:
+  # FastAPI Backend Service
+  - type: web
+    name: ascend-backend
+    runtime: python
+    region: oregon  # Change to your preferred region
+    plan: starter  # Free tier
+    branch: main
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port 8000
+    envVars:
+      - key: MONGO_URL
+        sync: false  # Set manually in Render dashboard
+      - key: DB_NAME
+        value: ascend_prod
+      - key: JWT_SECRET
+        sync: false  # Set manually - use strong random string
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: JWT_EXPIRATION_MINUTES
+        value: 43200  # 30 days
+      - key: GOOGLE_CLIENT_ID
+        sync: false  # Set manually - production OAuth client ID
+      - key: CORS_ORIGINS
+        sync: false  # Set manually - your Vercel frontend URL
+      - key: ENVIRONMENT
+        value: production
+      - key: PYTHON_VERSION
+        value: 3.11.0
+    healthCheckPath: /api/health
+    autoDeploy: true
