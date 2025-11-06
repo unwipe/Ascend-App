@@ -331,19 +331,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
             >
               <div className="text-center mb-8">
                 <div className="text-6xl mb-4">🔥</div>
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <h2 className="text-3xl font-bold text-white">Add Daily Habits</h2>
-                  <button
-                    onClick={() => {
-                      setInspirationQuestType('daily');
-                      setShowInspiration(true);
-                    }}
-                    className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10 rounded-lg p-2 transition-all"
-                    title="Need Inspiration?"
-                  >
-                    <Lightbulb className="w-6 h-6" />
-                  </button>
-                </div>
+                <h2 className="text-3xl font-bold text-white mb-2">Add Daily Habits</h2>
                 <p className="text-gray-300">Add all your daily habits now</p>
                 <div className="mt-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 max-w-lg mx-auto">
                   <p className="text-sm text-yellow-300">
