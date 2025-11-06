@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Flame, Plus, Trash2, Undo2, Clock } from 'lucide-react';
+import { Flame, Plus, Trash2, Undo2, Clock, Lightbulb } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Checkbox } from './ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import ConfirmModal from './ConfirmModal';
+import InspirationModal from './InspirationModal';
 import { getTimeUntilMidnight, formatCountdown, canCompleteQuest, canUndoQuest, getUndoTimeRemaining } from '../utils/timerUtils';
 import { formatStreakDisplay } from '../utils/streakSystem';
 
-const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, dailyQuestCreation, tutorialCompleted, onAddDaily, onToggleDaily, onDeleteDaily, onUndoDaily }) => {
+const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, dailyQuestCreation, tutorialCompleted, usedSuggestions, onAddDaily, onToggleDaily, onDeleteDaily, onUndoDaily, onMarkSuggestionUsed }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [newXP, setNewXP] = useState('10');
@@ -17,6 +18,7 @@ const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, dailyQuestCreatio
   const [completeIndex, setCompleteIndex] = useState(null);
   const [undoIndex, setUndoIndex] = useState(null);
   const [timers, setTimers] = useState({});
+  const [showInspiration, setShowInspiration] = useState(false);
 
   // Update timers every second
   useEffect(() => {
