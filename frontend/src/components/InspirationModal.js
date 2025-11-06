@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
-import { Lightbulb, Shuffle, Check, X } from 'lucide-react';
+import { Lightbulb, Shuffle, Check } from 'lucide-react';
 import { 
   getSuggestionsForType, 
   getRandomSuggestion, 
