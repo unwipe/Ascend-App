@@ -49,10 +49,15 @@ async def google_auth(auth_request: GoogleAuthRequest):
     - Creates new user if first login
     - Returns JWT token and user data
     """
+    logger.info("🔵 [Auth] Received Google auth request")
+    logger.info(f"🔵 [Auth] Token preview: {auth_request.token[:50]}...")
+    
     try:
         # Verify Google token
+        logger.info("🔵 [Auth] Verifying Google token...")
         google_user = verify_google_token(auth_request.token)
         google_id = google_user['google_id']
+        logger.info(f"🟢 [Auth] Google token verified: {google_user['email']}")
         
         # Check if user exists
         existing_user = await db.users.find_one({"google_id": google_id}, {"_id": 0})
