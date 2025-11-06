@@ -1002,6 +1002,10 @@ function App() {
     addXP(quest.xp);
     toast.success('Side Quest Completed! ✅', { description: `+${quest.xp} XP earned!` });
     
+    // Log to daily logs
+    logXPGain(quest.xp);
+    logQuestCompletion('side');
+    
     // Auto-remove after 5 minutes
     setTimeout(() => {
       setGameState(prev => ({
