@@ -171,27 +171,13 @@ function App() {
       setUser(userData);
       setShowWelcome(false);
       
-      // Merge server data with local data
-      const localData = loadGameData();
+      // Merge server data with local data using normalizer
+      const localData = loadGameData() || getInitialGameState();
       const serverData = response.user;
       
-      // Use server data if it exists, otherwise use local
-      const mergedState = {
-        ...getInitialGameState(),
-        ...localData,
-        ...serverData,
-        // Keep higher values for XP, coins, and streaks
-        xp: Math.max(localData?.xp || 0, serverData.xp || 0),
-        level: Math.max(localData?.level || 1, serverData.level || 1),
-        coins: Math.max(localData?.coins || 0, serverData.coins || 0),
-        dailyStreak: Math.max(localData?.dailyStreak || 0, serverData.streaks?.dailyStreak || 0),
-        weeklyStreak: Math.max(localData?.weeklyStreak || 0, serverData.streaks?.weeklyStreak || 0),
-        // Use server quests if they exist
-        dailyQuests: serverData.quests?.daily?.length > 0 ? serverData.quests.daily : localData?.dailyQuests || [],
-        weeklyQuests: serverData.quests?.weekly?.length > 0 ? serverData.quests.weekly : localData?.weeklyQuests || [],
-        mainQuest: serverData.quests?.main || localData?.mainQuest || null,
-        sideQuests: serverData.quests?.side?.length > 0 ? serverData.quests.side : localData?.sideQuests || [],
-      };
+      console.log('🔵 [App] Merging states - local inventory:', Array.isArray(localData?.inventory), 'server inventory:', Array.isArray(serverData?.inventory));
+      
+      const mergedState = mergeGameStates(serverData, localData);
       
       setGameState(mergedState);
       saveGameData(mergedState);
