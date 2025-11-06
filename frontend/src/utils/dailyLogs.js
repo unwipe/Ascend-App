@@ -1,6 +1,23 @@
 // Daily logs utility for tracking today's progress
 
 const LOGS_KEY = 'ascend_daily_logs';
+const DL_EVENT = 'dailyLogs:update';
+
+/**
+ * Emit update event when daily logs change
+ */
+export const emitDailyLogsUpdate = () => {
+  window.dispatchEvent(new CustomEvent(DL_EVENT));
+};
+
+/**
+ * Subscribe to daily logs updates
+ * @returns {Function} Cleanup function to unsubscribe
+ */
+export const onDailyLogsUpdate = (handler) => {
+  window.addEventListener(DL_EVENT, handler);
+  return () => window.removeEventListener(DL_EVENT, handler);
+};
 
 /**
  * Get today's date string (YYYY-MM-DD)
