@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Target, Plus, Edit2, CheckCircle2, Clock, History } from 'lucide-react';
+import { Target, Plus, Edit2, CheckCircle2, Clock, History, Lightbulb } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Checkbox } from './ui/checkbox';
 import ConfirmModal from './ConfirmModal';
+import InspirationModal from './InspirationModal';
 import { formatCountdown } from '../utils/timerUtils';
 
 const MainQuest = ({ mainQuest, mainQuestCooldown, onAddMainQuest, onEditMainQuest, onCompleteMainQuest, onToggleObjective, onViewHistory }) => {
