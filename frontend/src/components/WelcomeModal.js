@@ -10,15 +10,27 @@ const WelcomeModal = ({ isOpen, onGoogleLogin, onContinueWithoutAccount }) => {
   const [error, setError] = useState('');
 
   const handleGoogleSuccess = async (credentialResponse) => {
+    console.log('🔵 [WelcomeModal] Google popup returned successfully');
+    console.log('🔵 [WelcomeModal] Credential response:', { 
+      hasCredential: !!credentialResponse.credential,
+      credentialPreview: credentialResponse.credential ? credentialResponse.credential.substring(0, 50) + '...' : 'none'
+    });
+    
     setIsLoading(true);
     setError('');
     
     try {
       const token = credentialResponse.credential;
+      console.log('🔵 [WelcomeModal] Calling onGoogleLogin with token');
       await onGoogleLogin(token);
+      console.log('🟢 [WelcomeModal] onGoogleLogin completed successfully');
     } catch (err) {
-      setError('Login failed. Please try again.');
-      console.error('Google login error:', err);
+      console.error('🔴 [WelcomeModal] Login error:', {
+        message: err.message,
+        stack: err.stack,
+        fullError: err
+      });
+      setError(err.message || 'Login failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
