@@ -96,7 +96,8 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                       className="text-6xl hover:scale-110 transition-transform"
                       data-testid="avatar-button"
                     >
-                      {gameState.avatar}
+                      {/* Only show emoji avatars, not URLs */}
+                      {gameState.avatar && !gameState.avatar.startsWith('http') ? gameState.avatar : '😊'}
                     </button>
                     <div className="text-xs text-gray-400 mt-1 text-center">Click to change</div>
                   </div>
