@@ -94,10 +94,15 @@ def verify_jwt_token(credentials: HTTPAuthorizationCredentials = Security(securi
     Raises:
         HTTPException: If token is invalid or expired
     """
+    if not JWT_SECRET:
+        raise ValueError("JWT_SECRET is not configured")
+    
     token = credentials.credentials
     
     try:
-        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        # Ensure secret is a string (not bytes) for python-jose
+        secret_key = JWT_SECRET if isinstance(JWT_SECRET, str) else JWT_SECRET.decode('utf-8')
+        payload = jwt.decode(token, secret_key, algorithms=[JWT_ALGORITHM])
         return payload
     except JWTError as e:
         raise HTTPException(
