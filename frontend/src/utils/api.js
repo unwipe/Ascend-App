@@ -87,8 +87,12 @@ export const updateUserData = async (updateData, jwtToken) => {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || 'Failed to update user data');
+    try {
+      const error = await response.json();
+      throw new Error(error.detail || 'Failed to update user data');
+    } catch {
+      throw new Error(`Failed to update user data: ${response.status}`);
+    }
   }
 
   return response.json();
