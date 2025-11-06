@@ -5,9 +5,9 @@ import { getTodayProgress, onDailyLogsUpdate } from '../utils/dailyLogs';
 
 const TodaySummaryCard = ({ gameState }) => {
   const [todayStats, setTodayStats] = useState({
-    xpGained: 0,
-    coinsEarned: 0,
-    questsCompleted: {
+    xp: 0,
+    coins: 0,
+    completed: {
       daily: 0,
       weekly: 0,
       side: 0,
@@ -18,7 +18,6 @@ const TodaySummaryCard = ({ gameState }) => {
       weekly: 0
     }
   });
-  const [hasShownConfetti, setHasShownConfetti] = useState(false);
 
   useEffect(() => {
     if (!gameState) return;
