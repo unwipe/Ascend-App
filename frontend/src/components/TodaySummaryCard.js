@@ -154,7 +154,7 @@ const TodaySummaryCard = ({ gameState }) => {
       </div>
 
       {/* Progress message */}
-      {totalQuests === 0 && (todayStats.xpGained || 0) === 0 && (
+      {totalQuests === 0 && (todayStats.xp || 0) === 0 && (
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-400">
             Start your day by completing quests! 🚀
