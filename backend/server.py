@@ -91,7 +91,7 @@ async def google_auth(auth_request: GoogleAuthRequest):
                 'quests': {'daily': [], 'weekly': [], 'main': None, 'side': []},
                 'streaks': {},
                 'quest_streaks': {},
-                'inventory': {},
+                'inventory': [],  # Array, not object!
                 'active_effects': [],
                 'settings': {},
                 'used_promo_codes': [],
