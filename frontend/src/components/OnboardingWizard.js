@@ -687,6 +687,16 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
         </div>
       </DialogContent>
     </Dialog>
+
+    {/* Inspiration Modal */}
+    <InspirationModal
+      isOpen={showInspiration}
+      onClose={() => setShowInspiration(false)}
+      questType={inspirationQuestType}
+      onSelectSuggestion={handleSelectSuggestion}
+      usedSuggestions={[]}
+    />
+    </>
   );
 };
 
