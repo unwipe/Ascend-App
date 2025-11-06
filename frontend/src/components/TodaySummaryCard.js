@@ -79,7 +79,7 @@ const TodaySummaryCard = ({ gameState }) => {
             <p className="text-xs text-gray-400">XP Gained</p>
           </div>
           <p className="text-2xl font-bold text-blue-400">
-            {(todayStats.xpGained || 0) > 0 ? '+' : ''}{(todayStats.xpGained || 0).toLocaleString()}
+            {(todayStats.xp || 0) > 0 ? '+' : ''}{(todayStats.xp || 0).toLocaleString()}
           </p>
         </motion.div>
 
