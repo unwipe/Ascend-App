@@ -70,8 +70,10 @@ function App() {
     // Migrate old Streak Saver to Streak Freeze (Phase 2 - Prompt 10)
     migrateStreakSaverToFreeze();
     
-    const savedData = loadGameData();
+    const savedData = loadGameData(); // Already normalized by loadGameData
     if (savedData) {
+      console.log('🔵 [App] Loaded data - inventory is array:', Array.isArray(savedData.inventory));
+      
       // Check if tutorial completed
       if (!savedData.tutorialCompleted && !showWelcome) {
         setShowOnboarding(true);
