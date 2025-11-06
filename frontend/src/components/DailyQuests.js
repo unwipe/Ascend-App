@@ -279,6 +279,14 @@ const DailyQuests = ({ dailyQuests, dailyStreak, questStreaks, dailyQuestCreatio
         confirmText="Delete"
         variant="danger"
       />
+
+      <InspirationModal
+        isOpen={showInspiration}
+        onClose={() => setShowInspiration(false)}
+        questType="dailyQuest"
+        onSelectSuggestion={handleSelectSuggestion}
+        usedSuggestions={usedSuggestions || []}
+      />
     </>
   );
 };
