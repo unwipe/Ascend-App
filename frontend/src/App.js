@@ -576,6 +576,10 @@ function App() {
     
     addXP(200);
     toast.success('Main Quest Completed! 🎉', { description: '+200 XP earned!' });
+    
+    // Log to daily logs
+    logXPGain(200);
+    logQuestCompletion('main');
   };
 
   const handleToggleObjective = (index) => {
