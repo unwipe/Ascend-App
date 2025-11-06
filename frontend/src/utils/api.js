@@ -5,20 +5,40 @@ const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001
  * Authenticate with Google OAuth token
  */
 export const authenticateWithGoogle = async (googleToken) => {
-  const response = await fetch(`${API_BASE_URL}/api/auth/google`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ token: googleToken }),
-  });
+  console.log('🔵 [API] authenticateWithGoogle called');
+  console.log('🔵 [API] API_BASE_URL:', API_BASE_URL);
+  console.log('🔵 [API] Sending POST to /api/auth/google');
+  
+  const requestBody = { token: googleToken };
+  console.log('🔵 [API] Request body keys:', Object.keys(requestBody));
+  
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/auth/google`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    });
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.detail || 'Authentication failed');
+    console.log('🔵 [API] Response status:', response.status, response.statusText);
+    
+    if (!response.ok) {
+      const error = await response.json();
+      console.error('🔴 [API] Backend error response:', error);
+      throw new Error(error.detail || 'Authentication failed');
+    }
+
+    const data = await response.json();
+    console.log('🟢 [API] Backend success response received');
+    return data;
+  } catch (fetchError) {
+    console.error('🔴 [API] Fetch error:', {
+      message: fetchError.message,
+      stack: fetchError.stack
+    });
+    throw fetchError;
   }
-
-  return response.json();
 };
 
 /**
