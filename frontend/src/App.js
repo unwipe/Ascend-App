@@ -241,7 +241,12 @@ function App() {
 
   // Sync to server
   const syncToServer = async (state, token) => {
-    if (!token) return;
+    if (!token) {
+      setSyncStatus('offline');
+      return;
+    }
+    
+    setSyncStatus('saving');
     
     try {
       await updateUserData({
