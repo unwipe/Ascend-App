@@ -90,5 +90,7 @@ export const getInitialGameState = () => ({
     lastResetDate: new Date().toISOString()
   },
   // Promo Codes Tracking
-  usedPromoCodes: [] // Array of redeemed promo codes
+  usedPromoCodes: [], // Array of redeemed promo codes
+  // Quest Inspiration Tracking
+  usedSuggestions: [] // Array of used quest suggestions (lowercase)
 });
