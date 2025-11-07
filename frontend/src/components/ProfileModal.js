@@ -81,7 +81,7 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900/95 backdrop-blur-lg border border-white/20" data-testid="profile-modal">
+        <DialogContent ref={modalRef} className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900/95 backdrop-blur-lg border border-white/20" data-testid="profile-modal">
           <DialogHeader>
             <DialogTitle className="text-2xl text-white">Profile</DialogTitle>
           </DialogHeader>
