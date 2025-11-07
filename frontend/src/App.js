@@ -141,6 +141,12 @@ function App() {
       setGameState(initialState);
       setShowOnboarding(true);
     }
+    
+    // Apply Fluent Emoji rendering and preload common emoji
+    setTimeout(() => {
+      applyFluentEmoji(document.body);
+      preloadEmojis(COMMON_EMOJI);
+    }, 100);
   }, []);
 
   // Check online status periodically
