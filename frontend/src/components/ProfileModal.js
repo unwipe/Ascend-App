@@ -628,11 +628,11 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                   {lockedMythical.map((avatar) => (
                     <div
                       key={avatar.id}
-                      className="relative text-4xl p-4 rounded-lg bg-gradient-to-br from-yellow-500/5 to-orange-500/5 border-2 border-yellow-500/30 opacity-50"
+                      className="relative p-4 rounded-lg bg-gradient-to-br from-yellow-500/5 to-orange-500/5 border-2 border-yellow-500/30 opacity-50 flex items-center justify-center"
                       title="These characters can only be obtained through special achievements, not purchasable."
                       data-testid={`avatar-mythical-locked-${avatar.id}`}
                     >
-                      {avatar.emoji}
+                      <FluentEmoji emoji={avatar.emoji} size="3xl" className="w-12 h-12" />
                       <div className="absolute top-1 right-1 text-lg">🔒</div>
                       <div className="absolute bottom-0 left-0 right-0 text-[10px] text-yellow-400 font-bold text-center bg-black/50 py-1 rounded-b-lg">
                         Achievement
