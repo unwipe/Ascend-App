@@ -281,6 +281,7 @@ export function clearEmojiCache() {
  * Common emoji used in the app for preloading
  */
 export const COMMON_EMOJI = [
+  // UI Elements
   '🔥', // Streaks
   '🌌', // Logo
   '📅', '⚡', '⭐', '🎯', // Quest types
@@ -288,6 +289,10 @@ export const COMMON_EMOJI = [
   '💰', '🪙', // Coins
   '⚔️', '🛡️', '🧪', // Items
   '❄️', '🔮', // Effects
-  '🦅', // Phoenix avatar
-  '👤', // Default avatar
+  
+  // Common Avatars (FREE_AVATARS + Most Popular PAID)
+  '🧑‍💼', '👩‍💼', '🙎', '🙎‍♂️', '🙎‍♀️', '🧕', '👨‍🏫', '👩‍🏫', // Free avatars
+  '🧌', '🧛‍♂️', '🧛‍♀️', '🤴', '👸', '🦸‍♂️', '🦸‍♀️', // Popular paid
+  '🥷', '🧙‍♂️', // High-tier avatars
+  '🐦‍🔥', // Phoenix (mythical)
 ];
