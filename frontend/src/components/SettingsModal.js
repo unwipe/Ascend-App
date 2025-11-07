@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Settings, AlertTriangle, Gift } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
@@ -6,6 +6,7 @@ import { Switch } from './ui/switch';
 import { Input } from './ui/input';
 import ConfirmModal from './ConfirmModal';
 import { APP_VERSION, APP_NAME } from '../utils/constants';
+import { applyEmoji } from '../utils/emoji';
 
 const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll, onToggleStreakMode, onRedeemPromoCode, onLogout }) => {
   const [showFirstConfirm, setShowFirstConfirm] = useState(false);
@@ -14,6 +15,14 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll
   const [pendingStreakMode, setPendingStreakMode] = useState(null);
   const [promoCode, setPromoCode] = useState('');
   const [promoMessage, setPromoMessage] = useState({ text: '', type: '' });
+  const modalContentRef = useRef(null);
+  
+  // Apply emoji parsing when modal opens
+  useEffect(() => {
+    if (isOpen && modalContentRef.current) {
+      applyEmoji(modalContentRef.current);
+    }
+  }, [isOpen]);
 
   const handleFirstConfirm = () => {
     setShowFirstConfirm(false);
@@ -71,8 +80,8 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-md bg-gray-900/95 backdrop-blur-lg border border-white/20" data-testid="settings-modal">
-          <DialogHeader>
+        <DialogContent className="max-w-md bg-gray-900/95 backdrop-blur-lg border border-white/20 max-h-[85vh] flex flex-col" data-testid="settings-modal">
+          <DialogHeader className="flex-shrink-0">
             <DialogTitle className="flex items-center gap-3 text-2xl text-white">
               <Settings className="w-6 h-6 text-gray-400" />
               Settings
@@ -80,11 +89,11 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll
           </DialogHeader>
 
           {/* Version Info - At Top */}
-          <div className="text-center text-sm text-gray-400 border-b border-gray-700/50 pb-4">
+          <div className="text-center text-sm text-gray-400 border-b border-gray-700/50 pb-4 flex-shrink-0">
             {APP_NAME} {APP_VERSION}
           </div>
 
-          <div className="space-y-6 mt-4">
+          <div ref={modalContentRef} className="space-y-6 mt-4 overflow-y-auto overscroll-contain px-1 pb-safe mobile-scroll">
             {/* Daily Streak Mode */}
             <div className="bg-white/5 rounded-lg p-4">
               <div className="flex items-center justify-between mb-3">

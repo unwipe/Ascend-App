@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Button } from './ui/button';
@@ -11,6 +11,7 @@ import { FREE_AVATARS, PAID_AVATARS, MYTHICAL_AVATARS, getUnlockedAvatars, getLo
 import { getActiveStreaks, getMilestoneProgress, STREAK_MILESTONES } from '../utils/streakSystem';
 import { toast } from 'sonner';
 import ItemUseConfirmModal from './ItemUseConfirmModal';
+import { applyEmoji } from '../utils/emoji';
 
 const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMultiplier, onUseStreakFreeze }) => {
   const [isEditingUsername, setIsEditingUsername] = useState(false);
@@ -18,6 +19,15 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(gameState.avatar);
   const [confirmingItem, setConfirmingItem] = useState(null);
+  const [activeTab, setActiveTab] = useState('overview');
+  const tabPanelRef = useRef(null);
+  
+  // Apply emoji parsing when modal opens or tab changes
+  useEffect(() => {
+    if (isOpen && tabPanelRef.current) {
+      applyEmoji(tabPanelRef.current);
+    }
+  }, [isOpen, activeTab]);
 
   const handleSaveUsername = () => {
     if (tempUsername.trim()) {
@@ -76,18 +86,38 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
             <DialogTitle className="text-2xl text-white">Profile</DialogTitle>
           </DialogHeader>
 
-          <Tabs defaultValue="overview" className="mt-4">
-            <TabsList className="grid w-full grid-cols-6 bg-white/5">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="streaks">🔥 Streaks</TabsTrigger>
-              <TabsTrigger value="achievements"><Trophy className="w-4 h-4 mr-2" />Achievements</TabsTrigger>
-              <TabsTrigger value="inventory"><Package className="w-4 h-4 mr-2" />Inventory</TabsTrigger>
-              <TabsTrigger value="history"><History className="w-4 h-4 mr-2" />History</TabsTrigger>
-              <TabsTrigger value="stats"><BarChart3 className="w-4 h-4 mr-2" />Stats</TabsTrigger>
+          <Tabs defaultValue="overview" className="mt-4" onValueChange={setActiveTab}>
+            <TabsList className="flex gap-2 overflow-x-auto no-scrollbar flex-nowrap sm:flex-wrap sm:grid sm:grid-cols-6 bg-white/5 pb-2">
+              <TabsTrigger value="overview" className="whitespace-nowrap leading-tight text-sm sm:text-base px-3 py-2 rounded-md flex-shrink-0">
+                Overview
+              </TabsTrigger>
+              <TabsTrigger value="streaks" className="whitespace-nowrap leading-tight text-sm sm:text-base px-3 py-2 rounded-md flex-shrink-0">
+                🔥 Streaks
+              </TabsTrigger>
+              <TabsTrigger value="achievements" className="whitespace-nowrap leading-tight text-sm sm:text-base px-3 py-2 rounded-md flex-shrink-0">
+                <Trophy className="w-4 h-4 mr-1 inline" />
+                <span className="hidden sm:inline">Achievements</span>
+                <span className="sm:hidden">🏆</span>
+              </TabsTrigger>
+              <TabsTrigger value="inventory" className="whitespace-nowrap leading-tight text-sm sm:text-base px-3 py-2 rounded-md flex-shrink-0">
+                <Package className="w-4 h-4 mr-1 inline" />
+                <span className="hidden sm:inline">Inventory</span>
+                <span className="sm:hidden">📦</span>
+              </TabsTrigger>
+              <TabsTrigger value="history" className="whitespace-nowrap leading-tight text-sm sm:text-base px-3 py-2 rounded-md flex-shrink-0">
+                <History className="w-4 h-4 mr-1 inline" />
+                <span className="hidden sm:inline">History</span>
+                <span className="sm:hidden">📜</span>
+              </TabsTrigger>
+              <TabsTrigger value="stats" className="whitespace-nowrap leading-tight text-sm sm:text-base px-3 py-2 rounded-md flex-shrink-0">
+                <BarChart3 className="w-4 h-4 mr-1 inline" />
+                <span className="hidden sm:inline">Stats</span>
+                <span className="sm:hidden">📊</span>
+              </TabsTrigger>
             </TabsList>
 
             {/* Tab 1: Overview */}
-            <TabsContent value="overview" className="space-y-6">
+            <TabsContent value="overview" className="space-y-6" ref={tabPanelRef}>
               <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6">
                 <div className="flex items-center gap-6 mb-6">
                   <div className="relative">
