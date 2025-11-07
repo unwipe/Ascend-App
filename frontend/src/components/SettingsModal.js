@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Settings, AlertTriangle, Gift } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
@@ -6,6 +6,7 @@ import { Switch } from './ui/switch';
 import { Input } from './ui/input';
 import ConfirmModal from './ConfirmModal';
 import { APP_VERSION, APP_NAME } from '../utils/constants';
+import { applyEmoji } from '../utils/emoji';
 
 const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll, onToggleStreakMode, onRedeemPromoCode, onLogout }) => {
   const [showFirstConfirm, setShowFirstConfirm] = useState(false);
