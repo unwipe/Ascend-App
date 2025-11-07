@@ -25,8 +25,16 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   const [currentWeeklyXP, setCurrentWeeklyXP] = useState('10');
   const [showInspiration, setShowInspiration] = useState(false);
   const [inspirationQuestType, setInspirationQuestType] = useState('dailyQuest');
+  const modalRef = useRef(null);
 
   const totalSteps = 11;
+  
+  // Apply Fluent Emoji when modal opens or step changes
+  useEffect(() => {
+    if (isOpen && modalRef.current) {
+      setTimeout(() => applyFluentEmoji(modalRef.current), 50);
+    }
+  }, [isOpen, step]);
 
   const handleNext = () => {
     if (step < totalSteps - 1) setStep(step + 1);
