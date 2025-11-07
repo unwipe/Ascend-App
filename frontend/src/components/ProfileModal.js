@@ -570,10 +570,10 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                     <button
                       key={avatar.id}
                       onClick={() => handleSelectAvatar(avatar)}
-                      className="relative text-4xl p-4 rounded-lg bg-white/5 opacity-50 hover:opacity-70 transition-all"
+                      className="relative p-4 rounded-lg bg-white/5 opacity-50 hover:opacity-70 transition-all flex items-center justify-center"
                       data-testid={`avatar-locked-${avatar.id}`}
                     >
-                      {avatar.emoji}
+                      <FluentEmoji emoji={avatar.emoji} size="3xl" className="w-12 h-12" />
                       <div className="absolute top-1 right-1 text-lg">🔒</div>
                       <div className="absolute bottom-1 left-0 right-0 text-xs text-yellow-400 font-bold">
                         {avatar.price} 🪙
