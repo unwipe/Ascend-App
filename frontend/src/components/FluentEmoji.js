@@ -27,6 +27,8 @@ const FluentEmoji = ({
   style = {},
   ...props 
 }) => {
+  const [imageError, setImageError] = React.useState(false);
+
   // Size mapping
   const sizeClasses = {
     xs: 'w-4 h-4',      // 16px
@@ -40,6 +42,20 @@ const FluentEmoji = ({
 
   const sizeClass = sizeClasses[size] || size;
 
+  // If image fails to load, fall back to native emoji
+  if (imageError) {
+    return (
+      <span
+        className={`inline-block ${sizeClass} ${className}`.trim()}
+        style={{ fontSize: 'inherit', lineHeight: 1, ...style }}
+        title={emoji}
+        {...props}
+      >
+        {emoji}
+      </span>
+    );
+  }
+
   return (
     <img
       src={getEmojiURL(emoji)}
@@ -49,6 +65,7 @@ const FluentEmoji = ({
       loading="lazy"
       title={emoji}
       style={style}
+      onError={() => setImageError(true)}
       {...props}
     />
   );
