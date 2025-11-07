@@ -202,16 +202,35 @@ export function applyFluentEmojiDebounced(element, delay = 100) {
 
 /**
  * Get Fluent Emoji URL for a single emoji (for React components)
+ * Returns both 3D and Flat URLs for fallback handling in components
  * 
  * @param {string} emoji - Emoji character
- * @returns {string} - CDN URL for the emoji SVG
+ * @returns {Object} - Object with primary and fallback URLs
  * 
  * @example
- * const fireUrl = getEmojiURL('🔥');
- * <img src={fireUrl} alt="🔥" className="fluent-emoji" />
+ * const { primary, fallback } = getEmojiURL('🔥');
+ * <img src={primary} onError={(e) => { e.target.src = fallback }} />
  */
 export function getEmojiURL(emoji) {
-  return getFluentEmojiURL(emoji);
+  const primary = getFluentEmojiURL(emoji, '3D');
+  const fallback = getFluentEmojiURL(emoji, 'Flat');
+  
+  return {
+    primary,
+    fallback,
+    emoji // Include original emoji for native fallback
+  };
+}
+
+/**
+ * Mark an emoji URL as failed to avoid repeated attempts
+ * 
+ * @param {string} emoji - Emoji character
+ * @param {string} style - Style that failed ('3D' or 'Flat')
+ */
+export function markEmojiFailure(emoji, style) {
+  const cacheKey = `${emoji}-${style}`;
+  emojiFailureCache.add(cacheKey);
 }
 
 /**
