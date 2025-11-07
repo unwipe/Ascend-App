@@ -1,15 +1,17 @@
 import React from 'react';
-import { getEmojiURL } from '../utils/fluentEmoji';
+import { getEmojiURL, markEmojiFailure } from '../utils/fluentEmoji';
 
 /**
  * FluentEmoji Component
  * 
- * Renders a single emoji using Microsoft Fluent Emoji assets
- * Use this for explicit emoji rendering (avatars, icons, etc.) instead of DOM parsing
+ * Renders a single emoji using Microsoft Fluent Emoji assets with cascading fallbacks:
+ * 1. Try 3D style from Microsoft Fluent Emoji
+ * 2. Fall back to Flat style if 3D fails
+ * 3. Fall back to native emoji if both CDN attempts fail
  * 
  * @param {Object} props
  * @param {string} props.emoji - Emoji character to render
- * @param {string} props.size - Size class: 'sm', 'md', 'lg', 'xl', '2xl', or custom
+ * @param {string} props.size - Size class: 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', or custom
  * @param {string} props.className - Additional CSS classes
  * @param {string} props.alt - Alt text (defaults to emoji)
  * @param {Object} props.style - Inline styles
@@ -27,7 +29,12 @@ const FluentEmoji = ({
   style = {},
   ...props 
 }) => {
-  const [imageError, setImageError] = React.useState(false);
+  const [currentSrc, setCurrentSrc] = React.useState(() => {
+    const urls = getEmojiURL(emoji);
+    return urls.primary;
+  });
+  const [useFallback, setUseFallback] = React.useState(false);
+  const [useNative, setUseNative] = React.useState(false);
 
   // Size mapping
   const sizeClasses = {
@@ -42,8 +49,32 @@ const FluentEmoji = ({
 
   const sizeClass = sizeClasses[size] || size;
 
-  // If image fails to load, fall back to native emoji
-  if (imageError) {
+  // Handle image load error with cascading fallbacks
+  const handleError = React.useCallback(() => {
+    const urls = getEmojiURL(emoji);
+    
+    if (!useFallback) {
+      // First error: try Flat style
+      markEmojiFailure(emoji, '3D');
+      setCurrentSrc(urls.fallback);
+      setUseFallback(true);
+    } else if (!useNative) {
+      // Second error: fall back to native emoji
+      markEmojiFailure(emoji, 'Flat');
+      setUseNative(true);
+    }
+  }, [emoji, useFallback, useNative]);
+
+  // Reset state when emoji changes
+  React.useEffect(() => {
+    const urls = getEmojiURL(emoji);
+    setCurrentSrc(urls.primary);
+    setUseFallback(false);
+    setUseNative(false);
+  }, [emoji]);
+
+  // If both CDN attempts failed, render native emoji
+  if (useNative) {
     return (
       <span
         className={`inline-block ${sizeClass} ${className}`.trim()}
@@ -58,14 +89,14 @@ const FluentEmoji = ({
 
   return (
     <img
-      src={getEmojiURL(emoji)}
+      src={currentSrc}
       alt={alt || emoji}
       className={`fluent-emoji inline-block ${sizeClass} ${className}`.trim()}
       draggable={false}
       loading="lazy"
       title={emoji}
       style={style}
-      onError={() => setImageError(true)}
+      onError={handleError}
       {...props}
     />
   );
