@@ -18,15 +18,6 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(gameState.avatar);
   const [confirmingItem, setConfirmingItem] = useState(null);
-  const [activeTab, setActiveTab] = useState('overview');
-  const tabPanelRef = useRef(null);
-  
-  // Apply emoji parsing when modal opens or tab changes
-  useEffect(() => {
-    if (isOpen && tabPanelRef.current) {
-      applyEmoji(tabPanelRef.current);
-    }
-  }, [isOpen, activeTab]);
 
   const handleSaveUsername = () => {
     if (tempUsername.trim()) {
