@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Button } from './ui/button';
@@ -11,6 +11,8 @@ import { FREE_AVATARS, PAID_AVATARS, MYTHICAL_AVATARS, getUnlockedAvatars, getLo
 import { getActiveStreaks, getMilestoneProgress, STREAK_MILESTONES } from '../utils/streakSystem';
 import { toast } from 'sonner';
 import ItemUseConfirmModal from './ItemUseConfirmModal';
+import FluentEmoji from './FluentEmoji';
+import { applyFluentEmoji } from '../utils/fluentEmoji';
 
 const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMultiplier, onUseStreakFreeze }) => {
   const [isEditingUsername, setIsEditingUsername] = useState(false);
@@ -18,6 +20,14 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(gameState.avatar);
   const [confirmingItem, setConfirmingItem] = useState(null);
+  const modalRef = useRef(null);
+  
+  // Apply Fluent Emoji when modal opens
+  useEffect(() => {
+    if (isOpen && modalRef.current) {
+      setTimeout(() => applyFluentEmoji(modalRef.current), 50);
+    }
+  }, [isOpen]);
 
   const handleSaveUsername = () => {
     if (tempUsername.trim()) {
@@ -71,7 +81,7 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900/95 backdrop-blur-lg border border-white/20" data-testid="profile-modal">
+        <DialogContent ref={modalRef} className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900/95 backdrop-blur-lg border border-white/20" data-testid="profile-modal">
           <DialogHeader>
             <DialogTitle className="text-2xl text-white">Profile</DialogTitle>
           </DialogHeader>
@@ -111,11 +121,15 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                   <div className="relative">
                     <button
                       onClick={() => setShowAvatarSelector(!showAvatarSelector)}
-                      className="text-6xl hover:scale-110 transition-transform"
+                      className="hover:scale-110 transition-transform"
                       data-testid="avatar-button"
                     >
                       {/* Only show emoji avatars, not URLs */}
-                      {gameState.avatar && !gameState.avatar.startsWith('http') ? gameState.avatar : '😊'}
+                      <FluentEmoji 
+                        emoji={gameState.avatar && !gameState.avatar.startsWith('http') ? gameState.avatar : '😊'} 
+                        size="3xl"
+                        className="w-24 h-24"
+                      />
                     </button>
                     <div className="text-xs text-gray-400 mt-1 text-center">Click to change</div>
                   </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ArrowLeft, X, Sparkles, Plus, Lightbulb } from 'lucide-react';
 import { Dialog, DialogContent } from './ui/dialog';
@@ -7,6 +7,8 @@ import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { FREE_AVATARS } from '../utils/avatars';
 import InspirationModal from './InspirationModal';
+import FluentEmoji from './FluentEmoji';
+import { applyFluentEmoji } from '../utils/fluentEmoji';
 
 const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   const [step, setStep] = useState(0);
@@ -23,8 +25,16 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   const [currentWeeklyXP, setCurrentWeeklyXP] = useState('10');
   const [showInspiration, setShowInspiration] = useState(false);
   const [inspirationQuestType, setInspirationQuestType] = useState('dailyQuest');
+  const modalRef = useRef(null);
 
   const totalSteps = 11;
+  
+  // Apply Fluent Emoji when modal opens or step changes
+  useEffect(() => {
+    if (isOpen && modalRef.current) {
+      setTimeout(() => applyFluentEmoji(modalRef.current), 50);
+    }
+  }, [isOpen, step]);
 
   const handleNext = () => {
     if (step < totalSteps - 1) setStep(step + 1);
@@ -112,7 +122,7 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
   return (
     <>
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) onSkip(); }}>
-      <DialogContent className="max-w-3xl max-h-[90vh] bg-gradient-to-br from-gray-900/98 to-black/98 backdrop-blur-lg border border-white/20 overflow-hidden flex flex-col" data-testid="onboarding-wizard">
+      <DialogContent ref={modalRef} className="max-w-3xl max-h-[90vh] bg-gradient-to-br from-gray-900/98 to-black/98 backdrop-blur-lg border border-white/20 overflow-hidden flex flex-col" data-testid="onboarding-wizard">
         {/* Skip Button */}
         <button
           onClick={onSkip}
@@ -196,14 +206,14 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                       <button
                         key={avatarOption.id}
                         onClick={() => setAvatar(avatarOption.emoji)}
-                        className={`text-4xl p-3 rounded-lg transition-all ${
+                        className={`p-3 rounded-lg transition-all flex items-center justify-center ${
                           avatar === avatarOption.emoji
                             ? 'bg-blue-600 scale-110'
                             : 'bg-white/5 hover:bg-white/10'
                         }`}
                         data-testid={`avatar-${avatarOption.id}`}
                       >
-                        {avatarOption.emoji}
+                        <FluentEmoji emoji={avatarOption.emoji} size="3xl" className="w-12 h-12" />
                       </button>
                     ))}
                   </div>

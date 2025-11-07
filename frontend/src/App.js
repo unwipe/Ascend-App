@@ -29,6 +29,8 @@ import { checkLevelUp, checkStreakStatus, getWeekStart, calculateLevel } from '.
 import { checkAchievements } from './utils/achievements';
 import { soundManager } from './utils/soundEffects';
 import { getXPMultiplier, activateXPMultiplier, activateStreakFreeze, isStreakFreezeActive, useStreakFreeze, migrateStreakSaverToFreeze } from './utils/effectsUtils';
+import { applyFluentEmoji, preloadEmojis, COMMON_EMOJI } from './utils/fluentEmoji';
+import FluentEmoji from './components/FluentEmoji';
 import { updateQuestStreak, checkMilestoneRewards, getActiveStreaks } from './utils/streakSystem';
 import { redeemPromoCode } from './utils/promoCodes';
 import { authenticateWithGoogle, updateUserData, checkOnlineStatus } from './utils/api';
@@ -139,6 +141,12 @@ function App() {
       setGameState(initialState);
       setShowOnboarding(true);
     }
+    
+    // Apply Fluent Emoji rendering and preload common emoji
+    setTimeout(() => {
+      applyFluentEmoji(document.body);
+      preloadEmojis(COMMON_EMOJI);
+    }, 100);
   }, []);
 
   // Check online status periodically
@@ -1225,9 +1233,9 @@ function App() {
             <motion.div
               animate={{ rotate: [0, 5, -5, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="text-2xl sm:text-3xl flex-shrink-0"
+              className="flex-shrink-0"
             >
-              🌌
+              <FluentEmoji emoji="🌌" size="2xl" className="w-8 h-8 sm:w-10 sm:h-10" />
             </motion.div>
             <h1 className="text-xl sm:text-2xl font-bold text-white truncate">Ascend</h1>
             
@@ -1284,11 +1292,11 @@ function App() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowProfile(true)}
-              className="flex items-center justify-center min-w-[44px] min-h-[44px] p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all text-xl sm:text-2xl flex-shrink-0"
+              className="flex items-center justify-center min-w-[44px] min-h-[44px] p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all flex-shrink-0"
               data-testid="profile-header-btn"
               aria-label="Profile"
             >
-              {gameState.avatar}
+              <FluentEmoji emoji={gameState.avatar} size="lg" className="w-6 h-6 sm:w-7 sm:h-7" />
             </motion.button>
             
             <motion.button
