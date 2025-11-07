@@ -14,14 +14,6 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll
   const [pendingStreakMode, setPendingStreakMode] = useState(null);
   const [promoCode, setPromoCode] = useState('');
   const [promoMessage, setPromoMessage] = useState({ text: '', type: '' });
-  const modalContentRef = useRef(null);
-  
-  // Apply emoji parsing when modal opens
-  useEffect(() => {
-    if (isOpen && modalContentRef.current) {
-      applyEmoji(modalContentRef.current);
-    }
-  }, [isOpen]);
 
   const handleFirstConfirm = () => {
     setShowFirstConfirm(false);
