@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Settings, AlertTriangle, Gift } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
@@ -6,7 +6,6 @@ import { Switch } from './ui/switch';
 import { Input } from './ui/input';
 import ConfirmModal from './ConfirmModal';
 import { APP_VERSION, APP_NAME } from '../utils/constants';
-import { applyEmoji } from '../utils/emoji';
 
 const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll, onToggleStreakMode, onRedeemPromoCode, onLogout }) => {
   const [showFirstConfirm, setShowFirstConfirm] = useState(false);
@@ -15,14 +14,6 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll
   const [pendingStreakMode, setPendingStreakMode] = useState(null);
   const [promoCode, setPromoCode] = useState('');
   const [promoMessage, setPromoMessage] = useState({ text: '', type: '' });
-  const modalContentRef = useRef(null);
-  
-  // Apply emoji parsing when modal opens
-  useEffect(() => {
-    if (isOpen && modalContentRef.current) {
-      applyEmoji(modalContentRef.current);
-    }
-  }, [isOpen]);
 
   const handleFirstConfirm = () => {
     setShowFirstConfirm(false);
@@ -93,7 +84,7 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll
             {APP_NAME} {APP_VERSION}
           </div>
 
-          <div ref={modalContentRef} className="space-y-6 mt-4 overflow-y-auto overscroll-contain px-1 pb-safe mobile-scroll">
+          <div className="space-y-6 mt-4 overflow-y-auto overscroll-contain px-1 pb-safe mobile-scroll">
             {/* Daily Streak Mode */}
             <div className="bg-white/5 rounded-lg p-4">
               <div className="flex items-center justify-between mb-3">
