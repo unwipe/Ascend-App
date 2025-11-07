@@ -105,7 +105,7 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
             </TabsList>
 
             {/* Tab 1: Overview */}
-            <TabsContent value="overview" className="space-y-6" ref={tabPanelRef}>
+            <TabsContent value="overview" className="space-y-6">
               <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6">
                 <div className="flex items-center gap-6 mb-6">
                   <div className="relative">
