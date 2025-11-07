@@ -20,6 +20,14 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(gameState.avatar);
   const [confirmingItem, setConfirmingItem] = useState(null);
+  const modal Ref = useRef(null);
+  
+  // Apply Fluent Emoji when modal opens
+  useEffect(() => {
+    if (isOpen && modalRef.current) {
+      setTimeout(() => applyFluentEmoji(modalRef.current), 50);
+    }
+  }, [isOpen]);
 
   const handleSaveUsername = () => {
     if (tempUsername.trim()) {
