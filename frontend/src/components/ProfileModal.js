@@ -545,14 +545,14 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                   <button
                     key={avatar.id}
                     onClick={() => handleSelectAvatar(avatar)}
-                    className={`text-4xl p-4 rounded-lg transition-all ${
+                    className={`p-4 rounded-lg transition-all flex items-center justify-center ${
                       selectedAvatar === avatar.emoji
                         ? 'bg-blue-600 scale-110 shadow-lg'
                         : 'bg-white/5 hover:bg-white/10'
                     }`}
                     data-testid={`avatar-select-${avatar.id}`}
                   >
-                    {avatar.emoji}
+                    <FluentEmoji emoji={avatar.emoji} size="3xl" className="w-12 h-12" />
                   </button>
                 ))}
               </div>
