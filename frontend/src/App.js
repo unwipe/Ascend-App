@@ -28,7 +28,6 @@ import { logXPGain, logCoinsEarned, logQuestCompletion, logStreakChange, cleanOl
 import { checkLevelUp, checkStreakStatus, getWeekStart, calculateLevel } from './utils/gameLogic';
 import { checkAchievements } from './utils/achievements';
 import { soundManager } from './utils/soundEffects';
-import { applyEmoji } from './utils/emoji';
 import { getXPMultiplier, activateXPMultiplier, activateStreakFreeze, isStreakFreezeActive, useStreakFreeze, migrateStreakSaverToFreeze } from './utils/effectsUtils';
 import { updateQuestStreak, checkMilestoneRewards, getActiveStreaks } from './utils/streakSystem';
 import { redeemPromoCode } from './utils/promoCodes';
