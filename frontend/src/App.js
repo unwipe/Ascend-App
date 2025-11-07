@@ -1292,11 +1292,11 @@ function App() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowProfile(true)}
-              className="flex items-center justify-center min-w-[44px] min-h-[44px] p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all text-xl sm:text-2xl flex-shrink-0"
+              className="flex items-center justify-center min-w-[44px] min-h-[44px] p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all flex-shrink-0"
               data-testid="profile-header-btn"
               aria-label="Profile"
             >
-              {gameState.avatar}
+              <FluentEmoji emoji={gameState.avatar} size="lg" className="w-6 h-6 sm:w-7 sm:h-7" />
             </motion.button>
             
             <motion.button
