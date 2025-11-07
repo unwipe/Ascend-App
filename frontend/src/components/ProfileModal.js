@@ -20,7 +20,7 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
   const [showAvatarSelector, setShowAvatarSelector] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(gameState.avatar);
   const [confirmingItem, setConfirmingItem] = useState(null);
-  const modal Ref = useRef(null);
+  const modalRef = useRef(null);
   
   // Apply Fluent Emoji when modal opens
   useEffect(() => {
