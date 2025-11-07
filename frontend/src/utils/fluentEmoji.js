@@ -2,43 +2,86 @@
  * Microsoft Fluent Emoji Integration
  * 
  * Provides consistent emoji rendering across all devices using Microsoft's Fluent Emoji assets.
- * Uses 3D style for rich, modern appearance.
+ * Uses 3D style as primary with Flat as fallback for maximum visual appeal.
  * 
- * Assets served from jsDelivr CDN (GitHub mirror of microsoft/fluentui-emoji)
+ * Assets served from jsDelivr CDN (GitHub repo: microsoft/fluentui-emoji)
  * 
  * @see https://github.com/microsoft/fluentui-emoji
  */
 
-// CDN base URL for Fluent Emoji assets (3D style)
-const FLUENT_EMOJI_CDN = 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets';
-const FLUENT_EMOJI_STYLE = '3D'; // Options: 3D, Color, Flat, High Contrast
+// CDN base URLs for Fluent Emoji assets - GitHub repo via jsDelivr
+const FLUENT_EMOJI_3D_CDN = 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji/assets/3D';
+const FLUENT_EMOJI_FLAT_CDN = 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji/assets/Flat';
 
 // Cache for emoji URL resolutions to improve performance
 const emojiURLCache = new Map();
+const emojiFailureCache = new Set(); // Track failed URLs to avoid repeated attempts
+
+/**
+ * Convert Unicode emoji to properly formatted codepoint string
+ * Handles complex emoji including:
+ * - Multi-codepoint sequences (families, professions)
+ * - Skin tone modifiers
+ * - Regional flags
+ * - Variation selectors (VS16)
+ * 
+ * @param {string} emoji - Unicode emoji character(s)
+ * @returns {string} - Formatted codepoint string (e.g., "1f525" or "1f468-200d-1f4bb")
+ */
+function emojiToCodepoint(emoji) {
+  const codepoints = [];
+  
+  // Iterate through each code unit in the emoji
+  for (let i = 0; i < emoji.length; i++) {
+    const code = emoji.codePointAt(i);
+    
+    // Skip surrogate pairs (already captured by codePointAt)
+    if (code > 0xFFFF) {
+      i++; // Skip the low surrogate
+    }
+    
+    // Include VS16 (FE0F) for emoji presentation, but skip VS15 (FE0E) for text
+    // Keep ZWJ (200D) for multi-part sequences
+    // Keep skin tone modifiers (1F3FB-1F3FF)
+    if (code === 0xFE0E) {
+      continue; // Skip text variation selector
+    }
+    
+    codepoints.push(code.toString(16).toUpperCase());
+  }
+  
+  return codepoints.join('-');
+}
 
 /**
  * Convert Unicode emoji to Fluent Emoji asset path
  * 
  * @param {string} emoji - Unicode emoji character(s)
+ * @param {string} style - 'Color' (3D) or 'Flat'
  * @returns {string} - URL to Fluent Emoji SVG
  */
-function getFluentEmojiURL(emoji) {
+function getFluentEmojiURL(emoji, style = '3D') {
+  const cacheKey = `${emoji}-${style}`;
+  
   // Check cache first
-  if (emojiURLCache.has(emoji)) {
-    return emojiURLCache.get(emoji);
+  if (emojiURLCache.has(cacheKey)) {
+    return emojiURLCache.get(cacheKey);
   }
 
-  // Convert emoji to codepoint sequence
-  const codepoints = [...emoji]
-    .map(char => char.codePointAt(0).toString(16).toUpperCase().padStart(4, '0'))
-    .join('_');
+  // Check if this URL previously failed
+  if (emojiFailureCache.has(cacheKey)) {
+    return null;
+  }
 
-  // Build URL to Fluent Emoji asset
-  // Format: {CDN}/{codepoint}/{style}/{codepoint}.svg
-  const url = `${FLUENT_EMOJI_CDN}/${codepoints}/${FLUENT_EMOJI_STYLE}/${codepoints}.svg`;
+  // Convert emoji to codepoint
+  const codepoint = emojiToCodepoint(emoji);
+  
+  // Build URL based on style
+  const baseCDN = style === '3D' ? FLUENT_EMOJI_3D_CDN : FLUENT_EMOJI_FLAT_CDN;
+  const url = `${baseCDN}/${codepoint}.svg`;
 
   // Cache the URL
-  emojiURLCache.set(emoji, url);
+  emojiURLCache.set(cacheKey, url);
 
   return url;
 }
@@ -114,16 +157,35 @@ export function applyFluentEmoji(root = document.body, options = {}) {
         fragment.appendChild(document.createTextNode(text.slice(lastIndex, index)));
       }
 
-      // Create img element for emoji
+      // Create img element for emoji with fallback handling
       const img = document.createElement('img');
-      img.src = getFluentEmojiURL(emoji);
+      const urls = getEmojiURL(emoji);
+      
+      img.src = urls.primary;
       img.alt = emoji;
       img.className = className;
       img.draggable = false;
       img.loading = 'lazy';
-      
-      // Add title for accessibility
       img.title = emoji;
+      
+      // Add error handler for fallback
+      let fallbackAttempted = false;
+      img.onerror = function() {
+        if (!fallbackAttempted) {
+          // Try Flat style
+          fallbackAttempted = true;
+          markEmojiFailure(emoji, '3D');
+          this.src = urls.fallback;
+        } else {
+          // Both failed, replace with native emoji
+          markEmojiFailure(emoji, 'Flat');
+          const span = document.createElement('span');
+          span.textContent = emoji;
+          span.className = 'inline-block';
+          span.title = emoji;
+          this.parentNode?.replaceChild(span, this);
+        }
+      };
 
       fragment.appendChild(img);
 
@@ -159,16 +221,35 @@ export function applyFluentEmojiDebounced(element, delay = 100) {
 
 /**
  * Get Fluent Emoji URL for a single emoji (for React components)
+ * Returns both 3D and Flat URLs for fallback handling in components
  * 
  * @param {string} emoji - Emoji character
- * @returns {string} - CDN URL for the emoji SVG
+ * @returns {Object} - Object with primary and fallback URLs
  * 
  * @example
- * const fireUrl = getEmojiURL('🔥');
- * <img src={fireUrl} alt="🔥" className="fluent-emoji" />
+ * const { primary, fallback } = getEmojiURL('🔥');
+ * <img src={primary} onError={(e) => { e.target.src = fallback }} />
  */
 export function getEmojiURL(emoji) {
-  return getFluentEmojiURL(emoji);
+  const primary = getFluentEmojiURL(emoji, '3D');
+  const fallback = getFluentEmojiURL(emoji, 'Flat');
+  
+  return {
+    primary,
+    fallback,
+    emoji // Include original emoji for native fallback
+  };
+}
+
+/**
+ * Mark an emoji URL as failed to avoid repeated attempts
+ * 
+ * @param {string} emoji - Emoji character
+ * @param {string} style - Style that failed ('3D' or 'Flat')
+ */
+export function markEmojiFailure(emoji, style) {
+  const cacheKey = `${emoji}-${style}`;
+  emojiFailureCache.add(cacheKey);
 }
 
 /**
@@ -200,6 +281,7 @@ export function clearEmojiCache() {
  * Common emoji used in the app for preloading
  */
 export const COMMON_EMOJI = [
+  // UI Elements
   '🔥', // Streaks
   '🌌', // Logo
   '📅', '⚡', '⭐', '🎯', // Quest types
@@ -207,6 +289,10 @@ export const COMMON_EMOJI = [
   '💰', '🪙', // Coins
   '⚔️', '🛡️', '🧪', // Items
   '❄️', '🔮', // Effects
-  '🦅', // Phoenix avatar
-  '👤', // Default avatar
+  
+  // Common Avatars (FREE_AVATARS + Most Popular PAID)
+  '🧑‍💼', '👩‍💼', '🙎', '🙎‍♂️', '🙎‍♀️', '🧕', '👨‍🏫', '👩‍🏫', // Free avatars
+  '🧌', '🧛‍♂️', '🧛‍♀️', '🤴', '👸', '🦸‍♂️', '🦸‍♀️', // Popular paid
+  '🥷', '🧙‍♂️', // High-tier avatars
+  '🐦‍🔥', // Phoenix (mythical)
 ];

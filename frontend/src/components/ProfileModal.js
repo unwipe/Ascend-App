@@ -545,14 +545,14 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                   <button
                     key={avatar.id}
                     onClick={() => handleSelectAvatar(avatar)}
-                    className={`text-4xl p-4 rounded-lg transition-all ${
+                    className={`p-4 rounded-lg transition-all flex items-center justify-center ${
                       selectedAvatar === avatar.emoji
                         ? 'bg-blue-600 scale-110 shadow-lg'
                         : 'bg-white/5 hover:bg-white/10'
                     }`}
                     data-testid={`avatar-select-${avatar.id}`}
                   >
-                    {avatar.emoji}
+                    <FluentEmoji emoji={avatar.emoji} size="3xl" className="w-12 h-12" />
                   </button>
                 ))}
               </div>
@@ -570,10 +570,10 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                     <button
                       key={avatar.id}
                       onClick={() => handleSelectAvatar(avatar)}
-                      className="relative text-4xl p-4 rounded-lg bg-white/5 opacity-50 hover:opacity-70 transition-all"
+                      className="relative p-4 rounded-lg bg-white/5 opacity-50 hover:opacity-70 transition-all flex items-center justify-center"
                       data-testid={`avatar-locked-${avatar.id}`}
                     >
-                      {avatar.emoji}
+                      <FluentEmoji emoji={avatar.emoji} size="3xl" className="w-12 h-12" />
                       <div className="absolute top-1 right-1 text-lg">🔒</div>
                       <div className="absolute bottom-1 left-0 right-0 text-xs text-yellow-400 font-bold">
                         {avatar.price} 🪙
@@ -599,14 +599,14 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                     <button
                       key={avatar.id}
                       onClick={() => handleSelectAvatar(avatar)}
-                      className={`relative text-4xl p-4 rounded-lg transition-all border-2 ${
+                      className={`relative p-4 rounded-lg transition-all border-2 flex items-center justify-center ${
                         selectedAvatar === avatar.emoji
                           ? 'bg-gradient-to-br from-yellow-600/30 to-orange-600/30 border-yellow-400 scale-110 shadow-lg shadow-yellow-500/50'
                           : 'bg-gradient-to-br from-yellow-500/10 to-orange-500/10 border-yellow-500/50 hover:border-yellow-400/70'
                       }`}
                       data-testid={`avatar-mythical-${avatar.id}`}
                     >
-                      {avatar.emoji}
+                      <FluentEmoji emoji={avatar.emoji} size="3xl" className="w-12 h-12" />
                       <div className="absolute -top-1 -right-1 text-sm">✨</div>
                     </button>
                   ))}
@@ -628,11 +628,11 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                   {lockedMythical.map((avatar) => (
                     <div
                       key={avatar.id}
-                      className="relative text-4xl p-4 rounded-lg bg-gradient-to-br from-yellow-500/5 to-orange-500/5 border-2 border-yellow-500/30 opacity-50"
+                      className="relative p-4 rounded-lg bg-gradient-to-br from-yellow-500/5 to-orange-500/5 border-2 border-yellow-500/30 opacity-50 flex items-center justify-center"
                       title="These characters can only be obtained through special achievements, not purchasable."
                       data-testid={`avatar-mythical-locked-${avatar.id}`}
                     >
-                      {avatar.emoji}
+                      <FluentEmoji emoji={avatar.emoji} size="3xl" className="w-12 h-12" />
                       <div className="absolute top-1 right-1 text-lg">🔒</div>
                       <div className="absolute bottom-0 left-0 right-0 text-[10px] text-yellow-400 font-bold text-center bg-black/50 py-1 rounded-b-lg">
                         Achievement
