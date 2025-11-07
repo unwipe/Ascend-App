@@ -206,14 +206,14 @@ const OnboardingWizard = ({ isOpen, onComplete, onSkip }) => {
                       <button
                         key={avatarOption.id}
                         onClick={() => setAvatar(avatarOption.emoji)}
-                        className={`text-4xl p-3 rounded-lg transition-all ${
+                        className={`p-3 rounded-lg transition-all flex items-center justify-center ${
                           avatar === avatarOption.emoji
                             ? 'bg-blue-600 scale-110'
                             : 'bg-white/5 hover:bg-white/10'
                         }`}
                         data-testid={`avatar-${avatarOption.id}`}
                       >
-                        {avatarOption.emoji}
+                        <FluentEmoji emoji={avatarOption.emoji} size="3xl" className="w-12 h-12" />
                       </button>
                     ))}
                   </div>
