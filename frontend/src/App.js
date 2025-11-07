@@ -29,6 +29,8 @@ import { checkLevelUp, checkStreakStatus, getWeekStart, calculateLevel } from '.
 import { checkAchievements } from './utils/achievements';
 import { soundManager } from './utils/soundEffects';
 import { getXPMultiplier, activateXPMultiplier, activateStreakFreeze, isStreakFreezeActive, useStreakFreeze, migrateStreakSaverToFreeze } from './utils/effectsUtils';
+import { applyFluentEmoji, preloadEmojis, COMMON_EMOJI } from './utils/fluentEmoji';
+import FluentEmoji from './components/FluentEmoji';
 import { updateQuestStreak, checkMilestoneRewards, getActiveStreaks } from './utils/streakSystem';
 import { redeemPromoCode } from './utils/promoCodes';
 import { authenticateWithGoogle, updateUserData, checkOnlineStatus } from './utils/api';
