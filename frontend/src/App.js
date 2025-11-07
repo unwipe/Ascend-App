@@ -1219,21 +1219,21 @@ function App() {
       <Toaster position="top-center" richColors />
       
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-black/50 backdrop-blur-lg border-b border-white/10">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+      <header className="sticky top-0 z-50 bg-black/50 backdrop-blur-lg border-b border-white/10 pt-safe">
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <motion.div
               animate={{ rotate: [0, 5, -5, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="text-3xl"
+              className="text-2xl sm:text-3xl flex-shrink-0"
             >
               🌌
             </motion.div>
-            <h1 className="text-2xl font-bold text-white">Ascend</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-white truncate">Ascend</h1>
             
             {/* Online/Offline & Sync Status Indicator */}
             {user && (
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+              <div className="hidden xs:flex items-center gap-2 px-2 sm:px-3 py-1 rounded-full bg-white/5 border border-white/10">
                 {syncStatus === 'synced' && isOnline ? (
                   <>
                     <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
@@ -1246,7 +1246,7 @@ function App() {
                   </>
                 ) : (
                   <>
-                    <WifiOff className="w-4 h-4 text-gray-400" />
+                    <WifiOff className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
                     <span className="text-xs text-gray-400 hidden sm:inline">Offline</span>
                   </>
                 )}
@@ -1254,35 +1254,39 @@ function App() {
             )}
           </div>
           
-          <div className="flex gap-2">
+          {/* Action Buttons - Horizontal scroll on mobile */}
+          <div className="flex gap-2 overflow-x-auto no-scrollbar flex-shrink-0 max-w-[50vw] sm:max-w-none">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowStore(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg transition-all"
+              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg transition-all flex-shrink-0 min-w-[44px] min-h-[44px]"
               data-testid="store-header-btn"
+              aria-label="Store"
             >
-              <ShoppingBag className="w-5 h-5" />
-              <span className="hidden sm:inline">Store</span>
+              <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline text-sm">Store</span>
             </motion.button>
             
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowMiniGames(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all"
+              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all flex-shrink-0 min-w-[44px] min-h-[44px]"
               data-testid="mini-games-header-btn"
+              aria-label="Mini Games"
             >
-              <Gamepad2 className="w-5 h-5" />
-              <span className="hidden sm:inline">Mini-Games</span>
+              <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline text-sm">Mini-Games</span>
             </motion.button>
             
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowProfile(true)}
-              className="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all text-2xl"
+              className="flex items-center justify-center min-w-[44px] min-h-[44px] p-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all text-xl sm:text-2xl flex-shrink-0"
               data-testid="profile-header-btn"
+              aria-label="Profile"
             >
               {gameState.avatar}
             </motion.button>
@@ -1291,10 +1295,11 @@ function App() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowSettings(true)}
-              className="p-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all"
+              className="flex items-center justify-center min-w-[44px] min-h-[44px] p-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all flex-shrink-0"
               data-testid="settings-header-btn"
+              aria-label="Settings"
             >
-              <SettingsIcon className="w-5 h-5" />
+              <SettingsIcon className="w-4 h-4 sm:w-5 sm:h-5" />
             </motion.button>
           </div>
         </div>
