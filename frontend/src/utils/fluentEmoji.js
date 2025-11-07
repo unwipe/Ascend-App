@@ -2,96 +2,86 @@
  * Microsoft Fluent Emoji Integration
  * 
  * Provides consistent emoji rendering across all devices using Microsoft's Fluent Emoji assets.
- * Uses Color style (flat, colorful) which is more reliable and smaller than 3D.
+ * Uses 3D style as primary with Flat as fallback for maximum visual appeal.
  * 
- * Assets served from jsDelivr CDN (npm package: @fluentui/emoji)
+ * Assets served from jsDelivr CDN (GitHub repo: microsoft/fluentui-emoji)
  * 
  * @see https://github.com/microsoft/fluentui-emoji
  */
 
-// CDN base URL for Fluent Emoji assets - using npm package which is more reliable
-const FLUENT_EMOJI_CDN = 'https://cdn.jsdelivr.net/npm/@fluentui/emoji@latest/assets';
+// CDN base URLs for Fluent Emoji assets - GitHub repo via jsDelivr
+const FLUENT_EMOJI_3D_CDN = 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji/assets/3D';
+const FLUENT_EMOJI_FLAT_CDN = 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji/assets/Flat';
 
 // Cache for emoji URL resolutions to improve performance
 const emojiURLCache = new Map();
+const emojiFailureCache = new Set(); // Track failed URLs to avoid repeated attempts
 
-// Emoji to filename mapping for common emoji (fallback for complex sequences)
-const EMOJI_TO_FILENAME = {
-  '🔥': 'fire',
-  '🌌': 'milky_way',
-  '📅': 'calendar',
-  '⚡': 'high_voltage',
-  '⭐': 'star',
-  '🎯': 'direct_hit',
-  '🏆': 'trophy',
-  '🎉': 'party_popper',
-  '✨': 'sparkles',
-  '💰': 'money_bag',
-  '🪙': 'coin',
-  '⚔️': 'crossed_swords',
-  '🛡️': 'shield',
-  '🧪': 'test_tube',
-  '❄️': 'snowflake',
-  '🔮': 'crystal_ball',
-  '🦅': 'eagle',
-  '👤': 'bust_in_silhouette',
-  '😊': 'smiling_face_with_smiling_eyes',
-  '🤓': 'nerd_face',
-  '🎮': 'video_game',
-  '🚀': 'rocket',
-  '🌟': 'glowing_star',
-  '💎': 'gem_stone',
-  '🌈': 'rainbow',
-  '👑': 'crown',
-  '🦄': 'unicorn',
-  '🐉': 'dragon',
-  '🤖': 'robot',
-  '👻': 'ghost',
-  '🦁': 'lion',
-  '🐯': 'tiger_face',
-  '🦈': 'shark',
-  '🦖': 'T-Rex',
-};
+/**
+ * Convert Unicode emoji to properly formatted codepoint string
+ * Handles complex emoji including:
+ * - Multi-codepoint sequences (families, professions)
+ * - Skin tone modifiers
+ * - Regional flags
+ * - Variation selectors (VS16)
+ * 
+ * @param {string} emoji - Unicode emoji character(s)
+ * @returns {string} - Formatted codepoint string (e.g., "1f525" or "1f468-200d-1f4bb")
+ */
+function emojiToCodepoint(emoji) {
+  const codepoints = [];
+  
+  // Iterate through each code unit in the emoji
+  for (let i = 0; i < emoji.length; i++) {
+    const code = emoji.codePointAt(i);
+    
+    // Skip surrogate pairs (already captured by codePointAt)
+    if (code > 0xFFFF) {
+      i++; // Skip the low surrogate
+    }
+    
+    // Include VS16 (FE0F) for emoji presentation, but skip VS15 (FE0E) for text
+    // Keep ZWJ (200D) for multi-part sequences
+    // Keep skin tone modifiers (1F3FB-1F3FF)
+    if (code === 0xFE0E) {
+      continue; // Skip text variation selector
+    }
+    
+    codepoints.push(code.toString(16).toUpperCase());
+  }
+  
+  return codepoints.join('-');
+}
 
 /**
  * Convert Unicode emoji to Fluent Emoji asset path
  * 
  * @param {string} emoji - Unicode emoji character(s)
+ * @param {string} style - 'Color' (3D) or 'Flat'
  * @returns {string} - URL to Fluent Emoji SVG
  */
-function getFluentEmojiURL(emoji) {
+function getFluentEmojiURL(emoji, style = '3D') {
+  const cacheKey = `${emoji}-${style}`;
+  
   // Check cache first
-  if (emojiURLCache.has(emoji)) {
-    return emojiURLCache.get(emoji);
+  if (emojiURLCache.has(cacheKey)) {
+    return emojiURLCache.get(cacheKey);
   }
 
-  // Try filename mapping first (more reliable)
-  const filename = EMOJI_TO_FILENAME[emoji];
-  if (filename) {
-    const url = `${FLUENT_EMOJI_CDN}/${filename}_color.svg`;
-    emojiURLCache.set(emoji, url);
-    return url;
+  // Check if this URL previously failed
+  if (emojiFailureCache.has(cacheKey)) {
+    return null;
   }
 
-  // Fallback: Convert emoji to Unicode codepoint
-  // Remove variation selectors and zero-width joiners for cleaner filenames
-  const codepoint = [...emoji]
-    .map(char => {
-      const code = char.codePointAt(0);
-      // Skip variation selectors (FE0F, FE0E) and ZWJ (200D)
-      if (code === 0xFE0F || code === 0xFE0E || code === 0x200D) {
-        return null;
-      }
-      return code.toString(16).toLowerCase();
-    })
-    .filter(Boolean)
-    .join('_');
-
-  // Try standard naming: codepoint_color.svg
-  const url = `${FLUENT_EMOJI_CDN}/${codepoint}_color.svg`;
+  // Convert emoji to codepoint
+  const codepoint = emojiToCodepoint(emoji);
+  
+  // Build URL based on style
+  const baseCDN = style === '3D' ? FLUENT_EMOJI_3D_CDN : FLUENT_EMOJI_FLAT_CDN;
+  const url = `${baseCDN}/${codepoint}.svg`;
 
   // Cache the URL
-  emojiURLCache.set(emoji, url);
+  emojiURLCache.set(cacheKey, url);
 
   return url;
 }
