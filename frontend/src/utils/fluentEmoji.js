@@ -157,16 +157,35 @@ export function applyFluentEmoji(root = document.body, options = {}) {
         fragment.appendChild(document.createTextNode(text.slice(lastIndex, index)));
       }
 
-      // Create img element for emoji
+      // Create img element for emoji with fallback handling
       const img = document.createElement('img');
-      img.src = getFluentEmojiURL(emoji);
+      const urls = getEmojiURL(emoji);
+      
+      img.src = urls.primary;
       img.alt = emoji;
       img.className = className;
       img.draggable = false;
       img.loading = 'lazy';
-      
-      // Add title for accessibility
       img.title = emoji;
+      
+      // Add error handler for fallback
+      let fallbackAttempted = false;
+      img.onerror = function() {
+        if (!fallbackAttempted) {
+          // Try Flat style
+          fallbackAttempted = true;
+          markEmojiFailure(emoji, '3D');
+          this.src = urls.fallback;
+        } else {
+          // Both failed, replace with native emoji
+          markEmojiFailure(emoji, 'Flat');
+          const span = document.createElement('span');
+          span.textContent = emoji;
+          span.className = 'inline-block';
+          span.title = emoji;
+          this.parentNode?.replaceChild(span, this);
+        }
+      };
 
       fragment.appendChild(img);
 
