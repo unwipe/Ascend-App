@@ -84,7 +84,7 @@ const SettingsModal = ({ isOpen, onClose, settings = {}, user = null, onResetAll
             {APP_NAME} {APP_VERSION}
           </div>
 
-          <div ref={modalContentRef} className="space-y-6 mt-4 overflow-y-auto overscroll-contain px-1 pb-safe mobile-scroll">
+          <div className="space-y-6 mt-4 overflow-y-auto overscroll-contain px-1 pb-safe mobile-scroll">
             {/* Daily Streak Mode */}
             <div className="bg-white/5 rounded-lg p-4">
               <div className="flex items-center justify-between mb-3">
