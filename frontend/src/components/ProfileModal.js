@@ -121,11 +121,15 @@ const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMult
                   <div className="relative">
                     <button
                       onClick={() => setShowAvatarSelector(!showAvatarSelector)}
-                      className="text-6xl hover:scale-110 transition-transform"
+                      className="hover:scale-110 transition-transform"
                       data-testid="avatar-button"
                     >
                       {/* Only show emoji avatars, not URLs */}
-                      {gameState.avatar && !gameState.avatar.startsWith('http') ? gameState.avatar : '😊'}
+                      <FluentEmoji 
+                        emoji={gameState.avatar && !gameState.avatar.startsWith('http') ? gameState.avatar : '😊'} 
+                        size="3xl"
+                        className="w-24 h-24"
+                      />
                     </button>
                     <div className="text-xs text-gray-400 mt-1 text-center">Click to change</div>
                   </div>
