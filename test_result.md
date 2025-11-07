@@ -394,7 +394,7 @@ agent_communication:
       **TESTING RESULTS SUMMARY:**
       
       ✅ **Service Health & Authentication**: All working correctly
-      - Backend server accessible at https://ascend-game-1.preview.emergentagent.com/api
+      - Backend server accessible at https://emoji-fix.preview.emergentagent.com/api
       - All API endpoints documented and responding
       - Google OAuth authentication endpoint properly implemented
       - JWT token creation and validation working
