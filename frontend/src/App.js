@@ -1233,9 +1233,9 @@ function App() {
             <motion.div
               animate={{ rotate: [0, 5, -5, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="text-2xl sm:text-3xl flex-shrink-0"
+              className="flex-shrink-0"
             >
-              🌌
+              <FluentEmoji emoji="🌌" size="2xl" className="w-8 h-8 sm:w-10 sm:h-10" />
             </motion.div>
             <h1 className="text-xl sm:text-2xl font-bold text-white truncate">Ascend</h1>
             
