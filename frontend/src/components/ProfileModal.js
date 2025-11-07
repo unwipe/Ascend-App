@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Button } from './ui/button';
@@ -11,6 +11,7 @@ import { FREE_AVATARS, PAID_AVATARS, MYTHICAL_AVATARS, getUnlockedAvatars, getLo
 import { getActiveStreaks, getMilestoneProgress, STREAK_MILESTONES } from '../utils/streakSystem';
 import { toast } from 'sonner';
 import ItemUseConfirmModal from './ItemUseConfirmModal';
+import { applyEmoji } from '../utils/emoji';
 
 const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMultiplier, onUseStreakFreeze }) => {
   const [isEditingUsername, setIsEditingUsername] = useState(false);
