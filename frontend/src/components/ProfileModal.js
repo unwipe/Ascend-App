@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Edit2, Trophy, Package, BarChart3, History, Lock } from 'lucide-react';
+import { Edit2, Trophy, Package, BarChart3, History, Lock, Flame } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getLevelEmoji, getRankTitle } from '../utils/levelSystem';
 import { achievements } from '../utils/achievements';
@@ -11,7 +11,6 @@ import { FREE_AVATARS, PAID_AVATARS, MYTHICAL_AVATARS, getUnlockedAvatars, getLo
 import { getActiveStreaks, getMilestoneProgress, STREAK_MILESTONES } from '../utils/streakSystem';
 import { toast } from 'sonner';
 import ItemUseConfirmModal from './ItemUseConfirmModal';
-import { applyEmoji } from '../utils/emoji';
 
 const ProfileModal = ({ isOpen, onClose, gameState, onUpdateProfile, onUseXPMultiplier, onUseStreakFreeze }) => {
   const [isEditingUsername, setIsEditingUsername] = useState(false);
