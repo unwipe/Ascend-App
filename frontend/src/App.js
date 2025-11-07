@@ -140,6 +140,9 @@ function App() {
       setGameState(initialState);
       setShowOnboarding(true);
     }
+    
+    // Apply consistent emoji rendering across all devices
+    applyEmoji();
   }, []);
 
   // Check online status periodically
